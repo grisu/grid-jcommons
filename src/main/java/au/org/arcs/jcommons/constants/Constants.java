@@ -49,7 +49,10 @@ public class Constants {
 	public static final String SEND_EMAIL_ON_JOB_END_ATTRIBUTE_KEY = "sendOnJobFinish";
 	public static final String PBSDEBUG_KEY = "pbsDebug";
 
-
+	// job creation method names
+	public static final String FORCE_NAME_METHOD = "force-name";
+	public static final String UUID_NAME_METHOD = "uuid";
+	public static final String TIMESTAMP_METHOD = "timestamp";
 
 
 
