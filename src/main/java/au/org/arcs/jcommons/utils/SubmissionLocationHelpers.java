@@ -67,9 +67,11 @@ public final class SubmissionLocationHelpers {
 	public static String createSubmissionLocationString(
 			final GridResource gridResource) {
 
-		String hostname = gridResource.getContactString().substring(
-				gridResource.getContactString().indexOf("https://") != 0 ? 0
-						: 8, gridResource.getContactString().indexOf(":8443"));
+		String contactString = gridResource.getContactString();
+		
+		String hostname = contactString.substring(
+				contactString.indexOf("https://") != 0 ? 0
+						: 8, contactString.indexOf(":8443"));
 
 		return createSubmissionLocationString(hostname, gridResource
 				.getQueueName(), gridResource.getJobManager());
