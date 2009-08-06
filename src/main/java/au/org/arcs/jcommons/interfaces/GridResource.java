@@ -9,7 +9,7 @@ import java.util.Set;
  * 
  * @author Markus Binsteiner
  */
-public interface GridResource extends Comparable {
+public interface GridResource extends Comparable<GridResource> {
 
 	/**
 	 * The latitude of the site.
