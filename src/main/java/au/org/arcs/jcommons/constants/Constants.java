@@ -37,7 +37,7 @@ public class Constants {
 //	public static final String JOB_STATUS_KEY = "status";
 	public static final String STAGING_FILE_SYSTEM_KEY = "stagingFileSystem";
 	public static final String SUBMISSION_TIME_KEY = "submissionTime";
-	
+	public static final String MOUNTPOINT_KEY = "mountpoint";
 	public static final String MDS_EXECUTABLES_KEY = "Executables";
 	public static final String MDS_MODULES_KEY = "Module";
 	public static final String MDS_PARALLEL_AVAIL_KEY = "parallelAvail";
@@ -53,6 +53,7 @@ public class Constants {
 	public static final String FORCE_NAME_METHOD = "force-name";
 	public static final String UUID_NAME_METHOD = "uuid";
 	public static final String TIMESTAMP_METHOD = "timestamp";
+	public static final String MULTIJOB_NAME = "multijobname";
 
 
 
