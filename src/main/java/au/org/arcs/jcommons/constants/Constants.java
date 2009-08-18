@@ -53,8 +53,10 @@ public class Constants {
 	public static final String FORCE_NAME_METHOD = "force-name";
 	public static final String UUID_NAME_METHOD = "uuid";
 	public static final String TIMESTAMP_METHOD = "timestamp";
+	
 	public static final String MULTIJOB_NAME = "multijobname";
-
+	public static final String RELATIVE_PATH_FROM_JOBDIR = "relativePathToMultiPartJobDir";
+	public static final String RELATIVE_MULTIJOB_DIRECTORY_KEY = "multijob_directory";
 
 
 }
