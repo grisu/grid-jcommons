@@ -208,6 +208,60 @@ public final class JsdlHelpers {
 			return walltimeInSecs;
 		}
 	}
+	
+	/**
+	 * Sets the totalCPUTime of the job in seconds. If there is already a walltime specified it will be overwritten.
+	 * 
+	 * Be aware that you need to multiply the walltime in seconds times the number of cpus for this job to get the proper totalcputime.
+	 * 
+	 * @param jsdl
+	 *            the jsdl document
+	 * @param totalcputimeinseconds
+	 *            the new totalcputime
+	 * @throws XPathExpressionException
+	 *             if the JobName element could not be found
+	 */
+	public static void setTotalCPUTimeInSeconds(final Document jsdl, final int totalcputimeinseconds) {
+		String expression = "/jsdl:JobDefinition/jsdl:JobDescription/jsdl:Application/jsdl:TotalCPUTime";
+		NodeList resultNodes = null;
+		try {
+			resultNodes = (NodeList) xpath.evaluate(expression, jsdl,
+					XPathConstants.NODESET);
+		} catch (XPathExpressionException e) {
+			myLogger.warn("No Walltime node in jsdl file.");
+			// that's ok if we want to set the jobname
+		}
+
+		Node walltime = null;
+
+		// TODO what to do if that happens? Shouldn't though because the jsdl is
+		// validated against jsdl.xsd beforehand
+		if (resultNodes.getLength() > 1) {
+			return;
+		} else if (resultNodes.getLength() == 0) {
+			expression = "/jsdl:JobDefinition/jsdl:JobDescription/jsdl:Application";
+			try {
+				resultNodes = (NodeList) xpath.evaluate(expression, jsdl,
+						XPathConstants.NODESET);
+			} catch (XPathExpressionException e) {
+				myLogger.warn("No JobIdentification node in jsdl file.");
+				throw new RuntimeException(e);
+			}
+
+			if (resultNodes.getLength() != 1) {
+				throw new RuntimeException(
+						"No or more than one JobIdentification nodes in jsdl document.");
+			}
+
+			walltime = jsdl.createElement("jsdl:TotalCPUTime");
+			walltime.setTextContent(new Integer(totalcputimeinseconds).toString());
+			resultNodes.item(0).appendChild(walltime);
+		} else {
+			// replace the text content of the already existing JobName element
+			resultNodes.item(0).setTextContent(new Integer(totalcputimeinseconds).toString());
+		}
+
+	}
 
 	/**
 	 * Parses the jsdl document and returns the value of the TotalCPUCount
@@ -246,6 +300,59 @@ public final class JsdlHelpers {
 		}
 
 		return processorCount;
+
+	}
+	
+	/**
+	 * Sets the totalCPUcount of the job. If there is already a cpucount specified it will be overwritten.
+	 * 
+	 * @param jsdl
+	 *            the jsdl document
+	 * @param totalcputimeinseconds
+	 *            the new totalcputime
+	 * @throws XPathExpressionException
+	 *             if the JobName element could not be found
+	 */
+	public static void setProcessorCount(final Document jsdl, final int processorcount)
+			 {
+		String expression = "/jsdl:JobDefinition/jsdl:JobDescription/jsdl:Application/jsdl:TotalCPUCount/jsdl:exact";
+		NodeList resultNodes = null;
+		try {
+			resultNodes = (NodeList) xpath.evaluate(expression, jsdl,
+					XPathConstants.NODESET);
+		} catch (XPathExpressionException e) {
+			myLogger.warn("No Walltime node in jsdl file.");
+			// that's ok if we want to set the jobname
+		}
+
+		Node cpucount = null;
+
+		// TODO what to do if that happens? Shouldn't though because the jsdl is
+		// validated against jsdl.xsd beforehand
+		if (resultNodes.getLength() > 1) {
+			return;
+		} else if (resultNodes.getLength() == 0) {
+			expression = "/jsdl:JobDefinition/jsdl:JobDescription/jsdl:Application/jsdl:TotalCPUCount";
+			try {
+				resultNodes = (NodeList) xpath.evaluate(expression, jsdl,
+						XPathConstants.NODESET);
+			} catch (XPathExpressionException e) {
+				myLogger.warn("No JobIdentification node in jsdl file.");
+				throw new RuntimeException(e);
+			}
+
+			if (resultNodes.getLength() != 1) {
+				throw new RuntimeException(
+						"No or more than one JobIdentification nodes in jsdl document.");
+			}
+
+			cpucount = jsdl.createElement("jsdl:exact");
+			cpucount.setTextContent(new Integer(processorcount).toString());
+			resultNodes.item(0).appendChild(cpucount);
+		} else {
+			// replace the text content of the already existing JobName element
+			resultNodes.item(0).setTextContent(new Integer(processorcount).toString());
+		}
 
 	}
 
@@ -355,7 +462,7 @@ public final class JsdlHelpers {
 	 * @param application
 	 *            the name of the application
 	 */
-	public static void setApplicationType(final Document xmlTemplateDoc,
+	public static void setApplicationName(final Document xmlTemplateDoc,
 			final String application) {
 
 		getApplicationNode(xmlTemplateDoc).setTextContent(application);

@@ -57,6 +57,8 @@ public class Constants {
 	public static final String MULTIJOB_NAME = "multijobname";
 	public static final String RELATIVE_PATH_FROM_JOBDIR = "relativePathToMultiPartJobDir";
 	public static final String RELATIVE_MULTIJOB_DIRECTORY_KEY = "multijob_directory";
+	
+	public static final String ERROR_REASON = "errorReason";
 
 
 }
