@@ -9,20 +9,37 @@ import java.io.OutputStream;
 import org.apache.commons.httpclient.HttpClient;
 import org.apache.commons.httpclient.methods.GetMethod;
 
+import au.org.arcs.jcommons.constants.ArcsEnvironment;
+
 public class DependencyManager {
 	
     private static HttpClient httpClient = new HttpClient();
+    
+    public static void initArcsCommonJavaLibDir() {
+    	ClasspathHacker.initFolder(ArcsEnvironment.getArcsCommonJavaLibDirectory(), new JarFilenameFilter());
+    }
+    
+    public static void checkForBouncyCastleDependency() {
+    	checkForDependency(
+				"org.bouncycastle.jce.provider.BouncyCastleProvider",
+				"http://www.bouncycastle.org/download/bcprov-jdk15-143.jar",
+				new File(ArcsEnvironment.getArcsCommonJavaLibDirectory(),
+						"bcprov-jdk15-143.jar"));
+    }
 	
-    public static void checkForDependency(String className, String urlToDownload, File targetFile) throws IOException {
+    public static void checkForDependency(String className, String urlToDownload, File targetFile) {
     	
     	try {
 			Class classObject = Class.forName(className);
 		} catch (ClassNotFoundException e) {
-
+			try { 
 			// means we need to download the jar file
 			downloadJar(urlToDownload, targetFile);
 			
 			ClasspathHacker.addFile(targetFile);
+			} catch (Exception e2) {
+				throw new RuntimeException(e2);
+			}
 			
 		}
     	
