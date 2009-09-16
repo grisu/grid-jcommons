@@ -31,6 +31,16 @@ public class DependencyManager {
 						"bcprov-jdk15-143.jar"));
     }
     
+    public static void checkForArcsGsiDependency(int minVersion, int maxVersion, boolean withJython) {
+    	
+    	if ( withJython ) { 
+    		checkForVersionedDependency("au.org.arcs.auth.slcs.ArcsGsiPackageIndicator", minVersion, maxVersion, "https://code.arcs.org.au/nexus/content/repositories/snapshots/au/org/arcs/auth/arcs-gsi/1.1-SNAPSHOT/arcs-gsi-1.1-SNAPSHOT-lib.jar", new File(ArcsEnvironment.getArcsCommonJavaLibDirectory(), "arcs-gsi-lib.jar"));
+    	} else {
+    		checkForVersionedDependency("au.org.arcs.auth.slcs.ArcsGsiPackageIndicator", minVersion, maxVersion, "https://code.arcs.org.au/nexus/content/repositories/snapshots/au/org/arcs/auth/arcs-gsi/1.1-SNAPSHOT/arcs-gsi-1.1-SNAPSHOT-lib-without-jython.jar", new File(ArcsEnvironment.getArcsCommonJavaLibDirectory(), "arcs-gsi-lib-without-jython.jar"));
+    	}
+    	
+    }
+    
     public static void checkForVersionedDependency(String className, int minVersion, int maxVersion, String urlToDownload, File targetFile) {
     	
     	boolean download = false;
