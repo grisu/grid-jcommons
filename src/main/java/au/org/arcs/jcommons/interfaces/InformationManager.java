@@ -170,13 +170,13 @@ public interface InformationManager {
 	 *            name of the software package
 	 * @param version
 	 *            version of the software package
-	 * @param site
-	 *            name of the site
+	 * @param subLoc
+	 *            the submissionlocation
 	 * @return a map of the attribute details of the given application at the
 	 *         site.
 	 */
 	Map<String, String> getApplicationDetails(String application,
-			String version, String site);
+			String version, String submissionLocation);
 
 	String[] getStagingFileSystemForSubmissionLocation(String subLoc);
 

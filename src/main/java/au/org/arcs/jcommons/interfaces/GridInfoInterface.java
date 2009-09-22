@@ -138,6 +138,8 @@ public interface GridInfoInterface {
      */
     public abstract String[] getExeNameOfCodeAtSite(String site, String code, String version);
     
+    public abstract String[] getExeNameOfCodeForSubmissionLocation(String subLoc, String code, String version);
+    
     /**
      * Get the job type that the specified code supports.
      * 
@@ -157,11 +159,11 @@ public interface GridInfoInterface {
      * @param version The version of the code
      * @return The name of the module needed
      */
-    public abstract String getModuleNameOfCodeAtSite(String site, String code, String version);
+    public abstract String getModuleNameOfCodeForSubmissionLocation(String site, String code, String version);
     
-    public abstract boolean isSerialAvailForCodeAtSite(String site, String code, String version);    
+    public abstract boolean isSerialAvailForCodeForSubmissionLocation(String subLoc, String code, String version);    
     
-    public abstract boolean isParallelAvailForCodeAtSite(String site, String code, String version);
+    public abstract boolean isParallelAvailForCodeForSubmissionLocation(String subLoc, String code, String version);
     
     public abstract String[] getApplicationNamesThatProvideExecutable(String executable);
     
