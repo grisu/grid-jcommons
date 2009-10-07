@@ -6,6 +6,14 @@ public class ArcsEnvironment {
 	
 	public static final String ARCS_DEFAULT_DIRECTORY = System.getProperty("user.home") + File.separator + ".arcs";
 	
+	public static String getDefaultMyProxyServer() {
+		return "myproxy2.arcs.org.au";
+	}
+	
+	public static int getDefaultMyProxyPort() {
+		return 443;
+	}
+	
 	public static File getArcsConfigDirectory() {
 
 			File arcsDir = null;
@@ -27,5 +35,5 @@ public class ArcsEnvironment {
 		}
 		return file;
 	}
-
+	
 }
