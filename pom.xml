@@ -40,6 +40,10 @@
 		</dependency>
 	</dependencies>
 
+	<scm>
+		<connection>scm:git:git://git.code.arcs.org.au/arcs-java-commons/jcommons.git</connection>
+		<url>scm:git:git://git.code.arcs.org.au/arcs-java-commons/jcommons.git</url>
+	</scm>
 	<build>
 		<plugins>
 			<plugin>
