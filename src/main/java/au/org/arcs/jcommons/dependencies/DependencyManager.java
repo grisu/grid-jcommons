@@ -93,7 +93,7 @@ public class DependencyManager {
 		if (download) {
 			try {
 				// means we need to download the jar file
-				File downloadedFile = downloadJar(dependency.getDownloadUrl(), targetFolder);
+				File downloadedFile = downloadJar(dependency.getDownloadUrl(versions.get(0)), targetFolder);
 
 				ClasspathHacker.addFile(downloadedFile);
 			} catch (Exception e2) {
@@ -110,7 +110,7 @@ public class DependencyManager {
 		} catch (ClassNotFoundException e) {
 			try {
 				// means we need to download the jar file
-				File downloadedFile = downloadJar(dependency.getDownloadUrl(), targetFolder);
+				File downloadedFile = downloadJar(dependency.getDownloadUrl(null), targetFolder);
 
 				ClasspathHacker.addFile(downloadedFile);
 			} catch (Exception e2) {
