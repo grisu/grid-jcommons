@@ -3,7 +3,7 @@
 	<groupId>au.org.arcs.commons</groupId>
 	<artifactId>arcs-jcommons</artifactId>
 	<name>ARCS JCommons</name>
-	<version>1.1-SNAPSHOT</version>
+	<version>1.0-SNAPSHOT</version>
 	<description>Java Interfaces, Constants and helper classes that are
 		used in more than one of the ARCS projects.</description>
 	<dependencies>
