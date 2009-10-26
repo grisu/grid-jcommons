@@ -5,17 +5,16 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
-import java.util.LinkedList;
-import java.util.List;
+import java.util.Map;
+
+import javax.swing.JOptionPane;
 
 import org.apache.commons.httpclient.HttpClient;
 import org.apache.commons.httpclient.methods.GetMethod;
 import org.apache.log4j.Logger;
 
-import au.org.arcs.jcommons.constants.ArcsEnvironment;
-
 public class DependencyManager {
-	
+
 	public static boolean showDownloadDialog = false;
 
 	static final Logger myLogger = Logger.getLogger(DependencyManager.class
@@ -23,130 +22,96 @@ public class DependencyManager {
 
 	private static HttpClient httpClient = new HttpClient();
 
-	public static void initArcsCommonJavaLibDir() {
-		ClasspathHacker.initFolder(ArcsEnvironment
-				.getArcsCommonJavaLibDirectory(), new JarFilenameFilter());
-	}
+	public static void addDependencies(
+			Map<Dependency, String> dependencies, File folder) {
 
-	public static void checkForBouncyCastleDependency() {
-		checkForDependency(DefaultDependencies.BOUNCYCASTLE,
-				ArcsEnvironment.getArcsCommonJavaLibDirectory());
-	}
+		try {
+			boolean displayedDialog = false;
+			DownloadingDialog dialog = null;
+			if (showDownloadDialog) {
+				dialog = new DownloadingDialog("Downloading dependencies");
+				displayedDialog = true;
+				dialog.setVisible(true);
+			}
 
-	public static void checkForArcsGsiDependency(String version,
-			boolean withJython) {
+			for (Dependency dp : dependencies.keySet()) {
 
-		List<String> temp = new LinkedList<String>();
-		temp.add(version);
-		checkForArcsGsiDependency(temp, withJython);
+				String filename = dp.getFileName(dependencies.get(dp));
+				String version = dependencies.get(dp);
+				if ( showDownloadDialog) {
+					dialog.setMessage("Downloading: "+filename);
+				}
+				
+				try {
+					addVersionedDependency(dp, version, folder);
+				} catch (Exception e) {
+					
+					String message = "Could not download dependency \""+ 
+						filename+"\"\n\nPlease download the file \""+dp.getDownloadUrl(version)+"\" manually and put it in the folder:\n"
+						+ folder.toString();
+					
+					System.err.println(message);
+					
+					if ( showDownloadDialog ) {
+						dialog.dispose();
+						JOptionPane.showMessageDialog(null,
+						    message,
+						    "Download error",
+						    JOptionPane.ERROR_MESSAGE);
+					}
+					
+					System.exit(1);
 
-	}
+					
+				}
 
-	public static void checkForArcsGsiDependency(List<String> versions,
-			boolean withJython) {
+			}
 
-		if (withJython) {
-			checkForVersionedDependency(
-					DefaultDependencies.ARCSGSI,
-					versions, ArcsEnvironment.getArcsCommonJavaLibDirectory());
-		} else {
-			checkForVersionedDependency(
-					DefaultDependencies.ARCSGSI_WITHOUTPYTHON,
-					versions,
-					ArcsEnvironment.getArcsCommonJavaLibDirectory());
+			if (displayedDialog) {
+				dialog.dispose();
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
 
 	}
 
-	public static void checkForVersionedDependency(DefaultDependencies dependency,
-			String version, File targetFolder) {
-		List<String> temp = new LinkedList<String>();
-		temp.add(version);
-		checkForVersionedDependency(dependency, temp, targetFolder);
-	}
-
-	public static void checkForVersionedDependency(DefaultDependencies dependency,
-			List<String> versions, File targetFolder) {
-
-		boolean download = false;
+	private static void addVersionedDependency(Dependency dependency,
+			String version, File folder) {
 
 		try {
-			Class classObject = Class.forName(dependency.getClassName());
 
-			PackageIndicator classImpl = (PackageIndicator)(classObject.newInstance());
+			File depFile = dependency.getDependencyFile(version, folder);
 
-			String version = classImpl.getCurrentVersion();
-
-			if (version != null && version.indexOf("SNAPSHOT") >= 0) {
-				download = true;
-			} else {
-				
-				if (versions.contains(version)) {
-					download = false;
-				} else {
-					download = true;
-				}
+			if (version.indexOf("SNAPSHOT") >= 0) {
+				depFile.delete();
 			}
+
+			if (!depFile.exists()) {
+				downloadJar(dependency.getDownloadUrl(version), depFile);
+			}
+
+			ClasspathHacker.addFile(depFile);
 
 		} catch (Exception e) {
-			download = true;
-		}
-
-		if (download) {
-			try {
-				// means we need to download the jar file
-				File downloadedFile = downloadJar(dependency.getDownloadUrl(versions.get(0)), targetFolder);
-
-				ClasspathHacker.addFile(downloadedFile);
-			} catch (Exception e2) {
-				throw new RuntimeException(e2);
-			}
+			throw new RuntimeException(e);
 		}
 
 	}
 
-	public static void checkForDependency(DefaultDependencies dependency, File targetFolder) {
-
-		try {
-			Class classObject = Class.forName(dependency.getClassName());
-		} catch (ClassNotFoundException e) {
-			try {
-				// means we need to download the jar file
-				File downloadedFile = downloadJar(dependency.getDownloadUrl(null), targetFolder);
-
-				ClasspathHacker.addFile(downloadedFile);
-			} catch (Exception e2) {
-				throw new RuntimeException(e2);
-			}
-
-		}
-
-	}
-
-	public static File downloadJar(String url, File targetFolder)
-			throws IOException {
+	private static File downloadJar(String url, File file) throws IOException {
 
 		myLogger.info("Downloading dependency jar: " + url);
-		
-		System.out.println("Downloading dependency jar: " + url);
-		
-		String filename = url.substring(url.lastIndexOf("/")+1);
 
-		boolean displayedDialog = false;
-		DownloadingDialog dialog = null;
-		if ( showDownloadDialog ) {
-			dialog = new DownloadingDialog(filename);
-			displayedDialog = true;
-			dialog.setVisible(true);
-		}
-		
-		
+		System.out.println("Downloading dependency jar: " + url);
+
+		String filename = url.substring(url.lastIndexOf("/") + 1);
+
 		// create a method instance
 		GetMethod getMethod = new GetMethod(url);
 
-				
-		File file = new File(targetFolder, filename);
-		
+		file.delete();
+
 		try {
 
 			// execute the method
@@ -169,17 +134,10 @@ public class DependencyManager {
 			return file;
 
 		} finally {
-			try {
 			// release the connection
 			getMethod.releaseConnection();
-			if ( displayedDialog ) {
-				dialog.dispose();
-			}
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
+
 		}
-		
 
 	}
 

@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.lang.reflect.Method;
 import java.net.URL;
 import java.net.URLClassLoader;
+import java.util.Collection;
 
 /**
  * Used to add application specific plugins to the swing client.
@@ -28,6 +29,20 @@ public class ClasspathHacker {
 		}
 		
 		for ( File plugin : plugins ) {
+			
+			try {
+				ClasspathHacker.addFile(plugin);
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
+		}
+	}
+	
+	public static void initJarFile(Collection<File> files ) {
+		
+		for ( File plugin : files ) {
 			
 			try {
 				ClasspathHacker.addFile(plugin);

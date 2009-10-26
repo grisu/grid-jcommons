@@ -56,9 +56,13 @@ public class DownloadingDialog extends JDialog {
 	}
 	private JLabel getLabel() {
 		if (label == null) {
-			label = new JLabel("Downloading dependency: "+filename);
+			label = new JLabel(filename);
 			label.setBounds(12, 67, 254, 18);
 		}
 		return label;
+	}
+	
+	public void setMessage(String message) {
+		getLabel().setText(message);
 	}
 }

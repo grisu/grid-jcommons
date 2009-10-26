@@ -12,6 +12,8 @@ import javax.net.ssl.X509TrustManager;
 
 public class ArcsSecurityProvider extends Provider {
 
+	private static final long serialVersionUID = 1L;
+
 	public ArcsSecurityProvider() {
 		super("ArcsSecurityProvider", 1.0, "Trust certificates");
 		put("TrustManagerFactory.TrustAllCertificates",
