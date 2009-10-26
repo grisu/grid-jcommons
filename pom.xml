@@ -1,10 +1,12 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>au.org.arcs.commons</groupId>
 	<artifactId>arcs-jcommons</artifactId>
 	<name>ARCS JCommons</name>
-	<version>1.1-SNAPSHOT</version>
-	<description>Java Interfaces, Constants and helper classes that are used in more than one of the ARCS projects.</description>
+	<version>1.0-SNAPSHOT</version>
+	<description>Java Interfaces, Constants and helper classes that are
+		used in more than one of the ARCS projects.</description>
 	<dependencies>
 		<dependency>
 			<groupId>log4j</groupId>
@@ -40,9 +42,30 @@
 	</dependencies>
 
 	<scm>
-		<connection>scm:git:git://code.arcs.org.au/arcs-java-commons/jcommons.git</connection>
-		<url>scm:git:git://code.arcs.org.au/arcs-java-commons/jcommons.git</url>
+		<connection>scm:git:git://code.arcs.org.au/arcs-java-commons/jcommons.git
+		</connection>
+		<url>scm:git:git://code.arcs.org.au/arcs-java-commons/jcommons.git
+		</url>
 	</scm>
+
+	<distributionManagement>
+		<repository>
+			<id>arcs.release</id>
+			<name>ARCS Release Repository</name>
+			<url>http://code.arcs.org.au/nexus/content/repositories/releases
+			</url>
+			<uniqueVersion>false</uniqueVersion>
+		</repository>
+		<snapshotRepository>
+			<id>arcs.snapshot</id>
+			<name>ARCS SNAPSHOT Repository</name>
+			<url>http://code.arcs.org.au/nexus/content/repositories/snapshots
+			</url>
+			<uniqueVersion>false</uniqueVersion>
+		</snapshotRepository>
+	</distributionManagement>
+
+
 	<build>
 		<plugins>
 			<plugin>
