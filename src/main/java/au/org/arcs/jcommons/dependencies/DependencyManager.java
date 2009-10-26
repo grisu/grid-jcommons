@@ -15,6 +15,8 @@ import org.apache.log4j.Logger;
 import au.org.arcs.jcommons.constants.ArcsEnvironment;
 
 public class DependencyManager {
+	
+	public static boolean showDownloadDialog = false;
 
 	static final Logger myLogger = Logger.getLogger(DependencyManager.class
 			.getName());
@@ -128,11 +130,21 @@ public class DependencyManager {
 		
 		System.out.println("Downloading dependency jar: " + url);
 		
+		String filename = url.substring(url.lastIndexOf("/")+1);
+
+		boolean displayedDialog = false;
+		DownloadingDialog dialog = null;
+		if ( showDownloadDialog ) {
+			dialog = new DownloadingDialog(filename);
+			displayedDialog = true;
+			dialog.setVisible(true);
+		}
+		
+		
 		// create a method instance
 		GetMethod getMethod = new GetMethod(url);
 
-		String filename = url.substring(url.lastIndexOf("/")+1);
-		
+				
 		File file = new File(targetFolder, filename);
 		
 		try {
@@ -157,8 +169,15 @@ public class DependencyManager {
 			return file;
 
 		} finally {
+			try {
 			// release the connection
 			getMethod.releaseConnection();
+			if ( displayedDialog ) {
+				dialog.dispose();
+			}
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
 		}
 		
 
