@@ -29,7 +29,7 @@ public class DependencyManager {
 			boolean displayedDialog = false;
 			DownloadingDialog dialog = null;
 			if (showDownloadDialog) {
-				dialog = new DownloadingDialog("Downloading dependencies");
+				dialog = new DownloadingDialog("Checking dependencies");
 				displayedDialog = true;
 				dialog.setVisible(true);
 			}
