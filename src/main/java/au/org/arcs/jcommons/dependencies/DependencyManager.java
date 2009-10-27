@@ -14,6 +14,8 @@ import org.apache.commons.httpclient.methods.GetMethod;
 import org.apache.log4j.Logger;
 
 public class DependencyManager {
+	
+	public static final String DISABLE_DEPENDENCY_MANAGEMENT = "disableDependencyManagement";
 
 	public static boolean showDownloadDialog = false;
 
@@ -24,7 +26,15 @@ public class DependencyManager {
 
 	public static void addDependencies(
 			Map<Dependency, String> dependencies, File folder) {
+		
+		String disable = System.getProperty("disableDependencyManagement");
 
+		if ( disable != null && disable.toLowerCase().equals("true") ) {
+			
+			System.out.println("Dependency management disabled. Not resolving dependencies.");
+			return;
+			
+		}
 		try {
 			boolean displayedDialog = false;
 			DownloadingDialog dialog = null;
