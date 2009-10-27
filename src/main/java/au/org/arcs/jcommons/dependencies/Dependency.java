@@ -9,7 +9,9 @@ public enum Dependency {
 //	XFIRESERVICEINTERFACECREATOR("https://code.arcs.org.au/hudson/job/Grisu-connectors-SNAPSHOT-binaries/lastSuccessfulBuild/artifact/frontend-modules/xfire-frontend/target/xfire-frontend.jar"),
 //	CLIENTSIDEMDS("https://code.arcs.org.au/hudson/job/Grisu-SNAPSHOT-binaries/lastSuccessfulBuild/artifact/frontend/client-side-mds/target/client-side-mds.jar"),
 	ARCSGSI("https://code.arcs.org.au/nexus/content/repositories/releases/au/org/arcs/auth/arcs-gsi/${version}", "arcs-gsi-${version}-lib.jar"),
+	ARCSGSI_SNAPSHOT("https://code.arcs.org.au/nexus/content/repositories/snapshots/au/org/arcs/auth/arcs-gsi/${version}", "arcs-gsi-${version}-lib.jar"),
 	ARCSGSI_WITHOUTPYTHON("https://code.arcs.org.au/nexus/content/repositories/releases/au/org/arcs/auth/arcs-gsi/${version}", "arcs-gsi-${version}-lib-without-jython.jar"),
+	ARCSGSI_WITHOUTPYTHON_SNAPSHOT("https://code.arcs.org.au/nexus/content/repositories/snapshots/au/org/arcs/auth/arcs-gsi/${version}", "arcs-gsi-${version}-lib-without-jython.jar"),
 	BOUNCYCASTLE("http://www.bouncycastle.org/download/", "bcprov-${version}.jar");
 	
 	private String filename;
