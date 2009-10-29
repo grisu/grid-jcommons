@@ -35,6 +35,8 @@ public class DependencyManager {
 			return;
 			
 		}
+		
+		
 		try {
 			boolean displayedDialog = false;
 			DownloadingDialog dialog = null;
