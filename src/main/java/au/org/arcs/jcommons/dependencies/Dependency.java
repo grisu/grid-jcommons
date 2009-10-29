@@ -12,7 +12,8 @@ public enum Dependency {
 	ARCSGSI_SNAPSHOT("http://code.arcs.org.au/nexus/content/repositories/snapshots/au/org/arcs/auth/arcs-gsi/${version}", "arcs-gsi-${version}-lib.jar"),
 	ARCSGSI_WITHOUTPYTHON("http://code.arcs.org.au/nexus/content/repositories/releases/au/org/arcs/auth/arcs-gsi/${version}", "arcs-gsi-${version}-lib-without-jython.jar"),
 	ARCSGSI_WITHOUTPYTHON_SNAPSHOT("http://code.arcs.org.au/nexus/content/repositories/snapshots/au/org/arcs/auth/arcs-gsi/${version}", "arcs-gsi-${version}-lib-without-jython.jar"),
-	BOUNCYCASTLE("http://www.bouncycastle.org/download/", "bcprov-${version}.jar");
+	BOUNCYCASTLE("http://www.bouncycastle.org/download/", "bcprov-${version}.jar"), 
+	GRISU_LOCAL_BACKEND("http://code.arcs.org.au/nexus/content/repositories/snapshots/org/vpac/grisu/grisu-core/${version}", "grisu-core-${version}-backend.jar");
 	
 	private String filename;
 	private String downloadUrl;
