@@ -13,6 +13,9 @@ import org.apache.commons.httpclient.HttpClient;
 import org.apache.commons.httpclient.methods.GetMethod;
 import org.apache.log4j.Logger;
 
+import au.org.arcs.jcommons.configuration.CommonArcsProperties;
+import au.org.arcs.jcommons.configuration.CommonArcsProperties.Property;
+
 public class DependencyManager {
 	
 	public static final String DISABLE_DEPENDENCY_MANAGEMENT = "disableDependencyManagement";
@@ -34,6 +37,11 @@ public class DependencyManager {
 			System.out.println("Dependency management disabled. Not resolving dependencies.");
 			return;
 			
+		}
+		
+		if ( "true".equals(CommonArcsProperties.getDefault().getArcsProperty(Property.DISABLE_DEPENDENCY_MANAGEMENT).toLowerCase()) ) {
+			System.out.println("Dependency management disabled. Not resolving dependencies.");
+			return;
 		}
 		
 		
