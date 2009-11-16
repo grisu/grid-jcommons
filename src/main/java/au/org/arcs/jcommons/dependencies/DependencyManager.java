@@ -5,6 +5,8 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.Map;
 
 import javax.swing.JOptionPane;
@@ -39,7 +41,8 @@ public class DependencyManager {
 			
 		}
 		
-		if ( "true".equals(CommonArcsProperties.getDefault().getArcsProperty(Property.DISABLE_DEPENDENCY_MANAGEMENT).toLowerCase()) ) {
+		String value = CommonArcsProperties.getDefault().getArcsProperty(Property.DISABLE_DEPENDENCY_MANAGEMENT);
+		if ( value != null && "true".equals(value.toLowerCase()) ) {
 			System.out.println("Dependency management disabled. Not resolving dependencies.");
 			return;
 		}
@@ -104,7 +107,20 @@ public class DependencyManager {
 			File depFile = dependency.getDependencyFile(version, folder);
 
 			if (version.indexOf("SNAPSHOT") >= 0) {
-				depFile.delete();
+				
+				if ( depFile.exists() ) {
+					
+					// only download files that were not downloaded today
+					Calendar today = Calendar.getInstance();
+					
+					Calendar fileDate = Calendar.getInstance();
+					fileDate.setTimeInMillis(depFile.lastModified());
+					
+					if ( today.get(Calendar.DAY_OF_MONTH) != fileDate.get(Calendar.DAY_OF_MONTH) ) {
+						depFile.delete();
+					}
+
+				}
 			}
 
 			if (!depFile.exists()) {
