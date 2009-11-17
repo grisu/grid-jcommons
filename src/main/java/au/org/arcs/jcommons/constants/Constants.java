@@ -56,9 +56,13 @@ public class Constants {
 	public static final String UUID_NAME_METHOD = "uuid";
 	public static final String TIMESTAMP_METHOD = "timestamp";
 	
+	// multipartjob properties
 	public static final String MULTIJOB_NAME = "multijobname";
 	public static final String RELATIVE_PATH_FROM_JOBDIR = "relativePathToMultiPartJobDir";
 	public static final String RELATIVE_MULTIJOB_DIRECTORY_KEY = "multijob_directory";
+	
+	public static final String SITES_TO_INCLUDE_KEY = "sitesToInclude";
+	public static final String SITES_TO_EXCLUDE_KEY = "sitesToExclude";
 	
 	public static final String ERROR_REASON = "errorReason";
 	
@@ -78,4 +82,5 @@ public class Constants {
 	public static final String LEFT_FILE_BROWSER_LAST_URL = "left_fileBrowser_last_url";
 	public static final String RIGHT_FILE_BROWSER_LAST_URL = "right_fileBrowser_last_url";
 	public static final String DEFAULT_VERSION = "default_version_";
+
 }
