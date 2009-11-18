@@ -60,6 +60,7 @@ public class Constants {
 	public static final String MULTIJOB_NAME = "multijobname";
 	public static final String RELATIVE_PATH_FROM_JOBDIR = "relativePathToMultiPartJobDir";
 	public static final String RELATIVE_MULTIJOB_DIRECTORY_KEY = "multijob_directory";
+	public static final String JOBNAME_CREATION_METHOD_KEY = "jobnameCreationMethod";
 	
 	public static final String SITES_TO_INCLUDE_KEY = "sitesToInclude";
 	public static final String SITES_TO_EXCLUDE_KEY = "sitesToExclude";
