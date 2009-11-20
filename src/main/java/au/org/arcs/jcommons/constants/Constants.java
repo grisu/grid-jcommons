@@ -56,10 +56,10 @@ public class Constants {
 	public static final String UUID_NAME_METHOD = "uuid";
 	public static final String TIMESTAMP_METHOD = "timestamp";
 	
-	// multipartjob properties
-	public static final String MULTIJOB_NAME = "multijobname";
-	public static final String RELATIVE_PATH_FROM_JOBDIR = "relativePathToMultiPartJobDir";
-	public static final String RELATIVE_MULTIJOB_DIRECTORY_KEY = "multijob_directory";
+	// batchjob properties
+	public static final String BATCHJOB_NAME = "batchjobname";
+	public static final String RELATIVE_PATH_FROM_JOBDIR = "relativePathToBatchDir";
+	public static final String RELATIVE_BATCHJOB_DIRECTORY_KEY = "batchjob_directory";
 	public static final String JOBNAME_CREATION_METHOD_KEY = "jobnameCreationMethod";
 	public static final String OPTIMIZE_STATS = "optimizeStats";
 	

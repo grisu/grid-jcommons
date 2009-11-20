@@ -54,6 +54,8 @@ public class HttpProxyManager {
 		
 		CommonArcsProperties.getDefault().setArcsProperty(CommonArcsProperties.Property.HTTP_PROXY_HOST, proxyHost);
 		CommonArcsProperties.getDefault().setArcsProperty(CommonArcsProperties.Property.HTTP_PROXY_PORT, new Integer(proxyPort).toString());
+		
+		
 	}
 	
 	public static void setHttpAuth(final String username, final char[] password) {
