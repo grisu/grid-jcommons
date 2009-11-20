@@ -818,6 +818,50 @@ public final class JsdlHelpers {
 
 	}
 
+//	/**
+//	 * Adds submission locations to the job.
+//	 * 
+//	 * @param jsdl
+//	 *            the jsdl document
+//	 * @param subLocs
+//	 *            the submission locations
+//	 * @throws XPathExpressionException
+//	 *             if the candidatehosts element could not be found
+//	 */
+//	public static void addCandidateHosts(final Document jsdl, final String[] subLocs)
+//			throws XPathExpressionException {
+//		String expression = "/jsdl:JobDefinition/jsdl:JobDescription/jsdl:Resources/jsdl:CandidateHosts";
+//		NodeList resultNodes = null;
+//		try {
+//			resultNodes = (NodeList) xpath.evaluate(expression, jsdl,
+//					XPathConstants.NODESET);
+//		} catch (XPathExpressionException e) {
+//			myLogger.warn("No CandidateHosts node in jsdl file.");
+//			throw new XPathExpressionException(
+//					"Problem parsing candidateHost element: "
+//							+ e.getLocalizedMessage());
+//		}
+//
+//		Node hostName = null;
+//
+//		if (resultNodes.getLength() > 1) {
+//			throw new XPathExpressionException(
+//					"More than one CandidateHosts elements found");
+//		}
+//
+//		if (resultNodes.getLength() != 1) {
+//			throw new XPathExpressionException(
+//					"No or more than one JobIdentification nodes in jsdl document.");
+//		}
+//
+//		String nsURL = new JSDLNamespaceContext().getNamespaceURI("jsdl");
+//		for (String subLoc : subLocs) {
+//			hostName = jsdl.createElementNS(nsURL, "HostName");
+//			hostName.setTextContent(subLoc);
+//			resultNodes.item(0).appendChild(hostName);
+//		}
+//	}
+	
 	/**
 	 * Sets the submission location of the job.
 	 * 
@@ -828,7 +872,7 @@ public final class JsdlHelpers {
 	 * @throws XPathExpressionException
 	 *             if the candidatehosts element could not be found
 	 */
-	public static void addCandidateHosts(final Document jsdl, final String[] subLocs)
+	public static void setCandidateHosts(final Document jsdl, final String[] subLocs)
 			throws XPathExpressionException {
 		String expression = "/jsdl:JobDefinition/jsdl:JobDescription/jsdl:Resources/jsdl:CandidateHosts";
 		NodeList resultNodes = null;
@@ -855,10 +899,14 @@ public final class JsdlHelpers {
 		}
 
 		String nsURL = new JSDLNamespaceContext().getNamespaceURI("jsdl");
+//		for ( int i=0; i<resultNodes.item(0).getChildNodes().getLength(); i++ ) {
+//			resultNodes.item(0).removeChild(resultNodes.item(0).getChildNodes().item(i));
+//			
+//		}
 		for (String subLoc : subLocs) {
 			hostName = jsdl.createElementNS(nsURL, "HostName");
 			hostName.setTextContent(subLoc);
-			resultNodes.item(0).appendChild(hostName);
+			resultNodes.item(0).replaceChild(hostName, resultNodes.item(0).getFirstChild());
 		}
 	}
 
