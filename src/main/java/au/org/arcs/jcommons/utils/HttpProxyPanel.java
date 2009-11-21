@@ -15,6 +15,8 @@ import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
 import au.org.arcs.jcommons.configuration.CommonArcsProperties;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 public class HttpProxyPanel extends JPanel {
 	private JLabel label;
@@ -28,6 +30,7 @@ public class HttpProxyPanel extends JPanel {
 	private JPasswordField httpProxyPasswordField;
 	private JButton applyButton;
 	private Action action;
+	private JButton btnApply;
 
 	/**
 	 * Create the panel.
@@ -93,6 +96,12 @@ public class HttpProxyPanel extends JPanel {
 		gbc_8.gridx = 2;
 		gbc_8.gridy = 4;
 		add(getHttpProxyPasswordField(), gbc_8);
+		GridBagConstraints gbc_10 = new GridBagConstraints();
+		gbc_10.anchor = GridBagConstraints.EAST;
+		gbc_10.insets = new Insets(0, 0, 0, 5);
+		gbc_10.gridx = 2;
+		gbc_10.gridy = 5;
+		add(getBtnApply(), gbc_10);
 		GridBagConstraints gbc_9 = new GridBagConstraints();
 		gbc_9.insets = new Insets(0, 0, 0, 5);
 		gbc_9.anchor = GridBagConstraints.EAST;
@@ -190,7 +199,11 @@ public class HttpProxyPanel extends JPanel {
 	}
 	
 	public int getProxyPort() {
-		return new Integer(getHttpProxyPortField().getText());
+		try {
+			return new Integer(getHttpProxyPortField().getText());
+		} catch (Exception e) {
+			return 0;
+		}
 	}
 	
 	public char[] getPassword() {
@@ -198,4 +211,30 @@ public class HttpProxyPanel extends JPanel {
 	}
 
 
+	private JButton getBtnApply() {
+		if (btnApply == null) {
+			btnApply = new JButton("Apply");
+			btnApply.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+					
+					String host = getProxyHost();
+					int port = getProxyPort();
+					
+					if ( host != null ) {
+						if ( isAuthSelected() ) {
+							String username = getUsername();
+							char[] password = getPassword();
+							HttpProxyManager.setHttpProxy(host, port, username, password);
+						} else {
+							HttpProxyManager.setHttpProxy(host, port, null, null);
+						}
+					}
+
+						
+					
+				}
+			});
+		}
+		return btnApply;
+	}
 }

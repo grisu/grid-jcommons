@@ -55,14 +55,13 @@ public class HttpProxyDialog extends JDialog {
 						int port = httpProxyPanel.getProxyPort();
 						
 						if ( host != null ) {
-							HttpProxyManager.setHttpProxy(host, port);
-						}
-
-						if ( httpProxyPanel.isAuthSelected() ) {
-							String username = httpProxyPanel.getUsername();
-							char[] password = httpProxyPanel.getPassword();
-							
-							HttpProxyManager.setHttpAuth(username, password);
+							if ( httpProxyPanel.isAuthSelected() ) {
+								String username = httpProxyPanel.getUsername();
+								char[] password = httpProxyPanel.getPassword();
+								HttpProxyManager.setHttpProxy(host, port, username, password);
+							} else {
+								HttpProxyManager.setHttpProxy(host, port, null, null);
+							}
 						}
 						
 						HttpProxyDialog.this.dispose();
