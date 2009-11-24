@@ -61,7 +61,9 @@ public class Constants {
 	public static final String RELATIVE_PATH_FROM_JOBDIR = "relativePathToBatchDir";
 	public static final String RELATIVE_BATCHJOB_DIRECTORY_KEY = "batchjob_directory";
 	public static final String JOBNAME_CREATION_METHOD_KEY = "jobnameCreationMethod";
-	public static final String OPTIMIZE_STATS = "optimizeStats";
+	public static final String DISTRIBUTION_METHOD = "distributionMethod";
+	public static final String DISTRIBUTION_METHOD_EQUAL = "equal";
+	public static final String DISTRIBUTION_METHOD_PERCENTAGE = "percentage";
 	
 	public static final String SITES_TO_INCLUDE_KEY = "sitesToInclude";
 	public static final String SITES_TO_EXCLUDE_KEY = "sitesToExclude";

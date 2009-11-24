@@ -35,5 +35,15 @@ public class ArcsEnvironment {
 		}
 		return file;
 	}
+
+	public static File getArcsCommonDirectory() {
+		
+		String dir = getArcsConfigDirectory() + File.separator + "common";
+		File file = new File(dir);
+		if ( ! file.exists() ) {
+			file.mkdirs();
+		}
+		return file;
+	}
 	
 }
