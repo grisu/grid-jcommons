@@ -91,7 +91,7 @@ public final class JsdlHelpers {
 			schema = factory.newSchema(schemaFile);
 		} catch (SAXException e1) {
 			// this should not happen
-			e1.printStackTrace();
+			e1.printStackTrace(System.err);
 		}
 
 		// create a Validator instance, which can be used to validate an
@@ -106,7 +106,7 @@ public final class JsdlHelpers {
 			return false;
 		} catch (IOException e) {
 			// this should not happen
-			e.printStackTrace();
+			e.printStackTrace(System.err);
 		}
 		return true;
 

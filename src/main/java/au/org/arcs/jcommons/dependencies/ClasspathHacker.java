@@ -34,7 +34,7 @@ public class ClasspathHacker {
 				ClasspathHacker.addFile(plugin);
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
-				e.printStackTrace();
+				e.printStackTrace(System.err);
 			}
 			
 		}
@@ -48,7 +48,7 @@ public class ClasspathHacker {
 				ClasspathHacker.addFile(plugin);
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
-				e.printStackTrace();
+				e.printStackTrace(System.err);
 			}
 			
 		}
@@ -76,7 +76,7 @@ public class ClasspathHacker {
 			method.setAccessible(true);
 			method.invoke(sysloader,new Object[]{ u });
 		} catch (Throwable t) {
-			t.printStackTrace();
+			t.printStackTrace(System.err);
 			throw new IOException("Error, could not add URL to system classloader");
 		}//end try catch
 			

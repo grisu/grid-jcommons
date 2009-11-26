@@ -94,7 +94,7 @@ public class DependencyManager {
 				dialog.dispose();
 			}
 		} catch (Exception e) {
-			e.printStackTrace();
+			e.printStackTrace(System.err);
 		}
 
 	}
