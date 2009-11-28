@@ -14,11 +14,11 @@ public class HttpProxyManager {
 	
 	public static void setDefaultHttpProxy() {
 		
-		String httpProxy = CommonArcsProperties.getDefault().getArcsProperty(CommonArcsProperties.Property.HTTP_PROXY_HOST);
+		String httpProxy = lastTimeHttpProxyHost();
 		if ( httpProxy == null || "".equals(httpProxy) ) {
 			return;
 		}
-		int httpProxyPort = Integer.parseInt(CommonArcsProperties.getDefault().getArcsProperty(CommonArcsProperties.Property.HTTP_PROXY_PORT));
+		int httpProxyPort = lastTimeHttpProxyPort();
 		
 		setHttpProxy(httpProxy, httpProxyPort, null, null);
 		
@@ -35,7 +35,7 @@ public class HttpProxyManager {
 //		
 //	}
 	
-	public String lastTimeHttpProxyAuthUsername() {
+	public static String lastTimeHttpProxyAuthUsername() {
 		
 		String httproxyusername = CommonArcsProperties.getDefault().getArcsProperty(CommonArcsProperties.Property.HTTP_PROXY_USERNAME);
 		
@@ -103,7 +103,14 @@ public class HttpProxyManager {
 		CommonArcsProperties.getDefault().setArcsProperty(CommonArcsProperties.Property.HTTP_PROXY_USERNAME, username);	
 
 	}
-	
 
+	public static Integer lastTimeHttpProxyPort() {
+
+		return Integer.parseInt(CommonArcsProperties.getDefault().getArcsProperty(CommonArcsProperties.Property.HTTP_PROXY_PORT));
+	}
+	
+	public static String lastTimeHttpProxyHost() {
+		return CommonArcsProperties.getDefault().getArcsProperty(CommonArcsProperties.Property.HTTP_PROXY_HOST);
+	}
 
 }
