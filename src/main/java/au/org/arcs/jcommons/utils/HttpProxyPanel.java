@@ -220,14 +220,12 @@ public class HttpProxyPanel extends JPanel {
 					String host = getProxyHost();
 					int port = getProxyPort();
 					
-					if ( host != null ) {
-						if ( isAuthSelected() ) {
-							String username = getUsername();
-							char[] password = getPassword();
-							HttpProxyManager.setHttpProxy(host, port, username, password);
-						} else {
-							HttpProxyManager.setHttpProxy(host, port, null, null);
-						}
+					if ( isAuthSelected() ) {
+						String username = getUsername();
+						char[] password = getPassword();
+						HttpProxyManager.setHttpProxy(host, port, username, password);
+					} else {
+						HttpProxyManager.setHttpProxy(host, port, null, null);
 					}
 
 						
