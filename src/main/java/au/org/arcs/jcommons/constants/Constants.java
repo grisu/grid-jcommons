@@ -65,8 +65,8 @@ public class Constants {
 	public static final String DISTRIBUTION_METHOD_EQUAL = "equal";
 	public static final String DISTRIBUTION_METHOD_PERCENTAGE = "percentage";
 	
-	public static final String SITES_TO_INCLUDE_KEY = "sitesToInclude";
-	public static final String SITES_TO_EXCLUDE_KEY = "sitesToExclude";
+	public static final String LOCATIONS_TO_INCLUDE_KEY = "sitesToInclude";
+	public static final String LOCATIONS_TO_EXCLUDE_KEY = "sitesToExclude";
 	
 	public static final String ERROR_REASON = "errorReason";
 	

@@ -872,8 +872,7 @@ public final class JsdlHelpers {
 	 * @throws XPathExpressionException
 	 *             if the candidatehosts element could not be found
 	 */
-	public static void setCandidateHosts(final Document jsdl, final String[] subLocs)
-			throws XPathExpressionException {
+	public static void setCandidateHosts(final Document jsdl, final String[] subLocs) {
 		String expression = "/jsdl:JobDefinition/jsdl:JobDescription/jsdl:Resources/jsdl:CandidateHosts";
 		NodeList resultNodes = null;
 		try {
@@ -881,7 +880,7 @@ public final class JsdlHelpers {
 					XPathConstants.NODESET);
 		} catch (XPathExpressionException e) {
 			myLogger.warn("No CandidateHosts node in jsdl file.");
-			throw new XPathExpressionException(
+			throw new RuntimeException(
 					"Problem parsing candidateHost element: "
 							+ e.getLocalizedMessage());
 		}
@@ -889,12 +888,12 @@ public final class JsdlHelpers {
 		Node hostName = null;
 
 		if (resultNodes.getLength() > 1) {
-			throw new XPathExpressionException(
+			throw new RuntimeException(
 					"More than one CandidateHosts elements found");
 		}
 
 		if (resultNodes.getLength() != 1) {
-			throw new XPathExpressionException(
+			throw new RuntimeException(
 					"No or more than one JobIdentification nodes in jsdl document.");
 		}
 
