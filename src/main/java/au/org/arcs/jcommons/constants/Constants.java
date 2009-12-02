@@ -61,9 +61,28 @@ public class Constants {
 	public static final String RELATIVE_PATH_FROM_JOBDIR = "relativePathToBatchDir";
 	public static final String RELATIVE_BATCHJOB_DIRECTORY_KEY = "batchjob_directory";
 	public static final String JOBNAME_CREATION_METHOD_KEY = "jobnameCreationMethod";
+	// batchjob distribution
 	public static final String DISTRIBUTION_METHOD = "distributionMethod";
 	public static final String DISTRIBUTION_METHOD_EQUAL = "equal";
 	public static final String DISTRIBUTION_METHOD_PERCENTAGE = "percentage";
+	// batchjob submit policy
+	public static final String SUBMIT_POLICY = "restartPolicy";
+	public static final String SUBMIT_POLICY_DEFAULT = "default";
+	public static final String SUBMIT_POLICY_DEFAULT_RESTART = "defaultRestart";
+	public static final String RESTART_RESTART_DONE_JOBS = "restartDoneJobs";
+	public static final String RESTART_RESTART_WAITING_JOBS = "restartWaitingJobs";
+	public static final String RESTART_RESTART_FAILED_JOBS = "restartFailedJobs";
+	public static final String RESTART_RESTART_RUNNING_JOBS = "restartRunningJobs";
+	public static final String RESTART_START_NEWLY_READY_JOBS = "startReadyJobs";
+	public static final String RESTART_RESTART_TO_DONE_SUBMISSION_LOCATIONS = "restartToDoneSubLocs";
+	public static final String RESTART_RESTART_TO_WAITING_SUBMISSION_LOCATIONS = "restartToWaitingSubLocs";
+	public static final String RESTART_RESTART_TO_FAILED_SUBMISSION_LOCATIONS = "restartToFailedSubLocs";
+	public static final String RESTART_RESTART_TO_RUNNING_SUBMISSION_LOCATIONS = "restartToRunningSubLocs";
+	public static final String RESTART_RESTART_WAITING_JOBS_ON_RUNNING_LOCATIONS = "restartWaitingJobsOnRunningSubLocs";
+	public static final String RESTART_RESTART_WAITING_JOBS_ON_DONE_LOCATIONS = "restartWaitingJobsOnDoneSubLocs";
+	public static final String RESTART_RESTART_WAITING_JOBS_ON_FAILED_LOCATIONS = "restartWaitingJobsOnFailedSubLocs";
+	public static final String RESTART_RESTART_TO_ALL_LOCATIONS = "submitToAllLocations";
+	
 	
 	public static final String LOCATIONS_TO_INCLUDE_KEY = "sitesToInclude";
 	public static final String LOCATIONS_TO_EXCLUDE_KEY = "sitesToExclude";
@@ -86,6 +105,8 @@ public class Constants {
 	public static final String LEFT_FILE_BROWSER_LAST_URL = "left_fileBrowser_last_url";
 	public static final String RIGHT_FILE_BROWSER_LAST_URL = "right_fileBrowser_last_url";
 	public static final String DEFAULT_VERSION = "default_version_";
+	
+	
 
 
 }
