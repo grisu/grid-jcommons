@@ -81,6 +81,7 @@ public class Constants {
 	public static final String RESTART_RESTART_WAITING_JOBS_ON_RUNNING_LOCATIONS = "restartWaitingJobsOnRunningSubLocs";
 	public static final String RESTART_RESTART_WAITING_JOBS_ON_DONE_LOCATIONS = "restartWaitingJobsOnDoneSubLocs";
 	public static final String RESTART_RESTART_WAITING_JOBS_ON_FAILED_LOCATIONS = "restartWaitingJobsOnFailedSubLocs";
+	public static final String RESTART_RESTART_WAITING_JOBS_ON_WAITING_LOCATIONS = "restartWaitingJobsOnWaitingLocations";
 	public static final String RESTART_RESTART_TO_ALL_LOCATIONS = "submitToAllLocations";
 	
 	
