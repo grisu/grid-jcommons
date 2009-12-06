@@ -5,6 +5,8 @@ import java.io.File;
 public class ArcsEnvironment {
 	
 	public static final String ARCS_DEFAULT_DIRECTORY = System.getProperty("user.home") + File.separator + ".arcs";
+	public static final int DEFAULT_MYPROXY_PORT = 443;
+	public static final String DEFAULT_MYPROXY_SERVER = "myproxy.arcs.org.au";
 	
 	public static String getDefaultMyProxyServer() {
 		return "myproxy2.arcs.org.au";
@@ -39,6 +41,16 @@ public class ArcsEnvironment {
 	public static File getArcsCommonDirectory() {
 		
 		String dir = getArcsConfigDirectory() + File.separator + "common";
+		File file = new File(dir);
+		if ( ! file.exists() ) {
+			file.mkdirs();
+		}
+		return file;
+	}
+	
+	public static File getArcsHelperScriptsDirectory() {
+		
+		String dir = getArcsConfigDirectory() + File.separator + "helperScripts";
 		File file = new File(dir);
 		if ( ! file.exists() ) {
 			file.mkdirs();
