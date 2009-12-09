@@ -61,5 +61,23 @@ public class CommonArcsProperties {
 		
 		return result;
 	}
+	
+	public String getLastShibUsername() {
+
+		return getArcsProperty(Property.SHIB_USERNAME);
+		
+	}
+	
+	public String getLastShibIdp() {
+		return getArcsProperty(Property.SHIB_IDP);
+	}
+	
+	public void setLastShibUsername(String u) {
+		setArcsProperty(Property.SHIB_USERNAME, u);
+	}
+	
+	public void setLastShibIdp(String idp) {
+		setArcsProperty(Property.SHIB_IDP, idp);
+	}
 
 }
