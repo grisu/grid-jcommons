@@ -13,55 +13,50 @@ import java.util.Map;
 public interface InformationManager {
 
 	/**
+	 * Returns the names of all the applications at the site.
+	 * 
+	 * @param site
+	 *            name of the site
+	 * @return names of the applications at the site
+	 */
+	String[] getAllApplicationsAtSite(String site);
+
+	/**
+	 * Returns all the available applications on the Grid.
+	 * 
+	 * @return all the applications on the Grid
+	 */
+	String[] getAllApplicationsOnGrid();
+
+	/**
+	 * Calculates all the applications that are available for the specified VO
+	 * grid-wide.
+	 * 
+	 * @param fqan
+	 *            the vo
+	 * @return all available applications
+	 */
+	String[] getAllApplicationsOnGridForVO(String fqan);
+
+	/**
+	 * Returns a map of all hostnames gridwide and the sites they belong to as
+	 * value. Main purpose of this method is to increase the site lookup speed
+	 * for hosts on the Grid
+	 * <p>
+	 * 
+	 * The returned map will have this format: ngdata.hpsc.csiro.au -> CSIRO-ASC
+	 * ngdata.ivec.org -> iVEC
+	 * 
+	 * @return all hostnames/sites
+	 */
+	Map<String, String> getAllHosts();
+
+	/**
 	 * Return all the names of all the sites from MDS.
 	 * 
 	 * @return names of all the sites from MDS
 	 */
 	String[] getAllSites();
-
-	/**
-	 * Returns the name of the site where this host or URL belongs.
-	 * 
-	 * @param host_or_url
-	 *            the host or the service's URI
-	 * @return the name of the site where this host or URL belongs
-	 */
-	String getSiteForHostOrUrl(String host_or_url);
-
-	/**
-	 * Returns all the submissionlocations for the given application. The entry
-	 * for the submissionlocations are in this format:
-	 * 
-	 * <queue-name>:<grid-submission-host>[#<job-manager>]
-	 * 
-	 * example: hydra@hydra:ng2.sapac.edu.au#PBS sque:ng2.vpac.org
-	 * 
-	 * If jobmanager is not specified, it is assumed that the submission queue
-	 * is of type 'PBS'
-	 * 
-	 * @param application
-	 *            name of the application
-	 * @return all the submission queues for the given application.
-	 */
-	String[] getAllSubmissionLocationsForApplication(String application);
-	
-	/**
-	 * Returns a list of all submissionlocations for the specified site.
-	 * 
-	 * @param site the name of the site
-	 * @return the submissionLocations
-	 */
-	String[] getAllSubmissionLocationsForSite(String site);
-
-	/**
-	 * Returns all the data locations (mount points) on the grid available for
-	 * the given VO.
-	 * 
-	 * @param fqan
-	 *            fully qualified attribute name of the VO
-	 * @return all the data locations for the VO
-	 */
-	Map<String, String[]> getDataLocationsForVO(String fqan);
 
 	/**
 	 * Returns all submission locations on all the sites from MDS.
@@ -84,58 +79,39 @@ public interface InformationManager {
 	String[] getAllSubmissionLocations(String application, String version);
 
 	/**
-	 * Returns the list of available versions of the software application at a
-	 * given site.
+	 * Returns all the submissionlocations for the given application. The entry
+	 * for the submissionlocations are in this format:
+	 * 
+	 * <queue-name>:<grid-submission-host>[#<job-manager>]
+	 * 
+	 * example: hydra@hydra:ng2.sapac.edu.au#PBS sque:ng2.vpac.org
+	 * 
+	 * If jobmanager is not specified, it is assumed that the submission queue
+	 * is of type 'PBS'
 	 * 
 	 * @param application
-	 *            name of the software application
-	 * @param site
-	 *            name of the site
-	 * @return an array of string representing the available versions of the
-	 *         software application at the site
+	 *            name of the application
+	 * @return all the submission queues for the given application.
 	 */
-	String[] getVersionsOfApplicationOnSite(String application,
-			String site);
+	String[] getAllSubmissionLocationsForApplication(String application);
 
 	/**
-	 * Returns the list of available versions of the software application at a
-	 * given submissionlocation.
-	 * 
-	 * @param application
-	 *            name of the software application
-	 * @param submissionLocation
-	 *            name of the submissionlocation
-	 * @return an array of string representing the available versions of the
-	 *         software application at the submissionlocation
-	 */
-	String[] getVersionsOfApplicationOnSubmissionLocation(
-			String application, String submissionLocation);
-
-	/**
-	 * Returns all the available applications on the Grid.
-	 * 
-	 * @return all the applications on the Grid
-	 */
-	String[] getAllApplicationsOnGrid();
-
-	/**
-	 * Returns the names of all the applications at the site.
+	 * Returns a list of all submissionlocations for the specified site.
 	 * 
 	 * @param site
-	 *            name of the site
-	 * @return names of the applications at the site
+	 *            the name of the site
+	 * @return the submissionLocations
 	 */
-	String[] getAllApplicationsAtSite(String site);
+	String[] getAllSubmissionLocationsForSite(String site);
 
 	/**
-	 * Calculates all the applications that are available for the specified VO
-	 * grid-wide.
+	 * Returns all submission locations or a specific VO.
 	 * 
 	 * @param fqan
 	 *            the vo
-	 * @return all available applications
+	 * @return the submission locations
 	 */
-	String[] getAllApplicationsOnGridForVO(String fqan);
+	String[] getAllSubmissionLocationsForVO(String fqan);
 
 	/**
 	 * Returns the list of available versions of the software application on the
@@ -178,29 +154,25 @@ public interface InformationManager {
 	Map<String, String> getApplicationDetails(String application,
 			String version, String submissionLocation);
 
-	String[] getStagingFileSystemForSubmissionLocation(String subLoc);
-
 	/**
-	 * Returns a map of all hostnames gridwide and the sites they belong to as
-	 * value. Main purpose of this method is to increase the site lookup speed
-	 * for hosts on the Grid
-	 * <p>
+	 * Returns an array of Strings with codes that provide the specified
+	 * executable.
 	 * 
-	 * The returned map will have this format: ngdata.hpsc.csiro.au -> CSIRO-ASC
-	 * ngdata.ivec.org -> iVEC
-	 * 
-	 * @return all hostnames/sites
+	 * @param executable
+	 *            the executable
+	 * @return the codes
 	 */
-	Map<String, String> getAllHosts();
+	String[] getApplicationsThatProvideExecutable(String executable);
 
 	/**
-	 * Returns all submission locations or a specific VO.
+	 * Returns all the data locations (mount points) on the grid available for
+	 * the given VO.
 	 * 
 	 * @param fqan
-	 *            the vo
-	 * @return the submission locations
+	 *            fully qualified attribute name of the VO
+	 * @return all the data locations for the VO
 	 */
-	String[] getAllSubmissionLocationsForVO(String fqan);
+	Map<String, String[]> getDataLocationsForVO(String fqan);
 
 	/**
 	 * Returns the jobmanager that submits to the specified queue/site.
@@ -214,13 +186,41 @@ public interface InformationManager {
 	String getJobmanagerOfQueueAtSite(String site, String queue);
 
 	/**
-	 * Returns an array of Strings with codes that provide the specified
-	 * executable.
+	 * Returns the name of the site where this host or URL belongs.
 	 * 
-	 * @param executable
-	 *            the executable
-	 * @return the codes
+	 * @param host_or_url
+	 *            the host or the service's URI
+	 * @return the name of the site where this host or URL belongs
 	 */
-	String[] getApplicationsThatProvideExecutable(String executable);
+	String getSiteForHostOrUrl(String host_or_url);
+
+	String[] getStagingFileSystemForSubmissionLocation(String subLoc);
+
+	/**
+	 * Returns the list of available versions of the software application at a
+	 * given site.
+	 * 
+	 * @param application
+	 *            name of the software application
+	 * @param site
+	 *            name of the site
+	 * @return an array of string representing the available versions of the
+	 *         software application at the site
+	 */
+	String[] getVersionsOfApplicationOnSite(String application, String site);
+
+	/**
+	 * Returns the list of available versions of the software application at a
+	 * given submissionlocation.
+	 * 
+	 * @param application
+	 *            name of the software application
+	 * @param submissionLocation
+	 *            name of the submissionlocation
+	 * @return an array of string representing the available versions of the
+	 *         software application at the submissionlocation
+	 */
+	String[] getVersionsOfApplicationOnSubmissionLocation(String application,
+			String submissionLocation);
 
 }

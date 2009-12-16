@@ -9,11 +9,6 @@ import javax.swing.JProgressBar;
 public class DownloadingDialog extends JDialog {
 
 	static final long serialVersionUID = -7493900276355066466L;
-	private JProgressBar progressBar;
-	private JLabel label;
-	
-	private final String filename;
-
 	/**
 	 * Launch the application.
 	 */
@@ -30,15 +25,18 @@ public class DownloadingDialog extends JDialog {
 			}
 		});
 	}
+	private JProgressBar progressBar;
 
-	
-	
+	private JLabel label;
+
+	private final String filename;
+
 	/**
 	 * Create the dialog.
 	 */
 	public DownloadingDialog(String filename) {
 		setModal(false);
-		setLocationRelativeTo(null); 
+		setLocationRelativeTo(null);
 		this.filename = filename;
 		setBounds(100, 100, 288, 122);
 		getContentPane().setLayout(null);
@@ -46,6 +44,15 @@ public class DownloadingDialog extends JDialog {
 		getContentPane().add(getLabel());
 
 	}
+
+	private JLabel getLabel() {
+		if (label == null) {
+			label = new JLabel(filename);
+			label.setBounds(12, 67, 254, 18);
+		}
+		return label;
+	}
+
 	private JProgressBar getProgressBar() {
 		if (progressBar == null) {
 			progressBar = new JProgressBar();
@@ -54,14 +61,7 @@ public class DownloadingDialog extends JDialog {
 		}
 		return progressBar;
 	}
-	private JLabel getLabel() {
-		if (label == null) {
-			label = new JLabel(filename);
-			label.setBounds(12, 67, 254, 18);
-		}
-		return label;
-	}
-	
+
 	public void setMessage(String message) {
 		getLabel().setText(message);
 	}

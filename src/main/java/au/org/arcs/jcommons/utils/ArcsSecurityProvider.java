@@ -9,29 +9,20 @@ import javax.net.ssl.TrustManager;
 import javax.net.ssl.TrustManagerFactorySpi;
 import javax.net.ssl.X509TrustManager;
 
-
 public class ArcsSecurityProvider extends Provider {
-
-	private static final long serialVersionUID = 1L;
-
-	public ArcsSecurityProvider() {
-		super("ArcsSecurityProvider", 1.0, "Trust certificates");
-		put("TrustManagerFactory.TrustAllCertificates",
-				MyTrustManagerFactory.class.getName());
-	}
 
 	protected static class MyTrustManagerFactory extends TrustManagerFactorySpi {
 		public MyTrustManagerFactory() {
+		}
+
+		protected TrustManager[] engineGetTrustManagers() {
+			return new TrustManager[] { new MyX509TrustManager() };
 		}
 
 		protected void engineInit(KeyStore keystore) {
 		}
 
 		protected void engineInit(ManagerFactoryParameters mgrparams) {
-		}
-
-		protected TrustManager[] engineGetTrustManagers() {
-			return new TrustManager[] { new MyX509TrustManager() };
 		}
 	}
 
@@ -45,6 +36,14 @@ public class ArcsSecurityProvider extends Provider {
 		public X509Certificate[] getAcceptedIssuers() {
 			return null;
 		}
+	}
+
+	private static final long serialVersionUID = 1L;
+
+	public ArcsSecurityProvider() {
+		super("ArcsSecurityProvider", 1.0, "Trust certificates");
+		put("TrustManagerFactory.TrustAllCertificates",
+				MyTrustManagerFactory.class.getName());
 	}
 
 }

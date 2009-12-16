@@ -2,19 +2,15 @@ package au.org.arcs.jcommons.utils;
 
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
 
 public class HttpProxyDialog extends JDialog {
-
-	private final JPanel contentPanel = new JPanel();
-	
-	private HttpProxyPanel httpProxyPanel;
 
 	/**
 	 * Launch the application.
@@ -28,6 +24,10 @@ public class HttpProxyDialog extends JDialog {
 			e.printStackTrace(System.err);
 		}
 	}
+
+	private final JPanel contentPanel = new JPanel();
+
+	private HttpProxyPanel httpProxyPanel;
 
 	/**
 	 * Create the dialog.
@@ -50,22 +50,24 @@ public class HttpProxyDialog extends JDialog {
 				JButton okButton = new JButton("OK");
 				okButton.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
-						
+
 						String host = httpProxyPanel.getProxyHost();
 						int port = httpProxyPanel.getProxyPort();
-						
-						if ( host != null ) {
-							if ( httpProxyPanel.isAuthSelected() ) {
+
+						if (host != null) {
+							if (httpProxyPanel.isAuthSelected()) {
 								String username = httpProxyPanel.getUsername();
 								char[] password = httpProxyPanel.getPassword();
-								HttpProxyManager.setHttpProxy(host, port, username, password);
+								HttpProxyManager.setHttpProxy(host, port,
+										username, password);
 							} else {
-								HttpProxyManager.setHttpProxy(host, port, null, null);
+								HttpProxyManager.setHttpProxy(host, port, null,
+										null);
 							}
 						}
-						
+
 						HttpProxyDialog.this.dispose();
-						
+
 					}
 				});
 				okButton.setActionCommand("OK");

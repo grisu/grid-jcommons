@@ -1,12 +1,12 @@
 package au.org.arcs.jcommons.constants;
 
 public class Constants {
-	
+
 	public static final String GENERIC_APPLICATION_NAME = "generic";
 	public static final String NO_VERSION_INDICATOR_STRING = "any_version";
-	
+
 	public static final String STATUS_STRING = "status";
-	
+
 	// Static strings for JobProperty objects
 	public static final String JOBNAME_KEY = "jobname";
 	public static final String APPLICATIONNAME_KEY = "application";
@@ -36,7 +36,7 @@ public class Constants {
 	public static final String FACTORY_TYPE_KEY = "factoryType";
 	public static final String WORKINGDIRECTORY_KEY = "workingDirectory";
 	public static final String FQAN_KEY = "fqan";
-//	public static final String JOB_STATUS_KEY = "status";
+	// public static final String JOB_STATUS_KEY = "status";
 	public static final String STAGING_FILE_SYSTEM_KEY = "stagingFileSystem";
 	public static final String SUBMISSION_TIME_KEY = "submissionTime";
 	public static final String MOUNTPOINT_KEY = "mountpoint";
@@ -44,9 +44,9 @@ public class Constants {
 	public static final String MDS_MODULES_KEY = "Module";
 	public static final String MDS_PARALLEL_AVAIL_KEY = "parallelAvail";
 	public static final String MDS_SERIAL_AVAIL_KEY = "serialAvail";
-	
+
 	public static final String NON_VO_FQAN = "None";
-	
+
 	public static final String SEND_EMAIL_ON_JOB_START_ATTRIBUTE_KEY = "sendOnJobStart";
 	public static final String SEND_EMAIL_ON_JOB_END_ATTRIBUTE_KEY = "sendOnJobFinish";
 	public static final String PBSDEBUG_KEY = "pbsDebug";
@@ -55,7 +55,7 @@ public class Constants {
 	public static final String FORCE_NAME_METHOD = "force-name";
 	public static final String UUID_NAME_METHOD = "uuid";
 	public static final String TIMESTAMP_METHOD = "timestamp";
-	
+
 	// batchjob properties
 	public static final String BATCHJOB_NAME = "batchjobname";
 	public static final String RELATIVE_PATH_FROM_JOBDIR = "relativePathToBatchDir";
@@ -70,17 +70,14 @@ public class Constants {
 	public static final String SUBMIT_POLICY_DEFAULT = "default";
 	public static final String SUBMIT_POLICY_DEFAULT_RESTART = "defaultRestart";
 
-	
-	
 	public static final String LOCATIONS_TO_INCLUDE_KEY = "sitesToInclude";
 	public static final String LOCATIONS_TO_EXCLUDE_KEY = "sitesToExclude";
-	
+
 	public static final String ERROR_REASON = "errorReason";
-	
+
 	// user properties
 	public static final String DEFAULT_FQAN = "defaultFqan";
-	
-	
+
 	// default job properties
 	public static final String GENERIC_JOB_LAST_WALLTIME_IN_MINUTES = "genericJobLastWalltime";
 	public static final String GENERIC_JOB_LAST_CPUS = "genericJobLastCpus";
@@ -88,13 +85,10 @@ public class Constants {
 	public static final String GENERIC_JOB_LAST_USE_EMAIL = "genericJobLastUseEmail";
 	public static final String LAST_VERSION = "lastVersion";
 	public static final String GENERIC_JOB_LAST_INPUTFILE_URL = "generic_job_last_inputfile_url";
-	
+
 	// other user properties
 	public static final String LEFT_FILE_BROWSER_LAST_URL = "left_fileBrowser_last_url";
 	public static final String RIGHT_FILE_BROWSER_LAST_URL = "right_fileBrowser_last_url";
 	public static final String DEFAULT_VERSION = "default_version_";
-	
-	
-
 
 }

@@ -3,6 +3,8 @@ package au.org.arcs.jcommons.utils;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 
@@ -15,8 +17,6 @@ import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
 import au.org.arcs.jcommons.configuration.CommonArcsProperties;
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
 
 public class HttpProxyPanel extends JPanel {
 	private JLabel label;
@@ -37,8 +37,8 @@ public class HttpProxyPanel extends JPanel {
 	 */
 	public HttpProxyPanel() {
 		GridBagLayout gridBagLayout = new GridBagLayout();
-		gridBagLayout.columnWidths = new int[]{14, 0, 0, 12};
-		gridBagLayout.columnWeights = new double[]{0.0, 0.0, 1.0, 0.0};
+		gridBagLayout.columnWidths = new int[] { 14, 0, 0, 12 };
+		gridBagLayout.columnWeights = new double[] { 0.0, 0.0, 1.0, 0.0 };
 		setLayout(gridBagLayout);
 		GridBagConstraints gbc = new GridBagConstraints();
 		gbc.fill = GridBagConstraints.VERTICAL;
@@ -109,75 +109,55 @@ public class HttpProxyPanel extends JPanel {
 		gbc_9.gridy = 5;
 
 	}
-	private JLabel getLabel() {
-		if (label == null) {
-			label = new JLabel("Http proxy host");
-		}
-		return label;
-	}
-	private JTextField getProxyHostTextField() {
-		if (proxyHostTextField == null) {
-			proxyHostTextField = new JTextField();
-			proxyHostTextField.setColumns(10);
-			proxyHostTextField.setText(CommonArcsProperties.getDefault().getArcsProperty(CommonArcsProperties.Property.HTTP_PROXY_HOST));
-		}
-		return proxyHostTextField;
-	}
-	private JLabel getLabel_1() {
-		if (label_1 == null) {
-			label_1 = new JLabel("Http proxy port");
-		}
-		return label_1;
-	}
-	private JTextField getHttpProxyPortField() {
-		if (httpProxyPortField == null) {
-			httpProxyPortField = new JTextField();
-			httpProxyPortField.setColumns(10);
-			httpProxyPortField.setText(CommonArcsProperties.getDefault().getArcsProperty(CommonArcsProperties.Property.HTTP_PROXY_PORT));
-		}
-		return httpProxyPortField;
-	}
+
 	private JCheckBox getAuthCheckbox() {
 		if (authCheckbox == null) {
 			authCheckbox = new JCheckBox("Authentication required");
 			authCheckbox.addItemListener(new ItemListener() {
 				public void itemStateChanged(ItemEvent e) {
-					
-					getHttpProxyUsernameTextField().setEnabled(getAuthCheckbox().isSelected());
-					getHttpProxyPasswordField().setEnabled(getAuthCheckbox().isSelected());
-					
+
+					getHttpProxyUsernameTextField().setEnabled(
+							getAuthCheckbox().isSelected());
+					getHttpProxyPasswordField().setEnabled(
+							getAuthCheckbox().isSelected());
+
 				}
 			});
-			
-			String username = CommonArcsProperties.getDefault().getArcsProperty(CommonArcsProperties.Property.HTTP_PROXY_USERNAME);
-			if ( username != null && !"".equals(username) ) {
+
+			String username = CommonArcsProperties.getDefault()
+					.getArcsProperty(
+							CommonArcsProperties.Property.HTTP_PROXY_USERNAME);
+			if (username != null && !"".equals(username)) {
 				authCheckbox.setSelected(true);
 			}
 		}
 		return authCheckbox;
 	}
-	private JLabel getLabel_2() {
-		if (label_2 == null) {
-			label_2 = new JLabel("Http proxy username");
+
+	private JButton getBtnApply() {
+		if (btnApply == null) {
+			btnApply = new JButton("Apply");
+			btnApply.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+
+					String host = getProxyHost();
+					int port = getProxyPort();
+
+					if (isAuthSelected()) {
+						String username = getUsername();
+						char[] password = getPassword();
+						HttpProxyManager.setHttpProxy(host, port, username,
+								password);
+					} else {
+						HttpProxyManager.setHttpProxy(host, port, null, null);
+					}
+
+				}
+			});
 		}
-		return label_2;
+		return btnApply;
 	}
-	private JLabel getLabel_3() {
-		if (label_3 == null) {
-			label_3 = new JLabel("Http proxy password");
-		}
-		return label_3;
-	}
-	private JTextField getHttpProxyUsernameTextField() {
-		if (httpProxyUsernameTextField == null) {
-			httpProxyUsernameTextField = new JTextField();
-			httpProxyUsernameTextField.setEnabled(false);
-			httpProxyUsernameTextField.setColumns(10);
-			String username = CommonArcsProperties.getDefault().getArcsProperty(CommonArcsProperties.Property.HTTP_PROXY_USERNAME);
-			httpProxyUsernameTextField.setText(username);
-		}
-		return httpProxyUsernameTextField;
-	}
+
 	private JPasswordField getHttpProxyPasswordField() {
 		if (httpProxyPasswordField == null) {
 			httpProxyPasswordField = new JPasswordField();
@@ -185,19 +165,78 @@ public class HttpProxyPanel extends JPanel {
 		}
 		return httpProxyPasswordField;
 	}
-	
-	public boolean isAuthSelected() {
-		return getAuthCheckbox().isSelected();
+
+	private JTextField getHttpProxyPortField() {
+		if (httpProxyPortField == null) {
+			httpProxyPortField = new JTextField();
+			httpProxyPortField.setColumns(10);
+			httpProxyPortField.setText(CommonArcsProperties.getDefault()
+					.getArcsProperty(
+							CommonArcsProperties.Property.HTTP_PROXY_PORT));
+		}
+		return httpProxyPortField;
 	}
-	
-	public String getUsername() {
-		return getHttpProxyUsernameTextField().getText();
+
+	private JTextField getHttpProxyUsernameTextField() {
+		if (httpProxyUsernameTextField == null) {
+			httpProxyUsernameTextField = new JTextField();
+			httpProxyUsernameTextField.setEnabled(false);
+			httpProxyUsernameTextField.setColumns(10);
+			String username = CommonArcsProperties.getDefault()
+					.getArcsProperty(
+							CommonArcsProperties.Property.HTTP_PROXY_USERNAME);
+			httpProxyUsernameTextField.setText(username);
+		}
+		return httpProxyUsernameTextField;
 	}
-	
+
+	private JLabel getLabel() {
+		if (label == null) {
+			label = new JLabel("Http proxy host");
+		}
+		return label;
+	}
+
+	private JLabel getLabel_1() {
+		if (label_1 == null) {
+			label_1 = new JLabel("Http proxy port");
+		}
+		return label_1;
+	}
+
+	private JLabel getLabel_2() {
+		if (label_2 == null) {
+			label_2 = new JLabel("Http proxy username");
+		}
+		return label_2;
+	}
+
+	private JLabel getLabel_3() {
+		if (label_3 == null) {
+			label_3 = new JLabel("Http proxy password");
+		}
+		return label_3;
+	}
+
+	public char[] getPassword() {
+		return getHttpProxyPasswordField().getPassword();
+	}
+
 	public String getProxyHost() {
 		return getProxyHostTextField().getText();
 	}
-	
+
+	private JTextField getProxyHostTextField() {
+		if (proxyHostTextField == null) {
+			proxyHostTextField = new JTextField();
+			proxyHostTextField.setColumns(10);
+			proxyHostTextField.setText(CommonArcsProperties.getDefault()
+					.getArcsProperty(
+							CommonArcsProperties.Property.HTTP_PROXY_HOST));
+		}
+		return proxyHostTextField;
+	}
+
 	public int getProxyPort() {
 		try {
 			return new Integer(getHttpProxyPortField().getText());
@@ -205,34 +244,12 @@ public class HttpProxyPanel extends JPanel {
 			return 0;
 		}
 	}
-	
-	public char[] getPassword() {
-		return getHttpProxyPasswordField().getPassword();
+
+	public String getUsername() {
+		return getHttpProxyUsernameTextField().getText();
 	}
 
-
-	private JButton getBtnApply() {
-		if (btnApply == null) {
-			btnApply = new JButton("Apply");
-			btnApply.addActionListener(new ActionListener() {
-				public void actionPerformed(ActionEvent e) {
-					
-					String host = getProxyHost();
-					int port = getProxyPort();
-					
-					if ( isAuthSelected() ) {
-						String username = getUsername();
-						char[] password = getPassword();
-						HttpProxyManager.setHttpProxy(host, port, username, password);
-					} else {
-						HttpProxyManager.setHttpProxy(host, port, null, null);
-					}
-
-						
-					
-				}
-			});
-		}
-		return btnApply;
+	public boolean isAuthSelected() {
+		return getAuthCheckbox().isSelected();
 	}
 }

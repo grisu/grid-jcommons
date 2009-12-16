@@ -3,8 +3,6 @@ package au.org.arcs.jcommons.constants;
 import java.util.HashMap;
 import java.util.Map;
 
-import au.org.arcs.jcommons.constants.Constants;
-
 /**
  * Basic properties for a job that are needed to create a job.
  * 
@@ -102,8 +100,7 @@ public enum JobSubmissionProperty {
 	 * A comma-seperated list of modules you want to load. This should only be
 	 * used in if you know what you are doing. Defaults to null.
 	 */
-	MODULES(Constants.MODULES_KEY, ""), 
-	PBSDEBUG(Constants.PBSDEBUG_KEY, "");
+	MODULES(Constants.MODULES_KEY, ""), PBSDEBUG(Constants.PBSDEBUG_KEY, "");
 
 	private static final Map<String, JobSubmissionProperty> stringToJobPropertyMap = new HashMap<String, JobSubmissionProperty>();
 	static {
@@ -112,7 +109,11 @@ public enum JobSubmissionProperty {
 		}
 	}
 
+	public static JobSubmissionProperty fromString(final String key) {
+		return stringToJobPropertyMap.get(key);
+	}
 	private final String keyName;
+
 	private final String defaultValue;
 
 	JobSubmissionProperty(final String keyName, final String defaultValue) {
@@ -120,16 +121,12 @@ public enum JobSubmissionProperty {
 		this.defaultValue = defaultValue;
 	}
 
-	@Override
-	public String toString() {
-		return this.keyName;
-	}
-
 	public String defaultValue() {
 		return this.defaultValue;
 	}
 
-	public static JobSubmissionProperty fromString(final String key) {
-		return stringToJobPropertyMap.get(key);
+	@Override
+	public String toString() {
+		return this.keyName;
 	}
 }

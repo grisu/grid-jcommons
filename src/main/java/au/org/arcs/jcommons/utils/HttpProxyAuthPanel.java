@@ -1,18 +1,16 @@
 package au.org.arcs.jcommons.utils;
 
-import javax.swing.JPanel;
-import java.awt.GridBagLayout;
-import javax.swing.JLabel;
 import java.awt.GridBagConstraints;
-import javax.swing.JTextField;
+import java.awt.GridBagLayout;
 import java.awt.Insets;
-import javax.swing.JPasswordField;
+
 import javax.swing.JButton;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JPasswordField;
+import javax.swing.JTextField;
 
 import au.org.arcs.jcommons.configuration.CommonArcsProperties;
-
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
 
 public class HttpProxyAuthPanel extends JPanel {
 	private JLabel label;
@@ -26,10 +24,12 @@ public class HttpProxyAuthPanel extends JPanel {
 	 */
 	public HttpProxyAuthPanel() {
 		GridBagLayout gridBagLayout = new GridBagLayout();
-		gridBagLayout.columnWidths = new int[]{0, 0, 0, 0, 0};
-		gridBagLayout.rowHeights = new int[]{0, 0, 0, 0, 0};
-		gridBagLayout.columnWeights = new double[]{0.0, 0.0, 1.0, 0.0, Double.MIN_VALUE};
-		gridBagLayout.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
+		gridBagLayout.columnWidths = new int[] { 0, 0, 0, 0, 0 };
+		gridBagLayout.rowHeights = new int[] { 0, 0, 0, 0, 0 };
+		gridBagLayout.columnWeights = new double[] { 0.0, 0.0, 1.0, 0.0,
+				Double.MIN_VALUE };
+		gridBagLayout.rowWeights = new double[] { 0.0, 0.0, 0.0, 0.0,
+				Double.MIN_VALUE };
 		setLayout(gridBagLayout);
 		GridBagConstraints gbc = new GridBagConstraints();
 		gbc.insets = new Insets(0, 0, 5, 5);
@@ -69,35 +69,40 @@ public class HttpProxyAuthPanel extends JPanel {
 		}
 		return label;
 	}
-	private JTextField getTextField() {
-		if (textField == null) {
-			textField = new JTextField();
-			textField.setColumns(10);
-			String username = CommonArcsProperties.getDefault().getArcsProperty(CommonArcsProperties.Property.HTTP_PROXY_USERNAME);
-			if ( username != null && !"".equals(username) ) {
-				textField.setText(username);
-			}
-		}
-		return textField;
-	}
+
 	private JLabel getLabel_1() {
 		if (label_1 == null) {
 			label_1 = new JLabel("Http proxy password");
 		}
 		return label_1;
 	}
+
+	public char[] getPassword() {
+		return getPasswordField().getPassword();
+	}
+
 	private JPasswordField getPasswordField() {
 		if (passwordField == null) {
 			passwordField = new JPasswordField();
 		}
 		return passwordField;
 	}
-	
+
+	private JTextField getTextField() {
+		if (textField == null) {
+			textField = new JTextField();
+			textField.setColumns(10);
+			String username = CommonArcsProperties.getDefault()
+					.getArcsProperty(
+							CommonArcsProperties.Property.HTTP_PROXY_USERNAME);
+			if (username != null && !"".equals(username)) {
+				textField.setText(username);
+			}
+		}
+		return textField;
+	}
+
 	public String getUsername() {
 		return getTextField().getText();
-	}
-	
-	public char[] getPassword() {
-		return getPasswordField().getPassword();
 	}
 }

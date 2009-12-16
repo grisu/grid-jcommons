@@ -1,17 +1,22 @@
 package au.org.arcs.jcommons.utils;
 
 public class NewHttpProxyEvent {
-	
+
 	private final String proxyHost;
 	private final int proxyPort;
 	private final String username;
 	private final char[] password;
-	
-	public NewHttpProxyEvent(String proxyhost, int proxyPort, String username, char[] password) {
+
+	public NewHttpProxyEvent(String proxyhost, int proxyPort, String username,
+			char[] password) {
 		this.proxyHost = proxyhost;
 		this.proxyPort = proxyPort;
 		this.username = username;
 		this.password = password;
+	}
+
+	public char[] getPassword() {
+		return password;
 	}
 
 	public String getProxyHost() {
@@ -24,10 +29,6 @@ public class NewHttpProxyEvent {
 
 	public String getUsername() {
 		return username;
-	}
-
-	public char[] getPassword() {
-		return password;
 	}
 
 }

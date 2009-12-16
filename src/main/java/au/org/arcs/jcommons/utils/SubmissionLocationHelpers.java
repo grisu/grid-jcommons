@@ -3,7 +3,6 @@ package au.org.arcs.jcommons.utils;
 import au.org.arcs.jcommons.interfaces.GridResource;
 import au.org.arcs.jcommons.interfaces.InformationManager;
 
-
 /**
  * Helper class to calculate the string format that is used within Grisu and
  * which is called a submission location.
@@ -12,50 +11,6 @@ import au.org.arcs.jcommons.interfaces.InformationManager;
  * 
  */
 public final class SubmissionLocationHelpers {
-	
-	private SubmissionLocationHelpers() {
-	}
-
-	/**
-	 * Extract the queuename from the submission location.
-	 * 
-	 * @param subLoc
-	 *            the submission location
-	 * @return the queue name
-	 */
-	public static String extractQueue(final String subLoc) {
-
-		int endIndex = subLoc.indexOf(":");
-		if (endIndex <= 0) {
-			// return null;
-			return "Not available";
-		}
-
-		return subLoc.substring(0, endIndex);
-	}
-
-	/**
-	 * Extract the hostname from the submission location.
-	 * 
-	 * @param subLoc
-	 *            the submission location
-	 * @return the host name
-	 */
-	public static String extractHost(final String subLoc) {
-
-		int startIndex = subLoc.indexOf(":") + 1;
-		if (startIndex == -1) {
-			startIndex = 0;
-		}
-
-		int endIndex = subLoc.indexOf("#");
-		if (endIndex == -1) {
-			endIndex = subLoc.length();
-		}
-
-		return subLoc.substring(startIndex, endIndex);
-
-	}
 
 	/**
 	 * Calculates the submission location string for the specified GridResource.
@@ -68,10 +23,10 @@ public final class SubmissionLocationHelpers {
 			final GridResource gridResource) {
 
 		String contactString = gridResource.getContactString();
-		
-		String hostname = contactString.substring(
-				contactString.indexOf("https://") != 0 ? 0
-						: 8, contactString.indexOf(":8443"));
+
+		String hostname = contactString.substring(contactString
+				.indexOf("https://") != 0 ? 0 : 8, contactString
+				.indexOf(":8443"));
 
 		return createSubmissionLocationString(hostname, gridResource
 				.getQueueName(), gridResource.getJobManager());
@@ -88,8 +43,9 @@ public final class SubmissionLocationHelpers {
 	 *            the queue name for this submission location
 	 * @return the submission location string
 	 */
-	public static String createSubmissionLocationString(final InformationManager im,
-			final String contactString, final String queue) {
+	public static String createSubmissionLocationString(
+			final InformationManager im, final String contactString,
+			final String queue) {
 
 		String hostname = contactString.substring(contactString
 				.indexOf("https://") != 0 ? 0 : 8, contactString
@@ -127,6 +83,50 @@ public final class SubmissionLocationHelpers {
 		}
 		return result.toString();
 
+	}
+
+	/**
+	 * Extract the hostname from the submission location.
+	 * 
+	 * @param subLoc
+	 *            the submission location
+	 * @return the host name
+	 */
+	public static String extractHost(final String subLoc) {
+
+		int startIndex = subLoc.indexOf(":") + 1;
+		if (startIndex == -1) {
+			startIndex = 0;
+		}
+
+		int endIndex = subLoc.indexOf("#");
+		if (endIndex == -1) {
+			endIndex = subLoc.length();
+		}
+
+		return subLoc.substring(startIndex, endIndex);
+
+	}
+
+	/**
+	 * Extract the queuename from the submission location.
+	 * 
+	 * @param subLoc
+	 *            the submission location
+	 * @return the queue name
+	 */
+	public static String extractQueue(final String subLoc) {
+
+		int endIndex = subLoc.indexOf(":");
+		if (endIndex <= 0) {
+			// return null;
+			return "Not available";
+		}
+
+		return subLoc.substring(0, endIndex);
+	}
+
+	private SubmissionLocationHelpers() {
 	}
 
 }

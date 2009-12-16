@@ -12,6 +12,86 @@ import java.util.Set;
 public interface GridResource extends Comparable<GridResource> {
 
 	/**
+	 * All executables that are available for the application on this resource.
+	 * 
+	 * @return all executables
+	 */
+	Set<String> getAllExecutables();
+
+	/**
+	 * The name of the application.
+	 * 
+	 * @return the applicationname
+	 */
+	String getApplicationName();
+
+	/**
+	 * All the versions of the applications on this resource.
+	 * 
+	 * @return the versions
+	 */
+	List<String> getAvailableApplicationVersion();
+
+	/**
+	 * The contact string for this resource.
+	 * 
+	 * @return the contact string
+	 */
+	String getContactString();
+
+	/**
+	 * The number of free job slots on this resource for the fqan that was
+	 * specified earlier.
+	 * 
+	 * @return the free job slots
+	 */
+	int getFreeJobSlots();
+
+	/**
+	 * The job manager for this resource.
+	 * 
+	 * @return the job manager
+	 */
+	String getJobManager();
+
+	/**
+	 * The main memory ram size on this resource.
+	 * 
+	 * @return the memory
+	 */
+	int getMainMemoryRAMSize();
+
+	/**
+	 * The main memory virtual size on this resource.
+	 * 
+	 * @return the memory
+	 */
+	int getMainMemoryVirtualSize();
+
+	/**
+	 * The name of the queue for this resource.
+	 * 
+	 * @return the queue name
+	 */
+	String getQueueName();
+
+	/**
+	 * The rank that was calculated by the specified ranking algorithm of the
+	 * matchmaker.
+	 * 
+	 * @return the rank
+	 */
+	int getRank();
+
+	/**
+	 * The number of running jobs on this resource for the fqan that was
+	 * specified earlier.
+	 * 
+	 * @return the number of running jobs
+	 */
+	int getRunningJobs();
+
+	/**
 	 * The latitude of the site.
 	 * 
 	 * @return the latitude
@@ -33,42 +113,11 @@ public interface GridResource extends Comparable<GridResource> {
 	String getSiteName();
 
 	/**
-	 * The name of the application.
+	 * Ths smp size on this resource.
 	 * 
-	 * @return the applicationname
+	 * @return the smp size
 	 */
-	String getApplicationName();
-
-	/**
-	 * All the versions of the applications on this resource.
-	 * 
-	 * @return the versions
-	 */
-	List<String> getAvailableApplicationVersion();
-
-	/**
-	 * The number of free job slots on this resource for the fqan that was
-	 * specified earlier.
-	 * 
-	 * @return the free job slots
-	 */
-	int getFreeJobSlots();
-
-	/**
-	 * The number of running jobs on this resource for the fqan that was
-	 * specified earlier.
-	 * 
-	 * @return the number of running jobs
-	 */
-	int getRunningJobs();
-
-	/**
-	 * The number of waiting jobs on this resource for the fqan that was
-	 * spefified earlier.
-	 * 
-	 * @return the number of waiting jobs
-	 */
-	int getWaitingJobs();
+	int getSmpSize();
 
 	/**
 	 * The number of total jobs for this resource for the fqan that was
@@ -79,39 +128,12 @@ public interface GridResource extends Comparable<GridResource> {
 	int getTotalJobs();
 
 	/**
-	 * The main memory ram size on this resource.
+	 * The number of waiting jobs on this resource for the fqan that was
+	 * spefified earlier.
 	 * 
-	 * @return the memory
+	 * @return the number of waiting jobs
 	 */
-	int getMainMemoryRAMSize();
-
-	/**
-	 * The main memory virtual size on this resource.
-	 * 
-	 * @return the memory
-	 */
-	int getMainMemoryVirtualSize();
-
-	/**
-	 * Ths smp size on this resource.
-	 * 
-	 * @return the smp size
-	 */
-	int getSmpSize();
-
-	/**
-	 * The contact string for this resource.
-	 * 
-	 * @return the contact string
-	 */
-	String getContactString();
-
-	/**
-	 * The job manager for this resource.
-	 * 
-	 * @return the job manager
-	 */
-	String getJobManager();
+	int getWaitingJobs();
 
 	/**
 	 * Whether the version of the application that was requested earlier is
@@ -122,27 +144,5 @@ public interface GridResource extends Comparable<GridResource> {
 	 * @return whether the desired version is installed on this resource
 	 */
 	boolean isDesiredSoftwareVersionInstalled();
-
-	/**
-	 * The rank that was calculated by the specified ranking algorithm of the
-	 * matchmaker.
-	 * 
-	 * @return the rank
-	 */
-	int getRank();
-
-	/**
-	 * The name of the queue for this resource.
-	 * 
-	 * @return the queue name
-	 */
-	String getQueueName();
-
-	/**
-	 * All executables that are available for the application on this resource.
-	 * 
-	 * @return all executables
-	 */
-	Set<String> getAllExecutables();
 
 }
