@@ -19,7 +19,7 @@ import au.org.arcs.jcommons.configuration.CommonArcsProperties;
 import au.org.arcs.jcommons.configuration.CommonArcsProperties.Property;
 
 public class DependencyManager {
-	
+
 	public static final String DISABLE_DEPENDENCY_MANAGEMENT = "disableDependencyManagement";
 
 	public static boolean showDownloadDialog = false;
@@ -29,25 +29,35 @@ public class DependencyManager {
 
 	private static HttpClient httpClient = new HttpClient();
 
-	public static void addDependencies(
-			Map<Dependency, String> dependencies, File folder) {
-		
+	public static void addDependencies(Map<Dependency, String> dependencies,
+			File folder) {
+
+		addDependencies(dependencies, folder, false);
+
+	}
+
+	public static void addDependencies(Map<Dependency, String> dependencies,
+			File folder, boolean forceDependencyManagement) {
+
 		String disable = System.getProperty("disableDependencyManagement");
 
-		if ( disable != null && disable.toLowerCase().equals("true") ) {
-			
-			System.out.println("Dependency management disabled. Not resolving dependencies.");
+		if (!forceDependencyManagement
+				&& (disable == null || !disable.toLowerCase().equals("true"))) {
+
+			System.out
+					.println("Dependency management disabled. Not resolving dependencies.");
 			return;
-			
+
 		}
-		
-		String value = CommonArcsProperties.getDefault().getArcsProperty(Property.DISABLE_DEPENDENCY_MANAGEMENT);
-		if ( value != null && "true".equals(value.toLowerCase()) ) {
-			System.out.println("Dependency management disabled. Not resolving dependencies.");
+
+		String value = CommonArcsProperties.getDefault().getArcsProperty(
+				Property.DISABLE_DEPENDENCY_MANAGEMENT);
+		if (value != null && "true".equals(value.toLowerCase())) {
+			System.out
+					.println("Dependency management disabled. Not resolving dependencies.");
 			return;
 		}
-		
-		
+
 		try {
 			boolean displayedDialog = false;
 			DownloadingDialog dialog = null;
@@ -61,31 +71,30 @@ public class DependencyManager {
 
 				String filename = dp.getFileName(dependencies.get(dp));
 				String version = dependencies.get(dp);
-				if ( showDownloadDialog) {
-					dialog.setMessage("Downloading: "+filename);
+				if (showDownloadDialog) {
+					dialog.setMessage("Downloading: " + filename);
 				}
-				
+
 				try {
 					addVersionedDependency(dp, version, folder);
 				} catch (Exception e) {
-					
-					String message = "Could not download dependency \""+ 
-						filename+"\"\n\nPlease download the file \""+dp.getDownloadUrl(version)+"\" manually and put it in the folder:\n"
-						+ folder.toString();
-					
+
+					String message = "Could not download dependency \""
+							+ filename + "\"\n\nPlease download the file \""
+							+ dp.getDownloadUrl(version)
+							+ "\" manually and put it in the folder:\n"
+							+ folder.toString();
+
 					System.err.println(message);
-					
-					if ( showDownloadDialog ) {
+
+					if (showDownloadDialog) {
 						dialog.dispose();
-						JOptionPane.showMessageDialog(null,
-						    message,
-						    "Download error",
-						    JOptionPane.ERROR_MESSAGE);
+						JOptionPane.showMessageDialog(null, message,
+								"Download error", JOptionPane.ERROR_MESSAGE);
 					}
-					
+
 					System.exit(1);
 
-					
 				}
 
 			}
@@ -107,16 +116,17 @@ public class DependencyManager {
 			File depFile = dependency.getDependencyFile(version, folder);
 
 			if (version.indexOf("SNAPSHOT") >= 0) {
-				
-				if ( depFile.exists() ) {
-					
+
+				if (depFile.exists()) {
+
 					// only download files that were not downloaded today
 					Calendar today = Calendar.getInstance();
-					
+
 					Calendar fileDate = Calendar.getInstance();
 					fileDate.setTimeInMillis(depFile.lastModified());
-					
-					if ( today.get(Calendar.DAY_OF_MONTH) != fileDate.get(Calendar.DAY_OF_MONTH) ) {
+
+					if (today.get(Calendar.DAY_OF_MONTH) != fileDate
+							.get(Calendar.DAY_OF_MONTH)) {
 						depFile.delete();
 					}
 
