@@ -28,6 +28,7 @@ public interface InformationManager {
 	 */
 	String[] getAllApplicationsOnGrid();
 
+
 	/**
 	 * Calculates all the applications that are available for the specified VO
 	 * grid-wide.
@@ -37,6 +38,13 @@ public interface InformationManager {
 	 * @return all available applications
 	 */
 	String[] getAllApplicationsOnGridForVO(String fqan);
+
+	/**
+	 * Calculates all GridResources grid-wide and returns a map of (unique) submission location and the associated GridResource.
+	 * 
+	 * @return the map
+	 */
+	public Map<String, GridResource> getAllGridResources();
 
 	/**
 	 * Returns a map of all hostnames gridwide and the sites they belong to as
@@ -173,6 +181,16 @@ public interface InformationManager {
 	 * @return all the data locations for the VO
 	 */
 	Map<String, String[]> getDataLocationsForVO(String fqan);
+
+	/**
+	 * Returns the GridResource object for the submissionLocation string.
+	 * 
+	 * The GridResource object only has dummy values for dynamic stuff like freejobslots (for now).
+	 * 
+	 * @param submissionLocation the submission location string
+	 * @return the grid resource
+	 */
+	public GridResource getGridResource(String submissionLocation);
 
 	/**
 	 * Returns the jobmanager that submits to the specified queue/site.
