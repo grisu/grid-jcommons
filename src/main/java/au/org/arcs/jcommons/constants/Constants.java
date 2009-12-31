@@ -65,10 +65,15 @@ public class Constants {
 	public static final String DISTRIBUTION_METHOD = "distributionMethod";
 	public static final String DISTRIBUTION_METHOD_EQUAL = "equal";
 	public static final String DISTRIBUTION_METHOD_PERCENTAGE = "percentage";
+
 	// batchjob submit policy
 	public static final String SUBMIT_POLICY = "restartPolicy";
 	public static final String SUBMIT_POLICY_DEFAULT = "default";
-	public static final String SUBMIT_POLICY_DEFAULT_RESTART = "defaultRestart";
+	public static final String SUBMIT_POLICY_RESTART_DEFAULT = "defaultRestart";
+	// restart specific jobs policy
+	public static final String SUBMIT_POLICY_RESTART_SPECIFIC_JOBS = "restartSpecificJobs";
+	public static final String JOBNAMES_TO_RESTART = "jobnamesToRestart";
+	public static final String SUBMISSIONLOCATIONS_TO_RESTART = "submissionLocationsToRestart";
 
 	public static final String LOCATIONS_TO_INCLUDE_KEY = "sitesToInclude";
 	public static final String LOCATIONS_TO_EXCLUDE_KEY = "sitesToExclude";
