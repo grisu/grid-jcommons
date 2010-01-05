@@ -5,6 +5,8 @@ public class Constants {
 	public static final String GENERIC_APPLICATION_NAME = "generic";
 	public static final String NO_VERSION_INDICATOR_STRING = "any_version";
 
+	public static final String ALLJOBS_KEY = "allJobs";
+
 	public static final String STATUS_STRING = "status";
 
 	// Static strings for JobProperty objects
