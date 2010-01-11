@@ -11,14 +11,22 @@ public class CommonArcsProperties {
 
 	public enum Property {
 
-		SHIB_USERNAME, SHIB_IDP, MYPROXY_USERNAME, MYPROXY_HOST, MYPROXY_PORT, HTTP_PROXY_HOST, HTTP_PROXY_PORT, HTTP_PROXY_USERNAME, DISABLE_DEPENDENCY_MANAGEMENT
+		SHIB_USERNAME,
+		SHIB_IDP,
+		MYPROXY_USERNAME,
+		MYPROXY_HOST,
+		MYPROXY_PORT,
+		HTTP_PROXY_HOST,
+		HTTP_PROXY_PORT,
+		HTTP_PROXY_USERNAME,
+		DISABLE_DEPENDENCY_MANAGEMENT
 
 	}
 
 	private static CommonArcsProperties singleton = null;
 
 	public static final String ARCS_PROPERTIES_FILE = ArcsEnvironment.ARCS_DEFAULT_DIRECTORY
-			+ File.separator + "arcs.properties";
+	+ File.separator + "arcs.properties";
 
 	public static CommonArcsProperties getDefault() {
 		if (singleton == null) {
@@ -44,6 +52,10 @@ public class CommonArcsProperties {
 		return result;
 	}
 
+	public String getLastMyProxyUsername() {
+		return getArcsProperty(Property.MYPROXY_USERNAME);
+	}
+
 	public String getLastShibIdp() {
 		return getArcsProperty(Property.SHIB_IDP);
 	}
@@ -62,6 +74,10 @@ public class CommonArcsProperties {
 		} catch (ConfigurationException e) {
 			throw new RuntimeException(e);
 		}
+	}
+
+	public void setLastMyProxyUsername(String username) {
+		setArcsProperty(Property.MYPROXY_USERNAME, username);
 	}
 
 	public void setLastShibIdp(String idp) {
