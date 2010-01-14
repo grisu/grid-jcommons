@@ -90,6 +90,7 @@ public class Constants {
 
 	// user properties
 	public static final String DEFAULT_FQAN = "defaultFqan";
+	public static final String DEFAULT_ARCHIVE_LOCATION = "defaultArchiveLocation";
 
 	// default job properties
 	public static final String GENERIC_JOB_LAST_WALLTIME_IN_MINUTES = "genericJobLastWalltime";
