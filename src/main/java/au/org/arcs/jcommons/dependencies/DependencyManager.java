@@ -18,6 +18,7 @@ import au.org.arcs.jcommons.configuration.CommonArcsProperties;
 import au.org.arcs.jcommons.configuration.CommonArcsProperties.Property;
 
 public class DependencyManager {
+	
 
 	public static final String DISABLE_DEPENDENCY_MANAGEMENT = "disableDependencyManagement";
 
@@ -43,8 +44,7 @@ public class DependencyManager {
 		if (!forceDependencyManagement
 				&& (disable == null || !disable.toLowerCase().equals("true"))) {
 
-			System.out
-					.println("Dependency management disabled. Not resolving dependencies.");
+			myLogger.info("Dependency management disabled. Not resolving dependencies.");
 			return;
 
 		}
@@ -52,8 +52,7 @@ public class DependencyManager {
 		String value = CommonArcsProperties.getDefault().getArcsProperty(
 				Property.DISABLE_DEPENDENCY_MANAGEMENT);
 		if (value != null && "true".equals(value.toLowerCase())) {
-			System.out
-					.println("Dependency management disabled. Not resolving dependencies.");
+			myLogger.info("Dependency management disabled. Not resolving dependencies.");
 			return;
 		}
 
@@ -84,7 +83,7 @@ public class DependencyManager {
 							+ "\" manually and put it in the folder:\n"
 							+ folder.toString();
 
-					System.err.println(message);
+					myLogger.error(message);
 
 					if (showDownloadDialog) {
 						dialog.dispose();
@@ -147,8 +146,6 @@ public class DependencyManager {
 	private static File downloadJar(String url, File file) throws IOException {
 
 		myLogger.info("Downloading dependency jar: " + url);
-
-		System.out.println("Downloading dependency jar: " + url);
 
 		String filename = url.substring(url.lastIndexOf("/") + 1);
 
