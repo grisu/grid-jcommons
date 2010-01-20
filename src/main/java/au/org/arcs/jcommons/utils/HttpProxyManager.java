@@ -10,13 +10,24 @@ import au.org.arcs.jcommons.configuration.CommonArcsProperties;
 
 public class HttpProxyManager {
 
+	private static String currentHttpProxyHost = null;
+	private static int currentHttpProxyPort = 80;
+
+	public static String getCurrentHttpProxyHost() {
+		return currentHttpProxyHost;
+	}
+
+	public static int getCurrentHttpProxyPort() {
+		return currentHttpProxyPort;
+	}
+
 	public static String lastTimeHttpProxyAuthUsername() {
 
 		String httproxyusername = CommonArcsProperties.getDefault()
-				.getArcsProperty(
-						CommonArcsProperties.Property.HTTP_PROXY_USERNAME);
+		.getArcsProperty(
+				CommonArcsProperties.Property.HTTP_PROXY_USERNAME);
 
-		if (httproxyusername == null || "".equals(httproxyusername)) {
+		if ((httproxyusername == null) || "".equals(httproxyusername)) {
 			return httproxyusername;
 		} else {
 			return null;
@@ -24,7 +35,7 @@ public class HttpProxyManager {
 	}
 
 	// public static void askForHttpProxyAuthIfNecessarySwing() {
-	//		
+	//
 	// String username =
 	// CommonArcsProperties.getDefault().getArcsProperty(CommonArcsProperties.Property.HTTP_PROXY_USERNAME);
 	// if ( username != null && !"".equals(username) ) {
@@ -32,7 +43,7 @@ public class HttpProxyManager {
 	// dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 	// dialog.setVisible(true);
 	// }
-	//		
+	//
 	// }
 
 	public static String lastTimeHttpProxyHost() {
@@ -43,14 +54,14 @@ public class HttpProxyManager {
 	public static Integer lastTimeHttpProxyPort() {
 
 		return Integer
-				.parseInt(CommonArcsProperties.getDefault().getArcsProperty(
-						CommonArcsProperties.Property.HTTP_PROXY_PORT));
+		.parseInt(CommonArcsProperties.getDefault().getArcsProperty(
+				CommonArcsProperties.Property.HTTP_PROXY_PORT));
 	}
 
 	public static void setDefaultHttpProxy() {
 
 		String httpProxy = lastTimeHttpProxyHost();
-		if (httpProxy == null || "".equals(httpProxy)) {
+		if ((httpProxy == null) || "".equals(httpProxy)) {
 			return;
 		}
 		int httpProxyPort = lastTimeHttpProxyPort();
@@ -87,6 +98,8 @@ public class HttpProxyManager {
 					CommonArcsProperties.Property.HTTP_PROXY_HOST, "");
 			CommonArcsProperties.getDefault().setArcsProperty(
 					CommonArcsProperties.Property.HTTP_PROXY_PORT, "");
+			currentHttpProxyHost = null;
+			currentHttpProxyPort = 80;
 		} else {
 			System.getProperties().put("proxySet", "true");
 			System.getProperties().put("proxyHost", proxyHost);
@@ -94,12 +107,14 @@ public class HttpProxyManager {
 					new Integer(proxyPort).toString());
 			System.setProperty("http.proxyHost", proxyHost);
 			System.setProperty("http.proxyPort", new Integer(proxyPort)
-					.toString());
+			.toString());
 			CommonArcsProperties.getDefault().setArcsProperty(
 					CommonArcsProperties.Property.HTTP_PROXY_HOST, proxyHost);
 			CommonArcsProperties.getDefault().setArcsProperty(
 					CommonArcsProperties.Property.HTTP_PROXY_PORT,
 					new Integer(proxyPort).toString());
+			currentHttpProxyHost = proxyHost;
+			currentHttpProxyPort = proxyPort;;
 		}
 
 	}
@@ -113,11 +128,11 @@ public class HttpProxyManager {
 			System.getProperties().put(
 					"http_proxy",
 					"http://" + username + ":" + new String(password) + "@"
-							+ proxyHost + ":" + proxyPort + "/");
+					+ proxyHost + ":" + proxyPort + "/");
 			System.getProperties().put(
 					"https_proxy",
 					"http://" + username + ":" + new String(password) + "@"
-							+ proxyHost + ":" + proxyPort + "/");
+					+ proxyHost + ":" + proxyPort + "/");
 		} else {
 			// for jython
 			System.getProperties().put("http_proxy",
