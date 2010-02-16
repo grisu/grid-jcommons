@@ -5,7 +5,7 @@ public class Constants {
 	public static final String GENERIC_APPLICATION_NAME = "generic";
 	public static final String NO_VERSION_INDICATOR_STRING = "any_version";
 
-	public static final String ALLJOBS_KEY = "allJobs";
+	public static final String ALLJOBS_KEY = "alljobs";
 
 	public static final String STATUS_STRING = "status";
 
@@ -69,6 +69,8 @@ public class Constants {
 	public static final String RELATIVE_PATH_FROM_JOBDIR = "relativePathToBatchDir";
 	public static final String RELATIVE_BATCHJOB_DIRECTORY_KEY = "batchjob_directory";
 	public static final String JOBNAME_CREATION_METHOD_KEY = "jobnameCreationMethod";
+	public static final String BATCHJOB_OPTIMIZATION_RESULT = "optimizationResult";
+
 	// batchjob distribution
 	public static final String DISTRIBUTION_METHOD = "distributionMethod";
 	public static final String DISTRIBUTION_METHOD_EQUAL = "equal";
