@@ -145,4 +145,10 @@ public interface GridResource extends Comparable<GridResource> {
 	 */
 	boolean isDesiredSoftwareVersionInstalled();
 
+        /**
+         * In order to support multiple GRAM versions for different compute elements
+         * @return version of Grid Resource Manager
+         */
+        String getGRAMVersion();
+
 }
