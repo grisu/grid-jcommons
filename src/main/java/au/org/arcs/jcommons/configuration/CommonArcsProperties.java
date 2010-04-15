@@ -26,7 +26,7 @@ public class CommonArcsProperties {
 
 	private static CommonArcsProperties singleton = null;
 
-	public static final String ARCS_PROPERTIES_FILE = ArcsEnvironment.ARCS_DEFAULT_DIRECTORY
+	public static final String ARCS_PROPERTIES_FILE = ArcsEnvironment.getArcsConfigDirectory()
 	+ File.separator + "arcs.properties";
 
 	public static CommonArcsProperties getDefault() {

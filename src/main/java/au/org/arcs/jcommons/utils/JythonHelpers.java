@@ -8,8 +8,8 @@ public class JythonHelpers {
 
 	public static void setJythonCachedir() {
 		System.setProperty("python.cachedir",
-				ArcsEnvironment.ARCS_DEFAULT_DIRECTORY + File.separator
-						+ "cachedir");
+				ArcsEnvironment.getArcsConfigDirectory() + File.separator
+				+ "cachedir");
 	}
 
 }

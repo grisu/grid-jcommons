@@ -6,7 +6,7 @@ import org.apache.commons.lang.StringUtils;
 
 public class ArcsEnvironment {
 
-	public static final String ARCS_DEFAULT_DIRECTORY = System
+	private static final String ARCS_DEFAULT_DIRECTORY = System
 	.getProperty("user.home")
 	+ File.separator + ".arcs";
 	public static final int DEFAULT_MYPROXY_PORT = 443;
