@@ -36,8 +36,8 @@ public class ArcsEnvironment {
 
 		File arcsDir = null;
 
-		if ( StringUtils.isNotBlank(System.getProperty("arcs.config.home")) ) {
-			arcsDir = new File(System.getProperty("arcs.config.home"));
+		if ( StringUtils.isNotBlank(System.getProperty("arcs.common.home")) ) {
+			arcsDir = new File(System.getProperty("arcs.common.home"));
 		} else {
 			arcsDir = new File(ARCS_DEFAULT_DIRECTORY);
 		}
