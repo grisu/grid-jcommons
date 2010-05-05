@@ -29,6 +29,7 @@ public class Constants {
 	public static final String INPUT_FILE_URLS_KEY = "input_files";
 	public static final String MODULES_KEY = "modules";
 	public static final String SUBMISSION_TYPE_KEY = "submissionType";
+	public static final String HOSTCOUNT_KEY = "hostCount";
 
 	// Other job property strings
 	public static final String QUEUE_KEY = "queue";
@@ -52,7 +53,6 @@ public class Constants {
 	public static final String APPLICATIONVERSION_CALCULATED_KEY = "application_version_calculated";
 	public static final String SUBMISSIONLOCATION_CALCULATED_KEY = "submissionlocation_calculated";
 
-
 	public static final String NON_VO_FQAN = "None";
 
 	public static final String SEND_EMAIL_ON_JOB_START_ATTRIBUTE_KEY = "sendOnJobStart";
@@ -63,6 +63,7 @@ public class Constants {
 	public static final String FORCE_NAME_METHOD = "force-name";
 	public static final String UUID_NAME_METHOD = "uuid";
 	public static final String TIMESTAMP_METHOD = "timestamp";
+	public static final String UNIQUE_NUMBER_METHOD = "uniqueNumber";
 
 	// batchjob properties
 	public static final String BATCHJOB_NAME = "batchjobname";

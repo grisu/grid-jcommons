@@ -880,6 +880,44 @@ public final class JsdlHelpers {
 		return processorCount;
 	}
 
+	/**
+	 * Parses the jsdl document and returns the value of the TotalCPUCount
+	 * element.
+	 * 
+	 * @param jsdl
+	 *            the jsdl document
+	 * @return the number of cpus used in this job
+	 */
+	public static int getResourceCount(final Document jsdl) {
+
+		String expression = "/jsdl:JobDefinition/jsdl:JobDescription/jsdl:Application/jsdl:TotalResourceCount/jsdl:exact";
+		NodeList resultNodes = null;
+		try {
+			resultNodes = (NodeList) xpath.evaluate(expression, jsdl,
+					XPathConstants.NODESET);
+		} catch (XPathExpressionException e) {
+			myLogger.warn("No jobname in jsdl file.");
+			return -1;
+		}
+
+		if (resultNodes.getLength() != 1) {
+			myLogger
+					.warn("This template doesn't specify a (correct) TotalResrourceCount element. ");
+			return -1;
+		}
+
+		int resourceCount;
+		try {
+			resourceCount = new Integer(resultNodes.item(0).getTextContent());
+		} catch (NumberFormatException e) {
+			myLogger.error("No valid number entry in the walltime element.");
+			return -1;
+		}
+
+		return resourceCount;
+
+	}
+
 	// /**
 	// * Adds submission locations to the job.
 	// *

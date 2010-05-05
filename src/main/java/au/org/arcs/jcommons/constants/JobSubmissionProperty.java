@@ -100,7 +100,12 @@ public enum JobSubmissionProperty {
 	 * A comma-seperated list of modules you want to load. This should only be
 	 * used in if you know what you are doing. Defaults to null.
 	 */
-	MODULES(Constants.MODULES_KEY, ""), PBSDEBUG(Constants.PBSDEBUG_KEY, "");
+	MODULES(Constants.MODULES_KEY, ""), PBSDEBUG(Constants.PBSDEBUG_KEY, ""),
+
+	/**
+	 * The number of hosts to spread the job. Only important for threaded jobs.
+	 */
+	HOSTCOUNT(Constants.HOSTCOUNT_KEY, "-1");
 
 	private static final Map<String, JobSubmissionProperty> stringToJobPropertyMap = new HashMap<String, JobSubmissionProperty>();
 	static {
@@ -112,6 +117,7 @@ public enum JobSubmissionProperty {
 	public static JobSubmissionProperty fromString(final String key) {
 		return stringToJobPropertyMap.get(key);
 	}
+
 	private final String keyName;
 
 	private final String defaultValue;
