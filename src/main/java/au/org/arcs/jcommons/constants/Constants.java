@@ -48,6 +48,8 @@ public class Constants {
 	public static final String MDS_PARALLEL_AVAIL_KEY = "parallelAvail";
 	public static final String MDS_SERIAL_AVAIL_KEY = "serialAvail";
 
+	public static final String JOB_RESULT_FILENAME_PATTERNS = "resultFilenamePatterns";
+
 	// properties that display what happend during jsdl calculation
 	public static final String APPLICATIONNAME_CALCULATED_KEY = "application_name_calculated";
 	public static final String APPLICATIONVERSION_CALCULATED_KEY = "application_version_calculated";
