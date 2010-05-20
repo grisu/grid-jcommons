@@ -110,4 +110,7 @@ public class Constants {
 	public static final String RIGHT_FILE_BROWSER_LAST_URL = "right_fileBrowser_last_url";
 	public static final String DEFAULT_VERSION = "default_version_";
 
+	// Status prefixes
+	public static final String REDISTRIBUTE = "REDISTRIBUTE_";
+
 }
