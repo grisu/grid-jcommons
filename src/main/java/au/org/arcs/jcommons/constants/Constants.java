@@ -25,7 +25,7 @@ public class Constants {
 	public static final String STDOUT_KEY = "stdout";
 	public static final String STDERR_KEY = "stderr";
 	public static final String STDIN_KEY = "stdin";
-	public static final String SUBMISSIONLOCATION_KEY = "submissionlocation";
+	public static final String SUBMISSIONLOCATION_KEY = "submissionLocation";
 	public static final String INPUT_FILE_URLS_KEY = "input_files";
 	public static final String MODULES_KEY = "modules";
 	public static final String SUBMISSION_TYPE_KEY = "submissionType";
