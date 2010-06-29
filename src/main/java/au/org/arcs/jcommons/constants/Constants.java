@@ -12,7 +12,7 @@ public class Constants {
 	// Static strings for JobProperty objects
 	public static final String JOBNAME_KEY = "jobname";
 	public static final String APPLICATIONNAME_KEY = "application";
-	public static final String APPLICATIONVERSION_KEY = "version";
+	public static final String APPLICATIONVERSION_KEY = "applicationVersion";
 	public static final String NO_CPUS_KEY = "cpus";
 	public static final String FORCE_SINGLE_KEY = "force_single";
 	public static final String FORCE_MPI_KEY = "force_mpi";
@@ -26,10 +26,12 @@ public class Constants {
 	public static final String STDERR_KEY = "stderr";
 	public static final String STDIN_KEY = "stdin";
 	public static final String SUBMISSIONLOCATION_KEY = "submissionLocation";
-	public static final String INPUT_FILE_URLS_KEY = "input_files";
+	public static final String INPUT_FILE_URLS_KEY = "inputFilesUrls";
 	public static final String MODULES_KEY = "modules";
 	public static final String SUBMISSION_TYPE_KEY = "submissionType";
 	public static final String HOSTCOUNT_KEY = "hostCount";
+
+	public static final String PBS_DEBUG_KEY = "pbsDebug";
 
 	// Other job property strings
 	public static final String QUEUE_KEY = "queue";
