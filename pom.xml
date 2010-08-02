@@ -1,12 +1,12 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 	<modelVersion>4.0.0</modelVersion>
-	<groupId>au.org.arcs.commons</groupId>
-	<artifactId>arcs-jcommons</artifactId>
-	<name>ARCS JCommons</name>
+	<groupId>org.bestgrid</groupId>
+	<artifactId>grid-jcommons</artifactId>
+	<name>Grid JCommons</name>
 	<version>1.1-SNAPSHOT</version>
 	<description>Java Interfaces, Constants and helper classes that are
-		used in more than one of the ARCS projects.</description>
+		used in more than one of the grid related projects.</description>
 
 	<repositories>
 		<repository>
@@ -63,9 +63,9 @@
 	</dependencies>
 
 	<scm>
-		<connection>scm:git:git://code.arcs.org.au/arcs-java-commons/jcommons.git
+		<connection>scm:git:git://code.arcs.org.au/bestgrid/grid-commons.git
 		</connection>
-		<url>scm:git:git://code.arcs.org.au/arcs-java-commons/jcommons.git
+		<url>scm:git:git://code.arcs.org.au/bestgrid/grid-commons.git
 		</url>
 	</scm>
 
