@@ -111,6 +111,7 @@ public class Constants {
 	public static final String LEFT_FILE_BROWSER_LAST_URL = "left_fileBrowser_last_url";
 	public static final String RIGHT_FILE_BROWSER_LAST_URL = "right_fileBrowser_last_url";
 	public static final String DEFAULT_VERSION = "default_version_";
+	public static final String CLEAR_MOUNTPOINT_CACHE = "clearMountPointCache";
 
 	// Status prefixes
 	public static final String REDISTRIBUTE = "REDISTRIBUTE_";
