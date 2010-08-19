@@ -49,6 +49,7 @@ public class Constants {
 	public static final String MDS_MODULES_KEY = "Module";
 	public static final String MDS_PARALLEL_AVAIL_KEY = "parallelAvail";
 	public static final String MDS_SERIAL_AVAIL_KEY = "serialAvail";
+	public static final String EXECUTABLE_KEY = "executable";
 
 	public static final String JOB_RESULT_FILENAME_PATTERNS = "resultFilenamePatterns";
 
