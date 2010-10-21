@@ -11,23 +11,14 @@ public class CommonArcsProperties {
 
 	public enum Property {
 
-		SHIB_USERNAME,
-		SHIB_IDP,
-		MYPROXY_USERNAME,
-		MYPROXY_HOST,
-		MYPROXY_PORT,
-		HTTP_PROXY_HOST,
-		HTTP_PROXY_PORT,
-		HTTP_PROXY_USERNAME,
-		DISABLE_DEPENDENCY_MANAGEMENT,
-		DEBUG_UNCAUGHT_EXCEPTIONS
+		SHIB_USERNAME, SHIB_IDP, MYPROXY_USERNAME, MYPROXY_HOST, MYPROXY_PORT, HTTP_PROXY_HOST, HTTP_PROXY_PORT, HTTP_PROXY_USERNAME, DISABLE_DEPENDENCY_MANAGEMENT, DEBUG_UNCAUGHT_EXCEPTIONS
 
 	}
 
 	private static CommonArcsProperties singleton = null;
 
-	public static final String ARCS_PROPERTIES_FILE = ArcsEnvironment.getArcsConfigDirectory()
-	+ File.separator + "arcs.properties";
+	public static final String ARCS_PROPERTIES_FILE = ArcsEnvironment
+			.getArcsConfigDirectory() + File.separator + "arcs.properties";
 
 	public static CommonArcsProperties getDefault() {
 		if (singleton == null) {
@@ -38,7 +29,7 @@ public class CommonArcsProperties {
 
 	private final PropertiesConfiguration config;
 
-	public CommonArcsProperties() {
+	private CommonArcsProperties() {
 		try {
 			config = new PropertiesConfiguration(new File(ARCS_PROPERTIES_FILE));
 		} catch (ConfigurationException e) {
@@ -50,6 +41,11 @@ public class CommonArcsProperties {
 
 		String result = config.getString(prop.toString());
 
+		return result;
+	}
+
+	public int getArcsPropertyInt(Property prop) {
+		int result = config.getInt(prop.toString(), Integer.MIN_VALUE);
 		return result;
 	}
 

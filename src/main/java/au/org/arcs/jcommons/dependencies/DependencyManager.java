@@ -18,7 +18,6 @@ import au.org.arcs.jcommons.configuration.CommonArcsProperties;
 import au.org.arcs.jcommons.configuration.CommonArcsProperties.Property;
 
 public class DependencyManager {
-	
 
 	public static final String DISABLE_DEPENDENCY_MANAGEMENT = "disableDependencyManagement";
 
@@ -42,7 +41,7 @@ public class DependencyManager {
 		String disable = System.getProperty("disableDependencyManagement");
 
 		if (!forceDependencyManagement
-				&& (disable == null || !disable.toLowerCase().equals("true"))) {
+				&& ((disable == null) || !disable.toLowerCase().equals("true"))) {
 
 			myLogger.info("Dependency management disabled. Not resolving dependencies.");
 			return;
@@ -51,7 +50,7 @@ public class DependencyManager {
 
 		String value = CommonArcsProperties.getDefault().getArcsProperty(
 				Property.DISABLE_DEPENDENCY_MANAGEMENT);
-		if (value != null && "true".equals(value.toLowerCase())) {
+		if ((value != null) && "true".equals(value.toLowerCase())) {
 			myLogger.info("Dependency management disabled. Not resolving dependencies.");
 			return;
 		}

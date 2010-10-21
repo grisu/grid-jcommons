@@ -4,12 +4,13 @@ import java.io.File;
 
 import org.apache.commons.lang.StringUtils;
 
+import au.org.arcs.jcommons.configuration.CommonArcsProperties;
+
 public class ArcsEnvironment {
 
 	private static final String ARCS_DEFAULT_DIRECTORY = System
-	.getProperty("user.home")
-	+ File.separator + ".arcs";
-	public static final int DEFAULT_MYPROXY_PORT = 443;
+			.getProperty("user.home") + File.separator + ".arcs";
+	public static final int DEFAULT_MYPROXY_PORT = 7512;
 	public static final String DEFAULT_MYPROXY_SERVER = "myproxy.arcs.org.au";
 
 	public static File getArcsCommonDirectory() {
@@ -36,7 +37,7 @@ public class ArcsEnvironment {
 
 		File arcsDir = null;
 
-		if ( StringUtils.isNotBlank(System.getProperty("arcs.common.home")) ) {
+		if (StringUtils.isNotBlank(System.getProperty("arcs.common.home"))) {
 			arcsDir = new File(System.getProperty("arcs.common.home"));
 		} else {
 			arcsDir = new File(ARCS_DEFAULT_DIRECTORY);
@@ -52,7 +53,7 @@ public class ArcsEnvironment {
 	public static File getArcsHelperScriptsDirectory() {
 
 		String dir = getArcsConfigDirectory() + File.separator
-		+ "helperScripts";
+				+ "helperScripts";
 		File file = new File(dir);
 		if (!file.exists()) {
 			file.mkdirs();
@@ -61,11 +62,41 @@ public class ArcsEnvironment {
 	}
 
 	public static int getDefaultMyProxyPort() {
-		return 443;
+
+		int port = CommonArcsProperties.getDefault().getArcsPropertyInt(
+				CommonArcsProperties.Property.MYPROXY_PORT);
+
+		if (port != Integer.MIN_VALUE) {
+			return port;
+		}
+
+		String env = System.getProperty("myproxy.port");
+		try {
+			port = Integer.parseInt(env);
+			return port;
+		} catch (Exception e) {
+			return DEFAULT_MYPROXY_PORT;
+		}
+
 	}
 
 	public static String getDefaultMyProxyServer() {
-		return "myproxy2.arcs.org.au";
+
+		String server = CommonArcsProperties.getDefault().getArcsProperty(
+				CommonArcsProperties.Property.MYPROXY_PORT);
+
+		if (StringUtils.isNotBlank(server)) {
+			return server;
+		}
+
+		String env = System.getProperty("myproxy.host");
+
+		if (StringUtils.isNotBlank(env)) {
+			return env;
+		}
+
+		return DEFAULT_MYPROXY_SERVER;
+
 	}
 
 }
