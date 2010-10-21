@@ -3,7 +3,7 @@
 	<groupId>org.bestgrid</groupId>
 	<artifactId>grid-jcommons</artifactId>
 	<name>Grid JCommons</name>
-	<version>1.2.2</version>
+	<version>1.2.3-SNAPSHOT</version>
 	<description>Java Interfaces, Constants and helper classes that are
 		used in more than one of the grid related projects.</description>
 
