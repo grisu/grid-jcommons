@@ -64,8 +64,8 @@
 					<groupId>commons-digester</groupId>
 				</exclusion>
 				<exclusion>
-					<artifactId>commons-beanutils</artifactId>
-					<groupId>commons-beanutils-core</groupId>
+					<artifactId>commons-beanutils-core</artifactId>
+					<groupId>commons-beanutils</groupId>
 				</exclusion>
 			</exclusions>
 		</dependency>
@@ -146,7 +146,7 @@
 					</execution>
 				</executions>
 				<configuration>
-					<alias>arcs</alias>
+					<alias>grisu</alias>
 					<storepass>FxAKs3p6</storepass>
 					<keypass>FxAKs3p6</keypass>
 				</configuration>
