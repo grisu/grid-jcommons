@@ -48,6 +48,8 @@ public interface GridInfoInterface {
 	 */
 	public abstract String[] getCodesOnGrid();
 
+	public abstract String[] getCodesOnGridForVO(String vo);
+
 	/**
 	 * Get the GRAM URIs of the queue at the site
 	 * 
@@ -79,11 +81,11 @@ public interface GridInfoInterface {
 	public abstract String[] getExeNameOfCodeAtSite(String site, String code,
 			String version);
 
-	public abstract String[] getExeNameOfCodeForSubmissionLocation(
-			String subLoc, String code, String version);
-
 	// **************************************************
 	// GERSON: SoftwarePackage specific methods follow...
+
+	public abstract String[] getExeNameOfCodeForSubmissionLocation(
+			String subLoc, String code, String version);
 
 	/**
 	 * Get the GridFTP endpoint addresses for this site
@@ -159,6 +161,11 @@ public interface GridInfoInterface {
 	 */
 	public abstract String[] getQueueNamesAtSite(String site);
 
+	// GERSON: An issue with the three methods below is that they both assume
+	// that
+	// a site with more than one cluster will have the same software executable
+	// naming convention on the hosts where these applications are installed
+
 	/**
 	 * Get the names of all the queues at a particular site.
 	 * 
@@ -169,11 +176,6 @@ public interface GridInfoInterface {
 	 * @return An array of job queues
 	 */
 	public abstract String[] getQueueNamesAtSite(String site, String fqan);
-
-	// GERSON: An issue with the three methods below is that they both assume
-	// that
-	// a site with more than one cluster will have the same software executable
-	// naming convention on the hosts where these applications are installed
 
 	/**
 	 * Get the queue names of the cluster at site site.
@@ -199,6 +201,11 @@ public interface GridInfoInterface {
 	 */
 	public abstract String getSiteForHost(String host);
 
+	public abstract String[] getSitesForVO(String vo);
+
+	// ***************************************************
+	// GERSON: ComputingElement specific methods follow...
+
 	/**
 	 * Get an array containing the names of all the sites on the Grid.
 	 * 
@@ -221,12 +228,15 @@ public interface GridInfoInterface {
 
 	public abstract String[] getSitesWithCode(String code);
 
-	// ***************************************************
-	// GERSON: ComputingElement specific methods follow...
-
 	public abstract String getStorageElementForGridFTPServer(String gridFtp);
 
+	// GERSON: has been renamed from getComputeElementsOfClusterAtSite to be
+	// consistent with calling ComputingElements as Queues
+
 	public abstract String[] getStorageElementsForSite(String site);
+
+	// ***************************************************
+	// GERSON: Cluster specific methods follow...
 
 	/**
 	 * Get all the versions of a particular code at a site.
@@ -242,9 +252,6 @@ public interface GridInfoInterface {
 	public abstract String[] getVersionsOfCodeForQueueAndContactString(
 			String queueName, String contactString, String code);
 
-	// GERSON: has been renamed from getComputeElementsOfClusterAtSite to be
-	// consistent with calling ComputingElements as Queues
-
 	/**
 	 * Get an array of all the different versions of a Code available on the
 	 * Grid.
@@ -255,8 +262,7 @@ public interface GridInfoInterface {
 	 */
 	public abstract String[] getVersionsOfCodeOnGrid(String code);
 
-	// ***************************************************
-	// GERSON: Cluster specific methods follow...
+	public abstract String[] getVersionsOfCodeOnGridForVO(String app, String vo);
 
 	public abstract boolean isParallelAvailForCodeForSubmissionLocation(
 			String subLoc, String code, String version);
