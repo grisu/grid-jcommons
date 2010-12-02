@@ -24,8 +24,8 @@ public class HttpProxyManager {
 	public static String lastTimeHttpProxyAuthUsername() {
 
 		String httproxyusername = CommonArcsProperties.getDefault()
-		.getArcsProperty(
-				CommonArcsProperties.Property.HTTP_PROXY_USERNAME);
+				.getArcsProperty(
+						CommonArcsProperties.Property.HTTP_PROXY_USERNAME);
 
 		if ((httproxyusername == null) || "".equals(httproxyusername)) {
 			return httproxyusername;
@@ -54,8 +54,8 @@ public class HttpProxyManager {
 	public static Integer lastTimeHttpProxyPort() {
 
 		return Integer
-		.parseInt(CommonArcsProperties.getDefault().getArcsProperty(
-				CommonArcsProperties.Property.HTTP_PROXY_PORT));
+				.parseInt(CommonArcsProperties.getDefault().getArcsProperty(
+						CommonArcsProperties.Property.HTTP_PROXY_PORT));
 	}
 
 	public static void setDefaultHttpProxy() {
@@ -106,21 +106,23 @@ public class HttpProxyManager {
 			System.getProperties().put("proxyPort",
 					new Integer(proxyPort).toString());
 			System.setProperty("http.proxyHost", proxyHost);
-			System.setProperty("http.proxyPort", new Integer(proxyPort)
-			.toString());
+			System.setProperty("http.proxyPort",
+					new Integer(proxyPort).toString());
 			CommonArcsProperties.getDefault().setArcsProperty(
 					CommonArcsProperties.Property.HTTP_PROXY_HOST, proxyHost);
 			CommonArcsProperties.getDefault().setArcsProperty(
 					CommonArcsProperties.Property.HTTP_PROXY_PORT,
 					new Integer(proxyPort).toString());
 			currentHttpProxyHost = proxyHost;
-			currentHttpProxyPort = proxyPort;;
+			currentHttpProxyPort = proxyPort;
+			;
 		}
 
 	}
 
 	public static void setHttpProxy(String proxyHost, int proxyPort,
 			String username, char[] password) {
+
 		setHttpProxy(proxyHost, proxyPort);
 		if (StringUtils.isNotBlank(username)) {
 			setHttpAuth(username, password);
@@ -128,11 +130,11 @@ public class HttpProxyManager {
 			System.getProperties().put(
 					"http_proxy",
 					"http://" + username + ":" + new String(password) + "@"
-					+ proxyHost + ":" + proxyPort + "/");
+							+ proxyHost + ":" + proxyPort + "/");
 			System.getProperties().put(
 					"https_proxy",
 					"http://" + username + ":" + new String(password) + "@"
-					+ proxyHost + ":" + proxyPort + "/");
+							+ proxyHost + ":" + proxyPort + "/");
 		} else {
 			// for jython
 			System.getProperties().put("http_proxy",
@@ -146,6 +148,10 @@ public class HttpProxyManager {
 
 		EventBus.publish(new NewHttpProxyEvent(proxyHost, proxyPort, username,
 				password));
+	}
+
+	public static void useSystemHttpProxy() {
+		System.setProperty("java.net.useSystemProxies", "true");
 	}
 
 }
