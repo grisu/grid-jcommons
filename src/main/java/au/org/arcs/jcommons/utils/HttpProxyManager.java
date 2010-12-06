@@ -4,11 +4,15 @@ import java.net.Authenticator;
 import java.net.PasswordAuthentication;
 
 import org.apache.commons.lang.StringUtils;
+import org.apache.log4j.Logger;
 import org.bushe.swing.event.EventBus;
 
 import au.org.arcs.jcommons.configuration.CommonArcsProperties;
 
 public class HttpProxyManager {
+
+	static final Logger myLogger = Logger.getLogger(HttpProxyManager.class
+			.getName());
 
 	private static String currentHttpProxyHost = null;
 	private static int currentHttpProxyPort = 80;

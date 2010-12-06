@@ -83,7 +83,7 @@ public class ArcsEnvironment {
 	public static String getDefaultMyProxyServer() {
 
 		String server = CommonArcsProperties.getDefault().getArcsProperty(
-				CommonArcsProperties.Property.MYPROXY_PORT);
+				CommonArcsProperties.Property.MYPROXY_HOST);
 
 		if (StringUtils.isNotBlank(server)) {
 			return server;
