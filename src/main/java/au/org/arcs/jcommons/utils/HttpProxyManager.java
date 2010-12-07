@@ -1,5 +1,6 @@
 package au.org.arcs.jcommons.utils;
 
+import java.lang.reflect.Method;
 import java.net.Authenticator;
 import java.net.PasswordAuthentication;
 
@@ -126,6 +127,16 @@ public class HttpProxyManager {
 
 	public static void setHttpProxy(String proxyHost, int proxyPort,
 			String username, char[] password) {
+
+		try {
+			Class shibClass = Class
+					.forName("au.org.arcs.auth.shibboleth.Shibboleth");
+			Method m = shibClass.getMethod("setHttpProxy", String.class,
+					int.class, String.class, char[].class);
+			m.invoke(null, proxyHost, proxyPort, username, password);
+		} catch (Exception e) {
+			// probably not in classpath
+		}
 
 		setHttpProxy(proxyHost, proxyPort);
 		if (StringUtils.isNotBlank(username)) {
