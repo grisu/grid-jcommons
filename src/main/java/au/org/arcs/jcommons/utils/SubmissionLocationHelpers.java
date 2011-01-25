@@ -24,12 +24,12 @@ public final class SubmissionLocationHelpers {
 
 		String contactString = gridResource.getContactString();
 
-		String hostname = contactString.substring(contactString
-				.indexOf("https://") != 0 ? 0 : 8, contactString
-				.indexOf(":8443"));
+		String hostname = contactString.substring(
+				contactString.indexOf("https://") != 0 ? 0 : 8,
+				contactString.indexOf(":8443"));
 
-		return createSubmissionLocationString(hostname, gridResource
-				.getQueueName(), gridResource.getJobManager());
+		return createSubmissionLocationString(hostname,
+				gridResource.getQueueName(), gridResource.getJobManager());
 	}
 
 	/**
@@ -47,9 +47,9 @@ public final class SubmissionLocationHelpers {
 			final InformationManager im, final String contactString,
 			final String queue) {
 
-		String hostname = contactString.substring(contactString
-				.indexOf("https://") != 0 ? 0 : 8, contactString
-				.indexOf(":8443"));
+		String hostname = contactString.substring(
+				contactString.indexOf("https://") != 0 ? 0 : 8,
+				contactString.indexOf(":8443"));
 
 		String site = im.getSiteForHostOrUrl(hostname);
 

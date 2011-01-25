@@ -9,6 +9,7 @@ import javax.swing.JProgressBar;
 public class DownloadingDialog extends JDialog {
 
 	static final long serialVersionUID = -7493900276355066466L;
+
 	/**
 	 * Launch the application.
 	 */
@@ -25,6 +26,7 @@ public class DownloadingDialog extends JDialog {
 			}
 		});
 	}
+
 	private JProgressBar progressBar;
 
 	private JLabel label;

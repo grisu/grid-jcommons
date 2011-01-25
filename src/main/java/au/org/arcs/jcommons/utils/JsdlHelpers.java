@@ -87,21 +87,18 @@ public final class JsdlHelpers {
 		}
 
 		if (resultNodes != null && resultNodes.getLength() == 1) {
-			myLogger
-					.info("There's already a filesystem with that name. Returning that one.");
+			myLogger.info("There's already a filesystem with that name. Returning that one.");
 			Element fs = (Element) resultNodes.item(0);
 			NodeList childs = fs.getElementsByTagName("MountSource");
 			if (childs.getLength() != 1) {
-				myLogger
-						.error("Filesystem element has got more or less than one MountSource elements. That shouldn't be possible.");
+				myLogger.error("Filesystem element has got more or less than one MountSource elements. That shouldn't be possible.");
 				return null;
 			}
 			((Element) childs.item(0)).setTextContent(fileSystemRoot);
 			return fs;
 		}
 		if (resultNodes != null && resultNodes.getLength() > 1) {
-			myLogger
-					.error("More than one filesystems found. That is not possible.");
+			myLogger.error("More than one filesystems found. That is not possible.");
 			for (int i = 0; i < resultNodes.getLength(); i++) {
 				myLogger.error(resultNodes.item(i).getNodeName() + ": "
 						+ resultNodes.item(i).getTextContent());
@@ -399,8 +396,7 @@ public final class JsdlHelpers {
 
 		if (resultNodes.getLength() == 0) {
 			// try old version
-			myLogger
-					.debug("Couldn't find email element. Trying old email element...");
+			myLogger.debug("Couldn't find email element. Trying old email element...");
 			return getEmailElement_OLD(jsdl);
 		}
 		if (resultNodes.getLength() != 1) {
@@ -424,8 +420,7 @@ public final class JsdlHelpers {
 		if (resultNodes.getLength() != 1) {
 			return null;
 		} else {
-			myLogger
-					.error("Found email, but it is in the wrong spot. Please change your template so the \"Email\" element is now under: \"/JobDescription/jsdl-arcs:GrisuTemplate/\"");
+			myLogger.error("Found email, but it is in the wrong spot. Please change your template so the \"Email\" element is now under: \"/JobDescription/jsdl-arcs:GrisuTemplate/\"");
 		}
 		return (Element) resultNodes.item(0);
 	}
@@ -583,8 +578,7 @@ public final class JsdlHelpers {
 			for (int i = 0; i < resultNodes.getLength(); i++) {
 				modules[i] = resultNodes.item(i).getTextContent();
 			}
-			myLogger
-					.debug("Found modules but they are specified in the wrong (old) location within the jsdl document. Please change your template/jsdl file according to https://projects.arcs.org.au/trac/grisu/wiki/GlobusToolkitSubmitter");
+			myLogger.debug("Found modules but they are specified in the wrong (old) location within the jsdl document. Please change your template/jsdl file according to https://projects.arcs.org.au/trac/grisu/wiki/GlobusToolkitSubmitter");
 			return modules;
 		}
 
@@ -609,8 +603,7 @@ public final class JsdlHelpers {
 			resultNodes = (NodeList) xpath.evaluate(expression, jsdl,
 					XPathConstants.NODESET);
 		} catch (XPathExpressionException e) {
-			myLogger
-					.warn("No mountsource element with that name in jsdl file.");
+			myLogger.warn("No mountsource element with that name in jsdl file.");
 			return null;
 		}
 
@@ -619,8 +612,7 @@ public final class JsdlHelpers {
 			return null;
 		}
 		if (resultNodes.getLength() != 1) {
-			myLogger
-					.error("More than one or no matching filesystems found. That is not possible.");
+			myLogger.error("More than one or no matching filesystems found. That is not possible.");
 			for (int i = 0; i < resultNodes.getLength(); i++) {
 				myLogger.error(resultNodes.item(i).getNodeName() + ": "
 						+ resultNodes.item(i).getTextContent());
@@ -659,8 +651,7 @@ public final class JsdlHelpers {
 			return null;
 		}
 		if (resultNodes.getLength() != 1) {
-			myLogger
-					.debug("Found more than one pbs debug element. Not returning anything.");
+			myLogger.debug("Found more than one pbs debug element. Not returning anything.");
 			return null;
 		}
 		String value = ((Element) resultNodes.item(0)).getTextContent();
@@ -831,8 +822,7 @@ public final class JsdlHelpers {
 		}
 
 		if (resultNodes.getLength() != 1) {
-			myLogger
-					.warn("This template doesn't specify a (correct) TotalCPUCount element. Please have a look at your template and replace a possible <TotalCPUCount>2</TotalCPUCount> elemnt with something like: <TotalCPUCount><exact>2</exact></TotalCPUCount> Trying old, incorrect implementation...");
+			myLogger.warn("This template doesn't specify a (correct) TotalCPUCount element. Please have a look at your template and replace a possible <TotalCPUCount>2</TotalCPUCount> elemnt with something like: <TotalCPUCount><exact>2</exact></TotalCPUCount> Trying old, incorrect implementation...");
 			// this is just for backwards compatibility because I got the
 			// TotalCPUCount element wrong before...
 			return getProcessorCount_OLD(jsdl);
@@ -865,8 +855,7 @@ public final class JsdlHelpers {
 		if (resultNodes.getLength() != 1) {
 			return -1;
 		} else {
-			myLogger
-					.error("Template uses incorrect specification of TotalCPUCount element. Please replace <TotalCPUCount>2</TotalCPUCount> elemnt with something like: <TotalCPUCount><exact>2</exact></TotalCPUCount>.");
+			myLogger.error("Template uses incorrect specification of TotalCPUCount element. Please replace <TotalCPUCount>2</TotalCPUCount> elemnt with something like: <TotalCPUCount><exact>2</exact></TotalCPUCount>.");
 		}
 
 		int processorCount;
@@ -901,8 +890,7 @@ public final class JsdlHelpers {
 		}
 
 		if (resultNodes.getLength() != 1) {
-			myLogger
-					.warn("This template doesn't specify a (correct) TotalResrourceCount element. ");
+			myLogger.warn("This template doesn't specify a (correct) TotalResrourceCount element. ");
 			return -1;
 		}
 
@@ -984,8 +972,7 @@ public final class JsdlHelpers {
 
 		if (resultNodes == null || resultNodes.getLength() == 0
 				|| resultNodes.getLength() > 1) {
-			myLogger
-					.info("No or more than one Resource elements found. That's not possible");
+			myLogger.info("No or more than one Resource elements found. That's not possible");
 			return null;
 		}
 
@@ -1083,8 +1070,7 @@ public final class JsdlHelpers {
 		NodeList sources = stageInElement.getElementsByTagName("Source");
 		if (sources.getLength() != 1) {
 			// not implemented/possible?
-			myLogger
-					.error("More than one/no source element in stageIn element.");
+			myLogger.error("More than one/no source element in stageIn element.");
 			throw new RuntimeException(
 					"More than one/no source element in stageIn element.");
 		}
@@ -1146,8 +1132,7 @@ public final class JsdlHelpers {
 
 		if (filesystems.getLength() != 1) {
 			// not implemented/possible?
-			myLogger
-					.error("More than one/no FileSystemName element in target element.");
+			myLogger.error("More than one/no FileSystemName element in target element.");
 			throw new RuntimeException(
 					"More than one/no FileSystemName element in target element.");
 		}
@@ -1169,8 +1154,7 @@ public final class JsdlHelpers {
 		NodeList filenames = stageInElement.getElementsByTagName("FileName");
 		if (filenames.getLength() != 1) {
 			// not implemented/possible?
-			myLogger
-					.error("More than one/no FileName element in stageIn element.");
+			myLogger.error("More than one/no FileName element in stageIn element.");
 			throw new RuntimeException(
 					"More than one/no FileName element in stageIn element.");
 		}
@@ -1205,8 +1189,7 @@ public final class JsdlHelpers {
 
 		if (resultNodes == null || resultNodes.getLength() == 0
 				|| resultNodes.getLength() > 1) {
-			myLogger
-					.info("No or more than one Resource elements found. That's not possible");
+			myLogger.info("No or more than one Resource elements found. That's not possible");
 			return null;
 		}
 
@@ -1467,7 +1450,7 @@ public final class JsdlHelpers {
 		// for ( int i=0; i<resultNodes.item(0).getChildNodes().getLength(); i++
 		// ) {
 		// resultNodes.item(0).removeChild(resultNodes.item(0).getChildNodes().item(i));
-		//			
+		//
 		// }
 		for (String subLoc : subLocs) {
 			hostName = jsdl.createElementNS(nsURL, "HostName");
