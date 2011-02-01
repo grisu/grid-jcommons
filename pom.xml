@@ -143,11 +143,11 @@
 	<profiles>
 		<profile>
 			<id>sign</id>
-			<activation>
-				<property>
-					<name>BUILD_NUMBER</name>
-				</property>
-			</activation>
+<!--			<activation>-->
+<!--				<property>-->
+<!--					<name>BUILD_NUMBER</name>-->
+<!--				</property>-->
+<!--			</activation>-->
 
 			<build>
 				<plugins>
