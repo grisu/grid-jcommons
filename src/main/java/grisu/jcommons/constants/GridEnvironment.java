@@ -9,14 +9,14 @@ import org.apache.commons.lang.StringUtils;
 
 public class GridEnvironment {
 
-	private static final String ARCS_DEFAULT_DIRECTORY = System
-			.getProperty("user.home") + File.separator + ".arcs";
+	private static final String GRID_DEFAULT_DIRECTORY = System
+	.getProperty("user.home") + File.separator + ".grid";
 	public static final int DEFAULT_MYPROXY_PORT = 7512;
 	public static final String DEFAULT_MYPROXY_SERVER = "myproxy.arcs.org.au";
 
-	public static File getArcsCommonDirectory() {
+	public static File getGridCommonDirectory() {
 
-		String dir = getArcsConfigDirectory() + File.separator + "common";
+		String dir = getGridConfigDirectory() + File.separator + "common";
 		File file = new File(dir);
 		if (!file.exists()) {
 			file.mkdirs();
@@ -24,9 +24,9 @@ public class GridEnvironment {
 		return file;
 	}
 
-	public static File getArcsCommonJavaLibDirectory() {
+	public static File getGridCommonJavaLibDirectory() {
 
-		String dir = getArcsConfigDirectory() + File.separator + "lib";
+		String dir = getGridConfigDirectory() + File.separator + "lib";
 		File file = new File(dir);
 		if (!file.exists()) {
 			file.mkdirs();
@@ -34,14 +34,14 @@ public class GridEnvironment {
 		return file;
 	}
 
-	public static File getArcsConfigDirectory() {
+	public static File getGridConfigDirectory() {
 
 		File arcsDir = null;
 
 		if (StringUtils.isNotBlank(System.getProperty("arcs.common.home"))) {
 			arcsDir = new File(System.getProperty("arcs.common.home"));
 		} else {
-			arcsDir = new File(ARCS_DEFAULT_DIRECTORY);
+			arcsDir = new File(GRID_DEFAULT_DIRECTORY);
 		}
 
 		if (!arcsDir.exists()) {
@@ -51,10 +51,10 @@ public class GridEnvironment {
 		return arcsDir;
 	}
 
-	public static File getArcsHelperScriptsDirectory() {
+	public static File getGridHelperScriptsDirectory() {
 
-		String dir = getArcsConfigDirectory() + File.separator
-				+ "helperScripts";
+		String dir = getGridConfigDirectory() + File.separator
+		+ "helperScripts";
 		File file = new File(dir);
 		if (!file.exists()) {
 			file.mkdirs();

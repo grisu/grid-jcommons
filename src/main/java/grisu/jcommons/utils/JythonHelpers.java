@@ -9,7 +9,7 @@ public class JythonHelpers {
 
 	public static void setJythonCachedir() {
 		System.setProperty("python.cachedir",
-				GridEnvironment.getArcsConfigDirectory() + File.separator
+				GridEnvironment.getGridConfigDirectory() + File.separator
 						+ "cachedir");
 	}
 

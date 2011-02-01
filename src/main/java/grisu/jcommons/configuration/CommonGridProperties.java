@@ -19,7 +19,7 @@ public class CommonGridProperties {
 	private static CommonGridProperties singleton = null;
 
 	public static final String ARCS_PROPERTIES_FILE = GridEnvironment
-			.getArcsConfigDirectory() + File.separator + "arcs.properties";
+			.getGridConfigDirectory() + File.separator + "arcs.properties";
 
 	public static CommonGridProperties getDefault() {
 		if (singleton == null) {
