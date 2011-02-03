@@ -94,7 +94,7 @@ public class HttpProxyAuthPanel extends JPanel {
 			textField = new JTextField();
 			textField.setColumns(10);
 			String username = CommonGridProperties.getDefault()
-					.getArcsProperty(
+					.getGridProperty(
 							CommonGridProperties.Property.HTTP_PROXY_USERNAME);
 			if (username != null && !"".equals(username)) {
 				textField.setText(username);

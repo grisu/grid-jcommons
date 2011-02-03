@@ -49,7 +49,7 @@ public class DependencyManager {
 
 		}
 
-		String value = CommonGridProperties.getDefault().getArcsProperty(
+		String value = CommonGridProperties.getDefault().getGridProperty(
 				Property.DISABLE_DEPENDENCY_MANAGEMENT);
 		if ((value != null) && "true".equals(value.toLowerCase())) {
 			myLogger.info("Dependency management disabled. Not resolving dependencies.");

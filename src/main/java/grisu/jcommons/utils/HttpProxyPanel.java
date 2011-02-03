@@ -126,7 +126,7 @@ public class HttpProxyPanel extends JPanel {
 			});
 
 			String username = CommonGridProperties.getDefault()
-					.getArcsProperty(
+					.getGridProperty(
 							CommonGridProperties.Property.HTTP_PROXY_USERNAME);
 			if (username != null && !"".equals(username)) {
 				authCheckbox.setSelected(true);
@@ -172,7 +172,7 @@ public class HttpProxyPanel extends JPanel {
 			httpProxyPortField = new JTextField();
 			httpProxyPortField.setColumns(10);
 			httpProxyPortField.setText(CommonGridProperties.getDefault()
-					.getArcsProperty(
+					.getGridProperty(
 							CommonGridProperties.Property.HTTP_PROXY_PORT));
 		}
 		return httpProxyPortField;
@@ -184,7 +184,7 @@ public class HttpProxyPanel extends JPanel {
 			httpProxyUsernameTextField.setEnabled(false);
 			httpProxyUsernameTextField.setColumns(10);
 			String username = CommonGridProperties.getDefault()
-					.getArcsProperty(
+					.getGridProperty(
 							CommonGridProperties.Property.HTTP_PROXY_USERNAME);
 			httpProxyUsernameTextField.setText(username);
 		}
@@ -232,7 +232,7 @@ public class HttpProxyPanel extends JPanel {
 			proxyHostTextField = new JTextField();
 			proxyHostTextField.setColumns(10);
 			proxyHostTextField.setText(CommonGridProperties.getDefault()
-					.getArcsProperty(
+					.getGridProperty(
 							CommonGridProperties.Property.HTTP_PROXY_HOST));
 		}
 		return proxyHostTextField;

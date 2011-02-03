@@ -18,8 +18,8 @@ public class CommonGridProperties {
 
 	private static CommonGridProperties singleton = null;
 
-	public static final String ARCS_PROPERTIES_FILE = GridEnvironment
-			.getGridConfigDirectory() + File.separator + "arcs.properties";
+	public static final String GRID_PROPERTIES_FILE = GridEnvironment
+	.getGridConfigDirectory() + File.separator + "grid.properties";
 
 	public static CommonGridProperties getDefault() {
 		if (singleton == null) {
@@ -32,39 +32,39 @@ public class CommonGridProperties {
 
 	private CommonGridProperties() {
 		try {
-			config = new PropertiesConfiguration(new File(ARCS_PROPERTIES_FILE));
+			config = new PropertiesConfiguration(new File(GRID_PROPERTIES_FILE));
 		} catch (ConfigurationException e) {
 			throw new RuntimeException(e);
 		}
 	}
 
-	public String getArcsProperty(Property prop) {
+	public String getGridProperty(Property prop) {
 
 		String result = config.getString(prop.toString());
 
 		return result;
 	}
 
-	public int getArcsPropertyInt(Property prop) {
+	public int getGridPropertyInt(Property prop) {
 		int result = config.getInt(prop.toString(), Integer.MIN_VALUE);
 		return result;
 	}
 
 	public String getLastMyProxyUsername() {
-		return getArcsProperty(Property.MYPROXY_USERNAME);
+		return getGridProperty(Property.MYPROXY_USERNAME);
 	}
 
 	public String getLastShibIdp() {
-		return getArcsProperty(Property.SHIB_IDP);
+		return getGridProperty(Property.SHIB_IDP);
 	}
 
 	public String getLastShibUsername() {
 
-		return getArcsProperty(Property.SHIB_USERNAME);
+		return getGridProperty(Property.SHIB_USERNAME);
 
 	}
 
-	public void setArcsProperty(Property prop, String value) {
+	public void setGridProperty(Property prop, String value) {
 
 		config.setProperty(prop.toString(), value);
 		try {
@@ -75,15 +75,15 @@ public class CommonGridProperties {
 	}
 
 	public void setLastMyProxyUsername(String username) {
-		setArcsProperty(Property.MYPROXY_USERNAME, username);
+		setGridProperty(Property.MYPROXY_USERNAME, username);
 	}
 
 	public void setLastShibIdp(String idp) {
-		setArcsProperty(Property.SHIB_IDP, idp);
+		setGridProperty(Property.SHIB_IDP, idp);
 	}
 
 	public void setLastShibUsername(String u) {
-		setArcsProperty(Property.SHIB_USERNAME, u);
+		setGridProperty(Property.SHIB_USERNAME, u);
 	}
 
 }

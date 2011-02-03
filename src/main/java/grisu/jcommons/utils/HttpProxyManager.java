@@ -30,7 +30,7 @@ public class HttpProxyManager {
 	public static String lastTimeHttpProxyAuthUsername() {
 
 		String httproxyusername = CommonGridProperties.getDefault()
-				.getArcsProperty(
+				.getGridProperty(
 						CommonGridProperties.Property.HTTP_PROXY_USERNAME);
 
 		if ((httproxyusername == null) || "".equals(httproxyusername)) {
@@ -53,14 +53,14 @@ public class HttpProxyManager {
 	// }
 
 	public static String lastTimeHttpProxyHost() {
-		return CommonGridProperties.getDefault().getArcsProperty(
+		return CommonGridProperties.getDefault().getGridProperty(
 				CommonGridProperties.Property.HTTP_PROXY_HOST);
 	}
 
 	public static Integer lastTimeHttpProxyPort() {
 
 		return Integer
-				.parseInt(CommonGridProperties.getDefault().getArcsProperty(
+				.parseInt(CommonGridProperties.getDefault().getGridProperty(
 						CommonGridProperties.Property.HTTP_PROXY_PORT));
 	}
 
@@ -87,7 +87,7 @@ public class HttpProxyManager {
 
 		});
 
-		CommonGridProperties.getDefault().setArcsProperty(
+		CommonGridProperties.getDefault().setGridProperty(
 				CommonGridProperties.Property.HTTP_PROXY_USERNAME, username);
 
 	}
@@ -100,9 +100,9 @@ public class HttpProxyManager {
 			System.getProperties().put("proxyPort", 80);
 			System.setProperty("http.proxyHost", "");
 			System.setProperty("http.proxyPort", "80");
-			CommonGridProperties.getDefault().setArcsProperty(
+			CommonGridProperties.getDefault().setGridProperty(
 					CommonGridProperties.Property.HTTP_PROXY_HOST, "");
-			CommonGridProperties.getDefault().setArcsProperty(
+			CommonGridProperties.getDefault().setGridProperty(
 					CommonGridProperties.Property.HTTP_PROXY_PORT, "");
 			currentHttpProxyHost = null;
 			currentHttpProxyPort = 80;
@@ -114,9 +114,9 @@ public class HttpProxyManager {
 			System.setProperty("http.proxyHost", proxyHost);
 			System.setProperty("http.proxyPort",
 					new Integer(proxyPort).toString());
-			CommonGridProperties.getDefault().setArcsProperty(
+			CommonGridProperties.getDefault().setGridProperty(
 					CommonGridProperties.Property.HTTP_PROXY_HOST, proxyHost);
-			CommonGridProperties.getDefault().setArcsProperty(
+			CommonGridProperties.getDefault().setGridProperty(
 					CommonGridProperties.Property.HTTP_PROXY_PORT,
 					new Integer(proxyPort).toString());
 			currentHttpProxyHost = proxyHost;
@@ -157,7 +157,7 @@ public class HttpProxyManager {
 					"http://" + proxyHost + ":" + proxyPort + "/");
 			System.getProperties().put("https_proxy",
 					"http://" + proxyHost + ":" + proxyPort + "/");
-			CommonGridProperties.getDefault().setArcsProperty(
+			CommonGridProperties.getDefault().setGridProperty(
 					CommonGridProperties.Property.HTTP_PROXY_USERNAME, "");
 
 		}

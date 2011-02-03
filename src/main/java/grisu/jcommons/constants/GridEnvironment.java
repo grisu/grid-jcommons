@@ -64,7 +64,7 @@ public class GridEnvironment {
 
 	public static int getDefaultMyProxyPort() {
 
-		int port = CommonGridProperties.getDefault().getArcsPropertyInt(
+		int port = CommonGridProperties.getDefault().getGridPropertyInt(
 				CommonGridProperties.Property.MYPROXY_PORT);
 
 		if (port != Integer.MIN_VALUE) {
@@ -83,7 +83,7 @@ public class GridEnvironment {
 
 	public static String getDefaultMyProxyServer() {
 
-		String server = CommonGridProperties.getDefault().getArcsProperty(
+		String server = CommonGridProperties.getDefault().getGridProperty(
 				CommonGridProperties.Property.MYPROXY_HOST);
 
 		if (StringUtils.isNotBlank(server)) {
