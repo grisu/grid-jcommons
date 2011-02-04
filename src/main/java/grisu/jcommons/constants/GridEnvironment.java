@@ -14,6 +14,44 @@ public class GridEnvironment {
 	public static final int DEFAULT_MYPROXY_PORT = 7512;
 	public static final String DEFAULT_MYPROXY_SERVER = "myproxy.arcs.org.au";
 
+	public static int getDefaultMyProxyPort() {
+
+		int port = CommonGridProperties.getDefault().getGridPropertyInt(
+				CommonGridProperties.Property.MYPROXY_PORT);
+
+		if (port != Integer.MIN_VALUE) {
+			return port;
+		}
+
+		String env = System.getProperty("myproxy.port");
+		try {
+			port = Integer.parseInt(env);
+			return port;
+		} catch (Exception e) {
+			return DEFAULT_MYPROXY_PORT;
+		}
+
+	}
+
+	public static String getDefaultMyProxyServer() {
+	
+		String server = CommonGridProperties.getDefault().getGridProperty(
+				CommonGridProperties.Property.MYPROXY_HOST);
+	
+		if (StringUtils.isNotBlank(server)) {
+			return server;
+		}
+	
+		String env = System.getProperty("myproxy.host");
+	
+		if (StringUtils.isNotBlank(env)) {
+			return env;
+		}
+	
+		return DEFAULT_MYPROXY_SERVER;
+	
+	}
+
 	public static File getGridCommonDirectory() {
 
 		String dir = getGridConfigDirectory() + File.separator + "common";
@@ -62,42 +100,6 @@ public class GridEnvironment {
 		return file;
 	}
 
-	public static int getDefaultMyProxyPort() {
 
-		int port = CommonGridProperties.getDefault().getGridPropertyInt(
-				CommonGridProperties.Property.MYPROXY_PORT);
-
-		if (port != Integer.MIN_VALUE) {
-			return port;
-		}
-
-		String env = System.getProperty("myproxy.port");
-		try {
-			port = Integer.parseInt(env);
-			return port;
-		} catch (Exception e) {
-			return DEFAULT_MYPROXY_PORT;
-		}
-
-	}
-
-	public static String getDefaultMyProxyServer() {
-
-		String server = CommonGridProperties.getDefault().getGridProperty(
-				CommonGridProperties.Property.MYPROXY_HOST);
-
-		if (StringUtils.isNotBlank(server)) {
-			return server;
-		}
-
-		String env = System.getProperty("myproxy.host");
-
-		if (StringUtils.isNotBlank(env)) {
-			return env;
-		}
-
-		return DEFAULT_MYPROXY_SERVER;
-
-	}
 
 }
