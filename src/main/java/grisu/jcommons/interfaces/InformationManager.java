@@ -154,7 +154,7 @@ public interface InformationManager {
 	 *            name of the software package
 	 * @param version
 	 *            version of the software package
-	 * @param subLoc
+	 * @param submissionLocation
 	 *            the submissionlocation
 	 * @return a map of the attribute details of the given application at the
 	 *         site.

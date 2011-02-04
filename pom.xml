@@ -16,7 +16,8 @@
 	<repositories>
 		<repository>
 			<id>bestgrid.public.release</id>
-			<url>http://dev.ceres.auckland.ac.nz/nexus/content/groups/public/</url>
+			<url>http://dev.ceres.auckland.ac.nz/nexus/content/groups/public/
+			</url>
 		</repository>
 		<repository>
 			<id>bestgrid.public.snapshot</id>
@@ -29,12 +30,14 @@
 		<repository>
 			<name>BeSTGRID Releases Repository</name>
 			<id>bestgrid.release</id>
-			<url>http://dev.ceres.auckland.ac.nz/nexus/content/repositories/releases</url>
+			<url>http://dev.ceres.auckland.ac.nz/nexus/content/repositories/releases
+			</url>
 		</repository>
 		<snapshotRepository>
 			<id>bestgrid.snapshot</id>
 			<name>BeSTGRID Snapshots Repository</name>
-			<url>http://dev.ceres.auckland.ac.nz/nexus/content/repositories/snapshots</url>
+			<url>http://dev.ceres.auckland.ac.nz/nexus/content/repositories/snapshots
+			</url>
 		</snapshotRepository>
 	</distributionManagement>
 
@@ -45,15 +48,21 @@
 
 	<ciManagement>
 		<system>Hudson</system>
-		<url>http://dev.ceres.auckland.ac.nz/hudson/job/Grid-Jcommons-SNAPSHOT/</url>
+		<url>http://dev.ceres.auckland.ac.nz/hudson/job/Grid-Jcommons-SNAPSHOT/
+		</url>
 	</ciManagement>
 
 	<scm>
 		<connection>scm:git:git://github.com/grisu/grid-jcommons.git
 		</connection>
-		<developerConnection>scm:git:git@github.com:grisu/grid-jcommons.git</developerConnection>
+		<developerConnection>scm:git:git@github.com:grisu/grid-jcommons.git
+		</developerConnection>
 		<url>https://github.com/grisu/grid-jcommons</url>
 	</scm>
+
+	<properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+	</properties>
 
 	<dependencies>
 		<dependency>
@@ -122,12 +131,13 @@
 	</dependencies>
 
 
-	
+
 	<build>
 		<plugins>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-compiler-plugin</artifactId>
+				<version>2.3.2</version>
 				<configuration>
 					<source>1.5</source>
 					<target>1.5</target>
@@ -136,6 +146,7 @@
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-source-plugin</artifactId>
+				<version>2.1.2</version>
 				<executions>
 					<execution>
 						<id>attach-sources</id>
@@ -146,8 +157,6 @@
 					</execution>
 				</executions>
 			</plugin>
-
-
 		</plugins>
 	</build>
 
