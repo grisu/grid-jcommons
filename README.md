@@ -6,8 +6,8 @@ Grid Jcommons
 Documentation
 ------------------------
 
-[Wiki](https://github.com/grisu/grid-jcommons/wiki)
-[Javadoc](http://grisu.github.com/grid-jcommons/javadoc/)
+- [Wiki](https://github.com/grisu/grid-jcommons/wiki)
+- [Javadoc](http://grisu.github.com/grid-jcommons/javadoc/)
 
 Prerequisites
 --------------------
