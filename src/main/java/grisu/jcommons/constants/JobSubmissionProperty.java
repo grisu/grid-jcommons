@@ -113,6 +113,13 @@ public enum JobSubmissionProperty {
 		}
 	}
 
+	/**
+	 * Translates a string to a JobSubmissionProperty enum.
+	 * 
+	 * @param key
+	 *            the string
+	 * @return the enum
+	 */
 	public static JobSubmissionProperty fromString(final String key) {
 		return stringToJobPropertyMap.get(key);
 	}
@@ -121,11 +128,24 @@ public enum JobSubmissionProperty {
 
 	private final String defaultValue;
 
+	/**
+	 * Constructor for a JobSubmissionProperty enum.
+	 * 
+	 * @param keyName
+	 *            the name of the property
+	 * @param defaultValue
+	 *            the default value
+	 */
 	JobSubmissionProperty(final String keyName, final String defaultValue) {
 		this.keyName = keyName;
 		this.defaultValue = defaultValue;
 	}
 
+	/**
+	 * The default value for this job property.
+	 * 
+	 * @return the default
+	 */
 	public String defaultValue() {
 		return this.defaultValue;
 	}

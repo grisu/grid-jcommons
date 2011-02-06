@@ -9,9 +9,9 @@ import java.net.URLClassLoader;
 import java.util.Collection;
 
 /**
- * Used to add application specific plugins to the swing client.
+ * Used to add application specific plugins to grid client applications.
  * 
- * @author markus
+ * @author Markus Binsteiner
  * 
  */
 public class ClasspathHacker {
@@ -30,7 +30,7 @@ public class ClasspathHacker {
 	public static void addURL(URL u) throws IOException {
 
 		URLClassLoader sysloader = (URLClassLoader) ClassLoader
-				.getSystemClassLoader();
+		.getSystemClassLoader();
 		Class sysclass = URLClassLoader.class;
 
 		try {
@@ -40,14 +40,14 @@ public class ClasspathHacker {
 		} catch (Throwable t) {
 			t.printStackTrace(System.err);
 			throw new IOException(
-					"Error, could not add URL to system classloader");
+			"Error, could not add URL to system classloader");
 		}// end try catch
 
 	}// end method
 
 	public static void initFolder(File pluginFolder, FileFilter filter) {
 
-		if (pluginFolder == null || !pluginFolder.isDirectory()
+		if ((pluginFolder == null) || !pluginFolder.isDirectory()
 				|| !pluginFolder.canRead()) {
 			return;
 		}

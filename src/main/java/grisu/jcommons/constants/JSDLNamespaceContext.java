@@ -50,6 +50,11 @@ public class JSDLNamespaceContext implements NamespaceContext {
 		}
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see javax.xml.namespace.NamespaceContext#getPrefixes(java.lang.String)
+	 */
 	public final Iterator getPrefixes(final String namespaceURI) {
 		// not implemented for the example
 		return null;
