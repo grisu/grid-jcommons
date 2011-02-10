@@ -53,7 +53,7 @@ public class Constants {
 	/**
 	 * The key for the application version property of a job or batchjob.
 	 */
-	public static final String APPLICATIONVERSION_KEY = "applicatpionVersion";
+	public static final String APPLICATIONVERSION_KEY = "applicationVersion";
 	/**
 	 * The key for specifying the number of cpus to use for a job.
 	 */
