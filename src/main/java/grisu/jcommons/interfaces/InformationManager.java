@@ -176,6 +176,8 @@ public interface InformationManager {
 	 * Returns all the data locations (mount points) on the grid available for
 	 * the given VO.
 	 * 
+	 * The key is the protocol & hostname, the values are paths.
+	 * 
 	 * @param fqan
 	 *            fully qualified attribute name of the VO
 	 * @return all the data locations for the VO
@@ -193,6 +195,7 @@ public interface InformationManager {
 	 * @return the grid resource
 	 */
 	public GridResource getGridResource(String submissionLocation);
+
 
 	/**
 	 * Returns the jobmanager that submits to the specified queue/site.
@@ -242,5 +245,23 @@ public interface InformationManager {
 	 */
 	String[] getVersionsOfApplicationOnSubmissionLocation(String application,
 			String submissionLocation);
+
+	/**
+	 * Returns whether the specified datalocation is volatile (which basically
+	 * means that it is a filesystem that is used for running jobs) or whether
+	 * it is one that is used to store static data (like finished jobs) by the
+	 * user.
+	 * 
+	 * @param host
+	 *            the host url as returned by the key part of
+	 *            {@link #getDataLocationsForVO(String)}
+	 * @param path
+	 *            the path as returned by the value part of
+	 *            {@link #getDataLocationsForVO(String)}
+	 * @param fqan
+	 *            the fqan (in order to identify above datalocation uniquely)
+	 * @return whether the datalocation is volatile
+	 */
+	boolean isVolatileDataLocation(String host, String path, String fqan);
 
 }
