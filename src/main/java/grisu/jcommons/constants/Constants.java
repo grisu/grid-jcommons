@@ -32,9 +32,17 @@ public class Constants {
 	/**
 	 * A constant to indicate you want to know about all jobs, not just a subset
 	 * of them (i.e. only jobs using a certain application). In most cases you
-	 * can also specify "null", but this is cleaner.
+	 * can also specify "null", but this is cleaner. Does not return any jobs
+	 * that are part of a batchjob.
 	 */
 	public static final String ALLJOBS_KEY = "alljobs";
+
+	/**
+	 * A constant to indicate you want to know about all jobs, not just a subset
+	 * of them (i.e. only jobs using a certain application). Does also include
+	 * jobs that are part of a batchjob.
+	 */
+	public static final String ALLJOBS_INCL_BATCH_KEY = "alljobs_incl_batch";
 
 	/**
 	 * The key for the Status property of a job or batchjob.
