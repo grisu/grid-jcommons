@@ -29,6 +29,8 @@ public class Constants {
 	 */
 	public static final String NO_VERSION_INDICATOR_STRING = "any_version";
 
+	public static final String NO_JOBNAME_INDICATOR_STRING = "<no_jobname>";
+
 	/**
 	 * A constant to indicate you want to know about all jobs, not just a subset
 	 * of them (i.e. only jobs using a certain application). In most cases you
