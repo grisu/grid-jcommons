@@ -126,6 +126,10 @@ public class Constants {
 	 */
 	public static final String SUBMISSIONLOCATION_KEY = "submissionLocation";
 	/**
+	 * The backend that was used to submit this job.
+	 */
+	public static final String SUBMISSIONBACKEND_KEY = "submissionBackend";
+	/**
 	 * The key for the property that holds the urls of all input files used for
 	 * the job.
 	 */
