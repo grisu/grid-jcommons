@@ -392,6 +392,7 @@ public class Constants {
 	 * archived jobs. Use null as a value if you want to delete an existing one.
 	 */
 	public static final String JOB_ARCHIVE_LOCATION = "archiveLocation";
+	public static final String JOB_ARCHIVE_LOCATION_AUTO = "_autoArchiveLocation_";
 
 	// default job properties
 	// public static final String GENERIC_JOB_LAST_WALLTIME_IN_MINUTES =
