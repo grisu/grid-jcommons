@@ -31,6 +31,8 @@ public class Constants {
 
 	public static final String NO_JOBNAME_INDICATOR_STRING = "<no_jobname>";
 
+	public static final String NO_SUBMISSION_LOCATION_INDICATOR_STRING = "auto";
+
 	/**
 	 * A constant to indicate you want to know about all jobs, not just a subset
 	 * of them (i.e. only jobs using a certain application). In most cases you
