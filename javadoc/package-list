@@ -1,4 +1,5 @@
 externalHelpers
+grisu.control.info
 grisu.jcommons.configuration
 grisu.jcommons.constants
 grisu.jcommons.dependencies
