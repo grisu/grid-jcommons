@@ -58,6 +58,12 @@ public class Constants {
 	 * The key for the jobname property of a job or batchjob.
 	 */
 	public static final String JOBNAME_KEY = "jobname";
+
+	/**
+	 * Optional key for a description of the job.
+	 */
+	public static final String JOB_DESCRIPTION_KEY = "description";
+
 	/**
 	 * The key for the application property of a job or batchjob.
 	 */
