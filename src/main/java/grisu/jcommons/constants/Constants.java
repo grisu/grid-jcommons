@@ -27,7 +27,7 @@ public class Constants {
 	 * Grisu to use just any version of the application it can find. Again, it's
 	 * prefererred to specify the exact version if you know it.
 	 */
-	public static final String NO_VERSION_INDICATOR_STRING = "any_version";
+	public static final String NO_VERSION_INDICATOR_STRING = "any";
 
 	public static final String NO_JOBNAME_INDICATOR_STRING = "<no_jobname>";
 
