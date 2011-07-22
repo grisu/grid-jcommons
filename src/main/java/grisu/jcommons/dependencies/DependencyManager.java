@@ -101,7 +101,7 @@ public class DependencyManager {
 				dialog.dispose();
 			}
 		} catch (Exception e) {
-			e.printStackTrace(System.err);
+			myLogger.error(e);
 		}
 
 	}

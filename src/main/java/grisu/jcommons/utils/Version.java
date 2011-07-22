@@ -9,8 +9,11 @@ import java.util.List;
 
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang.StringUtils;
+import org.apache.log4j.Logger;
 
 public class Version {
+
+	static final Logger myLogger = Logger.getLogger(Version.class.getName());
 
 	public static String get(String module) {
 
@@ -28,7 +31,7 @@ public class Version {
 
 			return result.get(0);
 		} catch (Exception e) {
-			e.printStackTrace();
+			myLogger.error(e);
 			return "N/A";
 		}
 
@@ -47,7 +50,7 @@ public class Version {
 				list.add(line);
 			}
 		} catch (Exception e) {
-			e.printStackTrace();
+			myLogger.error(e);
 		} finally {
 			try {
 				if (br != null) {
@@ -57,7 +60,7 @@ public class Version {
 					is.close();
 				}
 			} catch (IOException e) {
-				e.printStackTrace();
+				myLogger.error(e);
 			}
 		}
 		return list;

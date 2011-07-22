@@ -8,6 +8,8 @@ import java.net.URL;
 import java.net.URLClassLoader;
 import java.util.Collection;
 
+import org.apache.log4j.Logger;
+
 /**
  * Used to add application specific plugins to grid client applications.
  * 
@@ -15,6 +17,9 @@ import java.util.Collection;
  * 
  */
 public class ClasspathHacker {
+
+	private static Logger myLogger = Logger.getLogger(ClasspathHacker.class
+			.getName());
 
 	private static final Class[] parameters = new Class[] { URL.class };
 
@@ -30,7 +35,7 @@ public class ClasspathHacker {
 	public static void addURL(URL u) throws IOException {
 
 		URLClassLoader sysloader = (URLClassLoader) ClassLoader
-		.getSystemClassLoader();
+				.getSystemClassLoader();
 		Class sysclass = URLClassLoader.class;
 
 		try {
@@ -38,9 +43,8 @@ public class ClasspathHacker {
 			method.setAccessible(true);
 			method.invoke(sysloader, new Object[] { u });
 		} catch (Throwable t) {
-			t.printStackTrace(System.err);
 			throw new IOException(
-			"Error, could not add URL to system classloader");
+					"Error, could not add URL to system classloader", t);
 		}// end try catch
 
 	}// end method
@@ -62,8 +66,7 @@ public class ClasspathHacker {
 			try {
 				ClasspathHacker.addFile(plugin);
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace(System.err);
+				myLogger.error(e);
 			}
 
 		}
@@ -76,8 +79,7 @@ public class ClasspathHacker {
 			try {
 				ClasspathHacker.addFile(plugin);
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace(System.err);
+				myLogger.error(e);
 			}
 
 		}

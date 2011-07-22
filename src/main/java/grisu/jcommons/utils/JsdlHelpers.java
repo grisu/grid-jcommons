@@ -53,7 +53,7 @@ import org.xml.sax.SAXException;
 public final class JsdlHelpers {
 
 	static final Logger myLogger = Logger
-	.getLogger(JsdlHelpers.class.getName());
+			.getLogger(JsdlHelpers.class.getName());
 
 	public static final String USER_EXECUTION_HOST_FILESYSTEM = "userExecutionHostFs";
 
@@ -78,7 +78,7 @@ public final class JsdlHelpers {
 			final Document jsdl, final String fileSystemName,
 			final String fileSystemRoot) {
 		String expression = "/jsdl:JobDefinition/jsdl:JobDescription/jsdl:Resources/jsdl:FileSystem[@name='"
-			+ fileSystemName + "']";
+				+ fileSystemName + "']";
 		NodeList resultNodes = null;
 		try {
 			resultNodes = (NodeList) xpath.evaluate(expression, jsdl,
@@ -138,13 +138,13 @@ public final class JsdlHelpers {
 	 */
 	public static String extractTargetFromStageInElement(final Element stageIn) {
 		String fileSystemName = ((Element) stageIn.getElementsByTagName(
-		"FileSystemName").item(0)).getTextContent();
+				"FileSystemName").item(0)).getTextContent();
 		String fileSystemUrl = getFileSystemRootUrl(stageIn.getOwnerDocument(),
 				fileSystemName);
 		String target = fileSystemUrl
-		+ File.separator
-		+ ((Element) stageIn.getElementsByTagName("FileName").item(0))
-		.getTextContent();
+				+ File.separator
+				+ ((Element) stageIn.getElementsByTagName("FileName").item(0))
+				.getTextContent();
 
 		return target;
 	}
@@ -507,11 +507,11 @@ public final class JsdlHelpers {
 	 *             the xml document
 	 */
 	public static String getJsdl(final Document jsdl)
-	throws TransformerException {
+			throws TransformerException {
 
 		// TODO use static transformer to reduce overhead?
 		Transformer transformer = TransformerFactory.newInstance()
-		.newTransformer();
+				.newTransformer();
 		transformer.setOutputProperty(OutputKeys.INDENT, "yes");
 
 		// initialize StreamResult with File object to save to file
@@ -598,7 +598,7 @@ public final class JsdlHelpers {
 			final String fileSystemName) {
 
 		String expression = "/jsdl:JobDefinition/jsdl:JobDescription/jsdl:Resources/jsdl:FileSystem[@name='"
-			+ fileSystemName + "']/jsdl:MountSource";
+				+ fileSystemName + "']/jsdl:MountSource";
 		NodeList resultNodes = null;
 		try {
 			resultNodes = (NodeList) xpath.evaluate(expression, jsdl,
@@ -997,7 +997,7 @@ public final class JsdlHelpers {
 		}
 
 		String value = emailElement
-		.getAttribute(Constants.SEND_EMAIL_ON_JOB_END_ATTRIBUTE_KEY);
+				.getAttribute(Constants.SEND_EMAIL_ON_JOB_END_ATTRIBUTE_KEY);
 
 		if ("true".equals(value)) {
 			return true;
@@ -1022,7 +1022,7 @@ public final class JsdlHelpers {
 		}
 
 		String value = emailElement
-		.getAttribute(Constants.SEND_EMAIL_ON_JOB_START_ATTRIBUTE_KEY);
+				.getAttribute(Constants.SEND_EMAIL_ON_JOB_START_ATTRIBUTE_KEY);
 
 		if ("true".equals(value)) {
 			return true;
@@ -1073,7 +1073,7 @@ public final class JsdlHelpers {
 			// not implemented/possible?
 			myLogger.error("More than one/no source element in stageIn element.");
 			throw new RuntimeException(
-			"More than one/no source element in stageIn element.");
+					"More than one/no source element in stageIn element.");
 		}
 
 		Element source = (Element) sources.item(0);
@@ -1082,7 +1082,7 @@ public final class JsdlHelpers {
 			// not implemented/possible?
 			myLogger.error("More than one/no URI element in sources element.");
 			throw new RuntimeException(
-			"More than one/no URI element in source element.");
+					"More than one/no URI element in source element.");
 		}
 		Element uri = (Element) sources.item(0);
 
@@ -1099,9 +1099,9 @@ public final class JsdlHelpers {
 	public static String getStageInTarget(final Element stageInElement) {
 
 		String fsNamePart = getStageInTarget_filesystemPart(stageInElement)
-		.getTextContent();
+				.getTextContent();
 		String relPart = getStageInTarget_relativePart(stageInElement)
-		.getTextContent();
+				.getTextContent();
 
 		String fsRoot = getFileSystemRootUrl(stageInElement.getOwnerDocument(),
 				fsNamePart);
@@ -1129,13 +1129,13 @@ public final class JsdlHelpers {
 			final Element stageInElement) {
 
 		NodeList filesystems = stageInElement
-		.getElementsByTagName("FileSystemName");
+				.getElementsByTagName("FileSystemName");
 
 		if (filesystems.getLength() != 1) {
 			// not implemented/possible?
 			myLogger.error("More than one/no FileSystemName element in target element.");
 			throw new RuntimeException(
-			"More than one/no FileSystemName element in target element.");
+					"More than one/no FileSystemName element in target element.");
 		}
 
 		Element filesystem = (Element) filesystems.item(0);
@@ -1157,7 +1157,7 @@ public final class JsdlHelpers {
 			// not implemented/possible?
 			myLogger.error("More than one/no FileName element in stageIn element.");
 			throw new RuntimeException(
-			"More than one/no FileName element in stageIn element.");
+					"More than one/no FileName element in stageIn element.");
 		}
 
 		Element filename = (Element) filenames.item(0);
@@ -1179,7 +1179,7 @@ public final class JsdlHelpers {
 			final String templateTagName) {
 
 		String expression = "/jsdl:JobDefinition/jsdl:JobDescription/jsdl-arcs:GrisuTemplate/jsdl-arcs:Info/jsdl-arcs:TemplateTag[@name='"
-			+ templateTagName + "']";
+				+ templateTagName + "']";
 		NodeList resultNodes = null;
 		try {
 			resultNodes = (NodeList) xpath.evaluate(expression, jsdl,
@@ -1431,19 +1431,19 @@ public final class JsdlHelpers {
 			myLogger.warn("No CandidateHosts node in jsdl file.");
 			throw new RuntimeException(
 					"Problem parsing candidateHost element: "
-					+ e.getLocalizedMessage());
+							+ e.getLocalizedMessage());
 		}
 
 		Node hostName = null;
 
 		if (resultNodes.getLength() > 1) {
 			throw new RuntimeException(
-			"More than one CandidateHosts elements found");
+					"More than one CandidateHosts elements found");
 		}
 
 		if (resultNodes.getLength() != 1) {
 			throw new RuntimeException(
-			"No or more than one JobIdentification nodes in jsdl document.");
+					"No or more than one JobIdentification nodes in jsdl document.");
 		}
 
 		String nsURL = new JSDLNamespaceContext().getNamespaceURI("jsdl");
@@ -1472,7 +1472,7 @@ public final class JsdlHelpers {
 	 *             if the JobName element could not be found
 	 */
 	public static void setJobname(final Document jsdl, final String new_jobname)
-	throws XPathExpressionException {
+			throws XPathExpressionException {
 		String expression = "/jsdl:JobDefinition/jsdl:JobDescription/jsdl:JobIdentification/jsdl:JobName";
 		NodeList resultNodes = null;
 		try {
@@ -1501,7 +1501,7 @@ public final class JsdlHelpers {
 
 			if (resultNodes.getLength() != 1) {
 				throw new XPathExpressionException(
-				"No or more than one JobIdentification nodes in jsdl document.");
+						"No or more than one JobIdentification nodes in jsdl document.");
 			}
 
 			jobName = jsdl.createElement("jsdl:JobName");
@@ -1555,7 +1555,7 @@ public final class JsdlHelpers {
 
 			if (resultNodes.getLength() != 1) {
 				throw new RuntimeException(
-				"No or more than one JobIdentification nodes in jsdl document.");
+						"No or more than one JobIdentification nodes in jsdl document.");
 			}
 
 			cpucount = jsdl.createElement("jsdl:exact");
@@ -1582,7 +1582,7 @@ public final class JsdlHelpers {
 
 		Element source_uri = ((Element) ((Element) stageIn
 				.getElementsByTagName("Source").item(0)).getElementsByTagName(
-				"URI").item(0));
+						"URI").item(0));
 		source_uri.setTextContent(source_url);
 
 	}
@@ -1631,7 +1631,7 @@ public final class JsdlHelpers {
 
 			if (resultNodes.getLength() != 1) {
 				throw new RuntimeException(
-				"No or more than one JobIdentification nodes in jsdl document.");
+						"No or more than one JobIdentification nodes in jsdl document.");
 			}
 
 			walltime = jsdl.createElement("jsdl:TotalCPUTime");
@@ -1679,7 +1679,7 @@ public final class JsdlHelpers {
 		// TODO use static Schema for better performance
 		// create a SchemaFactory capable of understanding WXS schemas
 		SchemaFactory factory = SchemaFactory
-		.newInstance(XMLConstants.W3C_XML_SCHEMA_NS_URI);
+				.newInstance(XMLConstants.W3C_XML_SCHEMA_NS_URI);
 
 		// load a WXS schema, represented by a Schema instance
 		Source schemaFile = new StreamSource(new File("jsdl.xsd"));
@@ -1687,8 +1687,7 @@ public final class JsdlHelpers {
 		try {
 			schema = factory.newSchema(schemaFile);
 		} catch (SAXException e1) {
-			// this should not happen
-			e1.printStackTrace(System.err);
+			myLogger.error(e1);
 		}
 
 		// create a Validator instance, which can be used to validate an
@@ -1702,8 +1701,7 @@ public final class JsdlHelpers {
 			// instance document is invalid!
 			return false;
 		} catch (IOException e) {
-			// this should not happen
-			e.printStackTrace(System.err);
+			myLogger.error(e);
 		}
 		return true;
 
