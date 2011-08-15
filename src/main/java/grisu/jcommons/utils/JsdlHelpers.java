@@ -31,6 +31,7 @@ import javax.xml.xpath.XPathConstants;
 import javax.xml.xpath.XPathExpressionException;
 import javax.xml.xpath.XPathFactory;
 
+import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 import org.w3c.dom.Attr;
 import org.w3c.dom.Document;
@@ -687,6 +688,58 @@ public final class JsdlHelpers {
 			arguments[i] = resultNodes.item(i).getTextContent();
 		}
 		return arguments;
+	}
+
+	/**
+	 * Parses the jsdl document and returns the value of the
+	 * jsdl-posix:Envornment element(s). This is the name (and path) of the
+	 * executable.
+	 * 
+	 * @param jsdl
+	 *            the jsdl document
+	 * @return the key and values of all set environment variables
+	 */
+	public static Map<String, String> getPosixApplicationEnvironment(
+			final Document jsdl) {
+
+		String expression = "/jsdl:JobDefinition/jsdl:JobDescription/jsdl:Application/jsdl-posix:POSIXApplication/jsdl-posix:Environment";
+		NodeList resultNodes = null;
+		try {
+			resultNodes = (NodeList) xpath.evaluate(expression, jsdl,
+					XPathConstants.NODESET);
+		} catch (XPathExpressionException e) {
+			myLogger.warn("No application in jsdl file.");
+			return null;
+		}
+
+		if (resultNodes.getLength() == 0) {
+			return null;
+		}
+
+		Map<String, String> result = new TreeMap<String, String>();
+
+		for (int i = 0; i < resultNodes.getLength(); i++) {
+
+			Element node = (Element)resultNodes.item(i);
+			String key = node.getAttribute("name");
+			String value = node.getTextContent();
+
+			if (StringUtils.isBlank(key)) {
+				myLogger.error("No name attribute for environment element. Ignoring element.");
+				continue;
+			}
+			if (StringUtils.isBlank(value)) {
+				myLogger.error("No value for environment element \"" + key
+						+ "\". Ignoring element.");
+				continue;
+			}
+
+			result.put(key, value);
+
+		}
+
+		return result;
+
 	}
 
 	/**

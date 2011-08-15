@@ -25,7 +25,8 @@ public enum JobSubmissionProperty {
 	 * backend to pick a version, specify the value of
 	 * {@link Constants#NO_VERSION_INDICATOR_STRING} here.
 	 */
-	APPLICATIONVERSION(Constants.APPLICATIONVERSION_KEY,
+	APPLICATIONVERSION(
+			Constants.APPLICATIONVERSION_KEY,
 			Constants.NO_VERSION_INDICATOR_STRING),
 			/**
 			 * The numbers of cpus for this job. If you don't specify
@@ -99,12 +100,18 @@ public enum JobSubmissionProperty {
 			 * A comma-seperated list of modules you want to load. This should only be
 			 * used in if you know what you are doing. Defaults to null.
 			 */
-			MODULES(Constants.MODULES_KEY, ""), PBSDEBUG(Constants.PBSDEBUG_KEY, ""),
+			MODULES(Constants.MODULES_KEY, ""),
+			PBSDEBUG(Constants.PBSDEBUG_KEY, ""),
 
 			/**
 			 * The number of hosts to spread the job. Only important for threaded jobs.
 			 */
-			HOSTCOUNT(Constants.HOSTCOUNT_KEY, "-1");
+			HOSTCOUNT(Constants.HOSTCOUNT_KEY, "-1"),
+			/**
+			 * List of keys and values that describe the environment variables to be set
+			 * for a job (format: [key1=value1][key2=value2]...)
+			 */
+			ENVIRONMENT_VARIABLES(Constants.ENVIRONMENT_VARIABLES_KEY, "");
 
 	private static final Map<String, JobSubmissionProperty> stringToJobPropertyMap = new HashMap<String, JobSubmissionProperty>();
 	static {

@@ -142,6 +142,13 @@ public class Constants {
 	 * the job.
 	 */
 	public static final String INPUT_FILE_URLS_KEY = "inputFilesUrls";
+
+	/**
+	 * The key for the property that holds the keys and values for the
+	 * environment variables that should be set for a job.
+	 */
+	public static final String ENVIRONMENT_VARIABLES_KEY = "environmentVariables";
+
 	/**
 	 * The key for specifying the modules to load for a job.
 	 */
