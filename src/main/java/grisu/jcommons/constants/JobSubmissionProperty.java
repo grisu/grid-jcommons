@@ -1,5 +1,6 @@
 package grisu.jcommons.constants;
 
+import java.util.EnumSet;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -115,18 +116,17 @@ public enum JobSubmissionProperty {
 			ENVIRONMENT_VARIABLES(Constants.ENVIRONMENT_VARIABLES_KEY, "");
 
 	private static final Map<String, JobSubmissionProperty> stringToJobPropertyMap = new HashMap<String, JobSubmissionProperty>();
+	private static final Map<String, JobSubmissionProperty> prettyNameToJobPropertyMap = new HashMap<String, JobSubmissionProperty>();
+
 	static {
-		for (JobSubmissionProperty jp : values()) {
+		for (JobSubmissionProperty jp : EnumSet
+				.allOf(JobSubmissionProperty.class)) {
 			stringToJobPropertyMap.put(jp.toString(), jp);
+			prettyNameToJobPropertyMap.put(jp.prettyName, jp);
 		}
 	}
 
-	private static final Map<String, JobSubmissionProperty> prettyNameToJobPropertyMap = new HashMap<String, JobSubmissionProperty>();
-	static {
-		for (JobSubmissionProperty jp : values()) {
-			prettyNameToJobPropertyMap.put(jp.toString(), jp);
-		}
-	}
+
 
 	/**
 	 * Translates a pretty name string to a JobSubmissionProperty enum.
@@ -172,9 +172,7 @@ public enum JobSubmissionProperty {
 	 *            the default value
 	 */
 	JobSubmissionProperty(final String keyName, final String defaultValue) {
-		this.keyName = keyName;
-		this.prettyName = keyName;
-		this.defaultValue = defaultValue;
+		this(keyName, keyName, defaultValue);
 	}
 
 	/**
@@ -192,6 +190,7 @@ public enum JobSubmissionProperty {
 		this.keyName = keyName;
 		this.prettyName = prettyName;
 		this.defaultValue = defaultValue;
+
 	}
 
 	/**
