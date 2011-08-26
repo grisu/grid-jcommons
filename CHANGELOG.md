@@ -1,6 +1,11 @@
 Changelog
 =========
 
+1.3
+---
+
+* Pretty names for JobSubmissionProperties for display in grid clients
+
 1.2.9
 -----
 
