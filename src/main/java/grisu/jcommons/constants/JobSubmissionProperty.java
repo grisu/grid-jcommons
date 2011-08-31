@@ -20,7 +20,7 @@ public enum JobSubmissionProperty {
 	 * for this job, specify the value of
 	 * {@link Constants#GENERIC_APPLICATION_NAME} here. Defaults to null.
 	 */
-	APPLICATIONNAME(Constants.APPLICATIONNAME_KEY, "package", ""),
+	APPLICATIONNAME(Constants.APPLICATIONNAME_KEY, "application", ""),
 	/**
 	 * The version of the application for this job. If you want the Grisu
 	 * backend to pick a version, specify the value of
