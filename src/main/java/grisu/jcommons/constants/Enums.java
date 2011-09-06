@@ -23,7 +23,13 @@ public class Enums {
 		 * then using the resulting MyProxy username and password to log into
 		 * the Grisu backend.
 		 */
-		SHIBBOLETH("Institutions login"), /**
+		SHIBBOLETH("Institutions login"),
+		/**
+		 * Shibboleth login that doesn't display list of idps but instead uses
+		 * the last one used.
+		 */
+		SHIBBOLETH_LAST_IDP("Institutions login"),
+		/**
 		 * MyProxy login.
 		 * 
 		 * Use this login if you created a MyProxy credential through other
