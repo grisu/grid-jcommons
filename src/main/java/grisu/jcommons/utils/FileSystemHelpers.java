@@ -6,21 +6,27 @@ public class FileSystemHelpers {
 
 	public static String getHost(String url) {
 
-		if (StringUtils.isBlank(url) || !url.contains("://")) {
+		if (StringUtils.isBlank(url)) {
 			return null;
 		}
 
-		int start = url.indexOf("://");
-		int end = url.lastIndexOf(":");
-		if (end <= start) {
-			end = url.substring(start + 3).indexOf("/");
+		int start = 0;
+		if (url.contains("://")) {
+			start = url.indexOf("://") + 3;
+		}
+
+		String temp = url.substring(start);
+		int end = temp.lastIndexOf(":");
+
+		if (end < 0) {
+			end = temp.indexOf("/");
 			if (end < 0) {
-				return url.substring(start + 3);
+				return temp;
 			} else {
-				return url.substring(start + 3, end + start + 3);
+				return temp.substring(end);
 			}
 		} else {
-			return url.substring(start + 3, end);
+			return temp.substring(0, end);
 		}
 
 	}
@@ -41,6 +47,15 @@ public class FileSystemHelpers {
 				return Integer.parseInt(p.substring(0, j));
 			}
 		}
+	}
+
+	public static String getProtocol(String url) {
+
+		int i = url.indexOf("://");
+		if ( i < 0 ) {
+			return null;
+		}
+		return url.substring(0, i);
 	}
 
 	public static void main(String[] args) {
