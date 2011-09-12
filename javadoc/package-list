@@ -4,4 +4,6 @@ grisu.jcommons.configuration
 grisu.jcommons.constants
 grisu.jcommons.dependencies
 grisu.jcommons.interfaces
+grisu.jcommons.model.info
 grisu.jcommons.utils
+org.bestgrid.goji.utils
