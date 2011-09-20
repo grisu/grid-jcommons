@@ -1,6 +1,66 @@
 package org.bestgrid.goji.utils;
 
 public class EndpointHelpers {
+	public static String encode(String endpoint) {
+
+		return endpoint.replaceFirst("#", "%23");
+
+	}
+
+	public static String extractEndpointName(String endpoint) {
+		int pos = endpoint.indexOf("#");
+
+		if (pos != -1) {
+			endpoint = endpoint.substring(pos + 1);
+		}
+
+		pos = endpoint.indexOf("/");
+
+		if (pos == -1) {
+			return endpoint;
+		} else {
+			return endpoint.substring(0, pos);
+		}
+
+	}
+
+	public static String extractEndpointPart(String go_url) {
+		int pos = go_url.indexOf("/");
+		if ( pos == -1 ) {
+			return null;
+		} else {
+			return go_url.substring(0, pos);
+		}
+	}
+
+	public static String extractPathPart(String go_url) {
+		int pos = go_url.indexOf("/");
+
+		if (pos == -1) {
+			return null;
+		} else {
+			return go_url.substring(pos);
+		}
+
+	}
+
+	public static String extractUsername(String url) {
+		int pos = url.indexOf("#");
+		if ( pos == -1 ) {
+			return null;
+		} else {
+			return url.substring(0, pos);
+		}
+	}
+
+	public static boolean isGlobusOnlineUrl(String url) {
+		if (!url.startsWith("gsiftp") && encode(url).contains("%23")) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+
 	public static void main(String[] args) {
 
 		String host = "ng2.canterbury.ac.nz";
@@ -12,17 +72,6 @@ public class EndpointHelpers {
 
 		System.out.println("Host: " + result[0]);
 		System.out.println("Fqan: " + result[1]);
-
-	}
-
-	public static String removeHash(String endpoint) {
-		int pos = endpoint.indexOf("#");
-
-		if (pos == -1) {
-			return endpoint;
-		} else {
-			return endpoint.substring(pos + 1);
-		}
 
 	}
 

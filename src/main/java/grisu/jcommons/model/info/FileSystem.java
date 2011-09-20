@@ -93,11 +93,7 @@ public class FileSystem implements Comparable<FileSystem> {
 	}
 
 	public String getUrl() {
-		if (port < 0) {
 			return protocol + "://" + host;
-		} else {
-			return protocol + "://" + host + ":" + port;
-		}
 	}
 
 	@Override

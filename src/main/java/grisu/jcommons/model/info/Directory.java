@@ -15,6 +15,31 @@ import org.bestgrid.goji.utils.EndpointHelpers;
  */
 public class Directory implements Comparable<Directory> {
 
+	private static String fixMdsLegacies(String path) {
+
+		path = path.replace("${GLOBUS_USER_HOME}", "~");
+
+		int i = path.indexOf("[");
+		if (i > 0) {
+			path = path.substring(0, i);
+		}
+
+		return path;
+	}
+
+	private static String slash(String path) {
+
+		if (!path.startsWith("/")) {
+			path = "/" + path;
+		}
+
+		if (!path.endsWith("/")) {
+			return path + "/";
+		} else {
+			return path;
+		}
+	}
+
 	private final FileSystem filesystem;
 	private final String path;
 	private final String fqan;
@@ -22,7 +47,13 @@ public class Directory implements Comparable<Directory> {
 
 	public Directory(FileSystem fs, String path, String fqan, String alias) {
 		this.filesystem = fs;
-		this.path = path;
+		if (path.endsWith("/")) {
+			this.path = slash(fixMdsLegacies(path.substring(0,
+					path.length() - 1)));
+		} else {
+			this.path = slash(fixMdsLegacies(path));
+		}
+
 		this.fqan = fqan;
 		if (StringUtils.isBlank(alias)) {
 			alias = EndpointHelpers.translateIntoEndpointName(fs.getHost(),
@@ -73,6 +104,46 @@ public class Directory implements Comparable<Directory> {
 		return path;
 	}
 
+	public String getRelativePath(String url) {
+		if ( EndpointHelpers.isGlobusOnlineUrl(url) ) {
+			String username = EndpointHelpers.extractUsername(url);
+			String epName = EndpointHelpers.extractEndpointName(url);
+
+			if (!epName.equals(EndpointHelpers.extractEndpointName(alias))) {
+				throw new IllegalStateException(
+						"Url not in this directory filespace.");
+			}
+
+
+			String otherPath = EndpointHelpers.extractPathPart(url);
+
+			if (!otherPath.startsWith(path)) {
+				throw new IllegalStateException(
+						"Url not in this directory filespace.");
+			}
+
+			return otherPath.substring(path.length());
+
+
+
+		} else {
+
+			String thisUrl = getUrl();
+
+			if (!url.startsWith(thisUrl)) {
+				throw new IllegalStateException(
+						"Url not in this directory filespace.");
+			}
+
+			return url.substring(thisUrl.length());
+
+		}
+	}
+
+	public String getUrl() {
+		return filesystem.toString() + path;
+	}
+
 	@Override
 	public int hashCode() {
 		return filesystem.hashCode() + path.hashCode() + fqan.hashCode();
@@ -80,7 +151,7 @@ public class Directory implements Comparable<Directory> {
 
 	@Override
 	public String toString() {
-		return filesystem.toString() + "/" + path;
+		return getUrl();
 	}
 
 }
