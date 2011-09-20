@@ -7,3 +7,4 @@ grisu.jcommons.interfaces
 grisu.jcommons.model.info
 grisu.jcommons.utils
 org.bestgrid.goji.utils
+org.json
