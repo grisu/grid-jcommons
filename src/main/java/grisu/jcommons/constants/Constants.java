@@ -454,4 +454,7 @@ public class Constants {
 	 */
 	public static final String REDISTRIBUTE = "REDISTRIBUTE_";
 
+	// user properties
+	public static final String JOBNAME_COUNTER = "jobname_counter;
+
 }
