@@ -6,11 +6,12 @@ import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.JProgressBar;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class DownloadingDialog extends JDialog {
 
-	static final Logger myLogger = Logger.getLogger(DownloadingDialog.class
+	static final Logger myLogger = LoggerFactory.getLogger(DownloadingDialog.class
 			.getName());
 
 	static final long serialVersionUID = -7493900276355066466L;
@@ -26,7 +27,7 @@ public class DownloadingDialog extends JDialog {
 					dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 					dialog.setVisible(true);
 				} catch (Exception e) {
-					myLogger.error(e);
+					myLogger.error(e.getLocalizedMessage());
 				}
 			}
 		});

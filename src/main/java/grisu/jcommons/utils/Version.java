@@ -9,11 +9,12 @@ import java.util.List;
 
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang.StringUtils;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class Version {
 
-	static final Logger myLogger = Logger.getLogger(Version.class.getName());
+	static final Logger myLogger = LoggerFactory.getLogger(Version.class.getName());
 
 	public static String get(String module) {
 
@@ -31,7 +32,7 @@ public class Version {
 
 			return result.get(0);
 		} catch (Exception e) {
-			myLogger.error(e);
+			myLogger.error("Can't get module " + module, e);
 			return "N/A";
 		}
 
@@ -50,7 +51,7 @@ public class Version {
 				list.add(line);
 			}
 		} catch (Exception e) {
-			myLogger.error(e);
+			myLogger.error("Can't read from jar " + s, e);
 		} finally {
 			try {
 				if (br != null) {
@@ -60,7 +61,7 @@ public class Version {
 					is.close();
 				}
 			} catch (IOException e) {
-				myLogger.error(e);
+				myLogger.error("Can't close " + s, e);
 			}
 		}
 		return list;

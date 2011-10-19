@@ -8,7 +8,8 @@ import java.net.URL;
 import java.net.URLClassLoader;
 import java.util.Collection;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Used to add application specific plugins to grid client applications.
@@ -18,7 +19,7 @@ import org.apache.log4j.Logger;
  */
 public class ClasspathHacker {
 
-	private static Logger myLogger = Logger.getLogger(ClasspathHacker.class
+	private static Logger myLogger = LoggerFactory.getLogger(ClasspathHacker.class
 			.getName());
 
 	private static final Class[] parameters = new Class[] { URL.class };
@@ -66,7 +67,7 @@ public class ClasspathHacker {
 			try {
 				ClasspathHacker.addFile(plugin);
 			} catch (IOException e) {
-				myLogger.error(e);
+				myLogger.error("Can't init folder.", e);
 			}
 
 		}
@@ -79,7 +80,7 @@ public class ClasspathHacker {
 			try {
 				ClasspathHacker.addFile(plugin);
 			} catch (IOException e) {
-				myLogger.error(e);
+				myLogger.error("Can't init jar file.", e);
 			}
 
 		}

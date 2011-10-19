@@ -32,7 +32,8 @@ import javax.xml.xpath.XPathExpressionException;
 import javax.xml.xpath.XPathFactory;
 
 import org.apache.commons.lang.StringUtils;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.w3c.dom.Attr;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
@@ -53,8 +54,7 @@ import org.xml.sax.SAXException;
 
 public final class JsdlHelpers {
 
-	static final Logger myLogger = Logger
-			.getLogger(JsdlHelpers.class.getName());
+	static final Logger myLogger = LoggerFactory.getLogger(JsdlHelpers.class);
 
 	public static final String USER_EXECUTION_HOST_FILESYSTEM = "userExecutionHostFs";
 
@@ -1740,7 +1740,7 @@ public final class JsdlHelpers {
 		try {
 			schema = factory.newSchema(schemaFile);
 		} catch (SAXException e1) {
-			myLogger.error(e1);
+			myLogger.error("Can't validate JSDL", e1);
 		}
 
 		// create a Validator instance, which can be used to validate an
@@ -1754,7 +1754,7 @@ public final class JsdlHelpers {
 			// instance document is invalid!
 			return false;
 		} catch (IOException e) {
-			myLogger.error(e);
+			myLogger.error("Can't open JSDL", e);
 		}
 		return true;
 

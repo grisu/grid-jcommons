@@ -15,7 +15,8 @@ import javax.swing.JOptionPane;
 
 import org.apache.commons.httpclient.HttpClient;
 import org.apache.commons.httpclient.methods.GetMethod;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 
 public class DependencyManager {
@@ -24,7 +25,7 @@ public class DependencyManager {
 
 	public static boolean showDownloadDialog = false;
 
-	static final Logger myLogger = Logger.getLogger(DependencyManager.class
+	static final Logger myLogger = LoggerFactory.getLogger(DependencyManager.class
 			.getName());
 
 	private static HttpClient httpClient = new HttpClient();
@@ -101,7 +102,7 @@ public class DependencyManager {
 				dialog.dispose();
 			}
 		} catch (Exception e) {
-			myLogger.error(e);
+			myLogger.error(e.getLocalizedMessage());
 		}
 
 	}
