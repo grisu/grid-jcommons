@@ -40,10 +40,14 @@ public class Directory implements Comparable<Directory> {
 		}
 	}
 
-	private final FileSystem filesystem;
-	private final String path;
-	private final String fqan;
-	private final String alias;
+	private FileSystem filesystem;
+	private String path;
+	private String fqan;
+	private String alias;
+
+	public Directory() {
+
+	}
 
 	public Directory(FileSystem fs, String path, String fqan, String alias) {
 		this.filesystem = fs;

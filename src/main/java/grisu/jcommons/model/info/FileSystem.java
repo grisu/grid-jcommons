@@ -6,12 +6,15 @@ import org.apache.commons.lang.StringUtils;
 
 public class FileSystem implements Comparable<FileSystem> {
 
-	public static final int DEFAULT_PORT = -1;
+	public static final int DEFAULT_PORT = 2811;
 	public static final String DEFAULT_PROTOCOL = "gsiftp";
 
-	private final String host;
-	private final int port;
-	private final String protocol;
+	private String host;
+	private int port = DEFAULT_PORT;
+	private String protocol = DEFAULT_PROTOCOL;
+
+	public FileSystem() {
+	}
 
 	public FileSystem(String url) {
 
@@ -38,20 +41,6 @@ public class FileSystem implements Comparable<FileSystem> {
 
 	}
 
-	public FileSystem(String protocol, String host, Integer port) {
-		this.host = host;
-		if (port == null) {
-			this.port = DEFAULT_PORT;
-		} else {
-			this.port = port;
-		}
-		if (StringUtils.isBlank(protocol)) {
-			this.protocol = DEFAULT_PROTOCOL;
-		} else {
-			this.protocol = protocol;
-		}
-	}
-
 	public int compareTo(FileSystem o) {
 		return getUrl().compareTo(o.getUrl());
 	}
@@ -66,11 +55,12 @@ public class FileSystem implements Comparable<FileSystem> {
 			} catch (Exception e) {
 				return false;
 			}
-		} else if (o instanceof FileSystem) {
-			other = (FileSystem) o;
-		} else {
-			return false;
-		}
+		} else
+			if (o instanceof FileSystem) {
+				other = (FileSystem) o;
+			} else {
+				return false;
+			}
 
 		if (host.equals(other.getHost()) && (port == other.getPort())
 				&& protocol.equals(other.getProtocol())) {
@@ -93,12 +83,37 @@ public class FileSystem implements Comparable<FileSystem> {
 	}
 
 	public String getUrl() {
+		if (port != DEFAULT_PORT) {
+			return protocol + "://" + host + ":" + port;
+		} else {
 			return protocol + "://" + host;
+		}
 	}
 
 	@Override
 	public int hashCode() {
 		return this.host.hashCode()+this.protocol.hashCode()+port;
+	}
+
+	public void setHost(String host) {
+		this.host = host;
+	}
+
+	public void setPort(int port) {
+		if (port < 0) {
+			this.port = DEFAULT_PORT;
+		} else {
+			this.port = port;
+		}
+	}
+
+	public void setProtocol(String protocol) {
+
+		if (StringUtils.isBlank(protocol)) {
+			this.protocol = DEFAULT_PROTOCOL;
+		} else {
+			this.protocol = protocol;
+		}
 	}
 
 	@Override
