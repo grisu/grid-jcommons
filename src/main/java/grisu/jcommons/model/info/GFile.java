@@ -7,6 +7,15 @@ import java.util.Date;
 import org.apache.commons.lang.StringUtils;
 import org.json.JSONObject;
 
+/**
+ * Wrapper class to access and get information about remote files.
+ * 
+ * Nicer than having to work with the JSON object GlobusOnline returns
+ * directly...
+ * 
+ * @author Markus Binsteiner
+ * 
+ */
 public class GFile implements Comparable<GFile> {
 
 	enum Type {
