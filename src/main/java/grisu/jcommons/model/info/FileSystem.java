@@ -13,6 +13,8 @@ public class FileSystem implements Comparable<FileSystem> {
 	private int port = DEFAULT_PORT;
 	private String protocol = DEFAULT_PROTOCOL;
 
+	private String alias = null;
+
 	public FileSystem() {
 	}
 
@@ -70,6 +72,13 @@ public class FileSystem implements Comparable<FileSystem> {
 		}
 	}
 
+	public String getAlias() {
+		if (StringUtils.isBlank(alias)) {
+			return host;
+		}
+		return alias;
+	}
+
 	public String getHost() {
 		return host;
 	}
@@ -93,6 +102,10 @@ public class FileSystem implements Comparable<FileSystem> {
 	@Override
 	public int hashCode() {
 		return this.host.hashCode()+this.protocol.hashCode()+port;
+	}
+
+	public void setAlias(String a) {
+		this.alias = a;
 	}
 
 	public void setHost(String host) {

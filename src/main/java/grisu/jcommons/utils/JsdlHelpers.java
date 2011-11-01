@@ -62,6 +62,49 @@ public final class JsdlHelpers {
 	// TODO check whether access to this has to be synchronized
 	private static final XPath xpath = getXPath();
 
+	public static Element addOrRetrieveExistingApplicationEnvironmentElement(
+			final Document jsdl, final String key) {
+
+		String expression = "/jsdl:JobDefinition/jsdl:JobDescription/jsdl:Application/jsdl-posix:POSIXApplication/jsdl-posix:Environment[@name='"
+				+ key + "']";
+		NodeList resultNodes = null;
+		try {
+			resultNodes = (NodeList) xpath.evaluate(expression, jsdl,
+					XPathConstants.NODESET);
+		} catch (XPathExpressionException e) {
+			myLogger.warn("No application in jsdl file. Good.");
+		}
+
+		if ((resultNodes != null) && (resultNodes.getLength() == 1)) {
+			myLogger.info("There's already a environment variable with that name. Returning that one.");
+			Element fs = (Element) resultNodes.item(0);
+			return fs;
+		}
+		if ((resultNodes != null) && (resultNodes.getLength() > 1)) {
+			myLogger.error("More than one environment variables for key " + key
+					+ " found. That is not possible.");
+			for (int i = 0; i < resultNodes.getLength(); i++) {
+				myLogger.error(resultNodes.item(i).getNodeName() + ": "
+						+ resultNodes.item(i).getTextContent());
+			}
+			return null;
+		}
+
+		// Element old = getUserExecutionHostFSElement(jsdl);
+		// System.out.println(old.getNamespaceURI());
+
+		String nsURL = new JSDLNamespaceContext().getNamespaceURI("jsdl-posix");
+		// creating new one
+		Element envVariable = jsdl.createElementNS(nsURL, "Environment");
+		// Element filesystem = jsdl.createDElement("jsdl:FileSystem");
+		envVariable.setAttribute("name", key);
+
+		// getting resources element
+		Element resources = getPosixApplicationElement(jsdl);
+		resources.appendChild(envVariable);
+		return envVariable;
+	}
+
 	/**
 	 * Adds a FileSystem element to the specified jsdl document. If a filesystem
 	 * with that name already exists, the new root url is that and it is
@@ -662,6 +705,7 @@ public final class JsdlHelpers {
 
 	}
 
+
 	/**
 	 * Parses the jsdl document and returns an array of all the arguments that
 	 * are used on the jsdl-posix:Executable.
@@ -690,6 +734,35 @@ public final class JsdlHelpers {
 		return arguments;
 	}
 
+
+	/**
+	 * Get the posixApplication element.
+	 * 
+	 * @param jsdl
+	 *            the jsdl document
+	 * @return the resources element
+	 */
+	public static Element getPosixApplicationElement(final Document jsdl) {
+
+		String expression = "/jsdl:JobDefinition/jsdl:JobDescription/jsdl:Application/jsdl-posix:POSIXApplication";
+		NodeList resultNodes = null;
+		try {
+			resultNodes = (NodeList) xpath.evaluate(expression, jsdl,
+					XPathConstants.NODESET);
+		} catch (XPathExpressionException e) {
+			myLogger.warn("No application in jsdl file. Good.");
+		}
+
+		if ((resultNodes == null) || (resultNodes.getLength() == 0)
+				|| (resultNodes.getLength() > 1)) {
+			myLogger.info("No or more than one Resource elements found. That's not possible");
+			return null;
+		}
+
+		Element resources = (Element) resultNodes.item(0);
+		return resources;
+	}
+
 	/**
 	 * Parses the jsdl document and returns the value of the
 	 * jsdl-posix:Envornment element(s). This is the name (and path) of the
@@ -708,7 +781,7 @@ public final class JsdlHelpers {
 			resultNodes = (NodeList) xpath.evaluate(expression, jsdl,
 					XPathConstants.NODESET);
 		} catch (XPathExpressionException e) {
-			myLogger.warn("No application in jsdl file.");
+			myLogger.warn("No application environment in jsdl file.");
 			return null;
 		}
 
@@ -923,43 +996,6 @@ public final class JsdlHelpers {
 		return processorCount;
 	}
 
-	/**
-	 * Parses the jsdl document and returns the value of the TotalCPUCount
-	 * element.
-	 * 
-	 * @param jsdl
-	 *            the jsdl document
-	 * @return the number of cpus used in this job
-	 */
-	public static int getResourceCount(final Document jsdl) {
-
-		String expression = "/jsdl:JobDefinition/jsdl:JobDescription/jsdl:Application/jsdl:TotalResourceCount/jsdl:exact";
-		NodeList resultNodes = null;
-		try {
-			resultNodes = (NodeList) xpath.evaluate(expression, jsdl,
-					XPathConstants.NODESET);
-		} catch (XPathExpressionException e) {
-			myLogger.warn("No jobname in jsdl file.");
-			return -1;
-		}
-
-		if (resultNodes.getLength() != 1) {
-			myLogger.warn("This template doesn't specify a (correct) TotalResrourceCount element. ");
-			return -1;
-		}
-
-		int resourceCount;
-		try {
-			resourceCount = new Integer(resultNodes.item(0).getTextContent());
-		} catch (NumberFormatException e) {
-			myLogger.error("No valid number entry in the walltime element.");
-			return -1;
-		}
-
-		return resourceCount;
-
-	}
-
 	// /**
 	// * Adds submission locations to the job.
 	// *
@@ -1005,6 +1041,43 @@ public final class JsdlHelpers {
 	// resultNodes.item(0).appendChild(hostName);
 	// }
 	// }
+
+	/**
+	 * Parses the jsdl document and returns the value of the TotalCPUCount
+	 * element.
+	 * 
+	 * @param jsdl
+	 *            the jsdl document
+	 * @return the number of cpus used in this job
+	 */
+	public static int getResourceCount(final Document jsdl) {
+
+		String expression = "/jsdl:JobDefinition/jsdl:JobDescription/jsdl:Application/jsdl:TotalResourceCount/jsdl:exact";
+		NodeList resultNodes = null;
+		try {
+			resultNodes = (NodeList) xpath.evaluate(expression, jsdl,
+					XPathConstants.NODESET);
+		} catch (XPathExpressionException e) {
+			myLogger.warn("No jobname in jsdl file.");
+			return -1;
+		}
+
+		if (resultNodes.getLength() != 1) {
+			myLogger.warn("This template doesn't specify a (correct) TotalResrourceCount element. ");
+			return -1;
+		}
+
+		int resourceCount;
+		try {
+			resourceCount = new Integer(resultNodes.item(0).getTextContent());
+		} catch (NumberFormatException e) {
+			myLogger.error("No valid number entry in the walltime element.");
+			return -1;
+		}
+
+		return resourceCount;
+
+	}
 
 	/**
 	 * Get the resources element.

@@ -96,15 +96,15 @@ public class EndpointHelpers {
 
 	}
 
-	public static String translateIntoEndpointName(String host, String fqan) {
+	public static String translateIntoEndpointName(String host_or_fsAlias, String fqan) {
 
-		host = host.replace(".", "_");
+		host_or_fsAlias = host_or_fsAlias.replace(".", "_");
 		if (fqan.startsWith("/")) {
 			fqan = fqan.substring(1);
 		}
 		fqan = fqan.replace("/", "_");
 
-		return host + "--" + fqan;
+		return host_or_fsAlias + "--" + fqan;
 
 	}
 }
