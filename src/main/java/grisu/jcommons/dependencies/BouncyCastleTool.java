@@ -21,8 +21,8 @@ public class BouncyCastleTool {
 	private static final String[] possiblePaths = new String[] {
 		BouncyCastleTool.class.getProtectionDomain().getCodeSource()
 		.getLocation().getPath(),
-		GridEnvironment.getGridCommonJavaLibDirectory().getAbsolutePath(),
-	"/usr/share/java" };
+ "/usr/share/java",
+			GridEnvironment.getGridCommonJavaLibDirectory().getAbsolutePath() };
 
 	private static boolean addExternalBouncyCastle() {
 
@@ -34,6 +34,10 @@ public class BouncyCastleTool {
 			File dir = new File(path);
 			if (!dir.exists() || !dir.canRead()) {
 				continue;
+			}
+
+			if (dir.isFile()) {
+				dir = dir.getParentFile();
 			}
 
 			String[] files = dir.list(new FilenameFilter() {
@@ -48,6 +52,9 @@ public class BouncyCastleTool {
 					}
 				}
 			});
+			if (files == null) {
+				continue;
+			}
 
 			for (String file : files) {
 				try {
