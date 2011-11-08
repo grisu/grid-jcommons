@@ -16,15 +16,15 @@ import org.apache.commons.lang.StringUtils;
 public class GridEnvironment {
 
 	private static final String GRID_DEFAULT_DIRECTORY = System
-	.getProperty("user.home") + File.separator + ".grid";
+			.getProperty("user.home") + File.separator + ".grid";
 	/**
 	 * The port of the default MyProxy server (7512).
 	 */
-	public static final int DEFAULT_MYPROXY_PORT = 7512;
+	private static final int DEFAULT_MYPROXY_PORT = 7512;
 	/**
 	 * The hostname of the default MyProxy server (myproxy.arcs.org.au).
 	 */
-	public static final String DEFAULT_MYPROXY_SERVER = "myproxy.arcs.org.au";
+	private static final String DEFAULT_MYPROXY_SERVER = "myproxy.arcs.org.au";
 
 	/**
 	 * Calculates which MyProxy server to us and returns its port.
