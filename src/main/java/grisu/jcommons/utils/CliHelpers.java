@@ -27,7 +27,7 @@ public class CliHelpers {
 	private static ConsoleReader consoleReader = null;
 
 	public static String[] indeterminateProgressStrings = new String[] { "-",
-			"\\", "|", "/" };
+		"\\", "|", "/" };
 
 	public static final int DURATION = 100;
 
@@ -124,23 +124,24 @@ public class CliHelpers {
 
 	public static void main(String[] args) throws InterruptedException {
 
-		// while (true) {
+		while (true) {
+
+			setIndeterminateProgress("Testing...", true);
+
+			Thread.sleep(4000);
+
+			setIndeterminateProgress(false);
+
+			System.out.println(" xx ");
+		}
+
+		// for (int i = 1; i < 100; i = i + 10) {
 		//
-		// setIndeterminateProgress("Testing...", true);
+		// setProgress(i, 100);
+		// Thread.sleep(1000);
 		//
-		// Thread.sleep(4000);
-		//
-		// setIndeterminateProgress("Success.", false);
-		//
-		// System.out.println(" xx ");
 		// }
 
-		for (int i = 1; i < 100; i = i + 10) {
-
-			setProgress(i, 100);
-			Thread.sleep(1000);
-
-		}
 	}
 
 	private static String repetition(String string, int progress) {
@@ -180,9 +181,18 @@ public class CliHelpers {
 		} else {
 			timer.cancel();
 			spinUpdater = null;
-			writeToTerminal("");
+			writeToTerminal("                                                ");
+			// try {
+			// consoleReader.clearLine();
+			// } catch (IOException e) {
+			// // TODO Auto-generated catch block
+			// e.printStackTrace();
+			// }
 			if (!StringUtils.isBlank(message)) {
+				writeToTerminal(message);
 				System.out.println(message);
+			} else {
+				writeToTerminal("");
 			}
 
 		}
