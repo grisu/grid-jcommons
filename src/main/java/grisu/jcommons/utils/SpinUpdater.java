@@ -19,9 +19,9 @@ public class SpinUpdater extends TimerTask {
 		String msg = null;
 		// TODO Auto-generated method stub
 		if (StringUtils.isBlank(message)) {
-			msg = "   " + CliHelpers.indeterminateProgressStrings[i];
+			msg = "   [" + CliHelpers.indeterminateProgressStrings[i] + "]";
 		} else {
-			msg = "   " + CliHelpers.indeterminateProgressStrings[i] + " "
+			msg = "   [" + CliHelpers.indeterminateProgressStrings[i] + "]   "
 					+ message;
 		}
 		CliHelpers.writeToTerminal(msg);
