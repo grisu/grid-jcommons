@@ -52,7 +52,12 @@ public class Enums {
 		 * uses the resulting MyProxy username and password to login to the
 		 * Grisu backend.
 		 */
-		X509_CERTIFICATE("Certificate login");
+		X509_CERTIFICATE("Certificate login"),
+
+		/**
+		 * Undefined marker.
+		 */
+		UNDEFINED("Undefined");
 
 		/**
 		 * Translates a String into a {@link LoginType} enum.
