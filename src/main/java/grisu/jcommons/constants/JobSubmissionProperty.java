@@ -51,9 +51,13 @@ public enum JobSubmissionProperty {
 			 */
 			MEMORY_IN_B(Constants.MEMORY_IN_B_KEY, ""),
 			/**
-			 * The email address to use when specifying {@link #EMAIL_ON_START} or
-			 * {@link #EMAIL_ON_FINISH}.
-			 */
+	 * The minimum amount of virtual memory that this job needs. Defaults to 0.
+	 */
+	VIRTUAL_MEMORY_IN_B(Constants.VIRTUAL_MEMORY_IN_B_KEY, ""),
+	/**
+	 * The email address to use when specifying {@link #EMAIL_ON_START} or
+	 * {@link #EMAIL_ON_FINISH}.
+	 */
 			EMAIL_ADDRESS(Constants.EMAIL_ADDRESS_KEY, "email", ""),
 			/**
 			 * Specifies whether you want an email sent to you after the job started on

@@ -206,7 +206,11 @@ public class CliHelpers {
 
 		getConsoleReader().setDefaultPrompt("");
 
-		final int progress = (completed * 20) / total;
+		int progress = completed;
+		if (total != 0) {
+			progress = (completed * 20) / total;
+		}
+
 		final String totalStr = String.valueOf(total);
 		final String percent = String.format(
 				"%" + totalStr.length() + "d/%s [", completed, totalStr);

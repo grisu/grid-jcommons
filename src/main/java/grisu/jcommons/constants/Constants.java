@@ -91,6 +91,13 @@ public class Constants {
 	 * to (in Bytes).
 	 */
 	public static final String MEMORY_IN_B_KEY = "memory";
+
+	/**
+	 * The key for specifying the amount of virtual memory this job needs to
+	 * have access to (in Bytes).
+	 */
+	public static final String VIRTUAL_MEMORY_IN_B_KEY = "virtualMemory";
+
 	/**
 	 * The key for specifying the email address to send job status updates to.
 	 */

@@ -1424,6 +1424,43 @@ public final class JsdlHelpers {
 	}
 
 	/**
+	 * Returns the total virtual memory requirement for this job. This is the memory
+	 * that is required for each cpu multiplied with the number of cpus.
+	 * 
+	 * @param jsdl
+	 *            the jsdl document
+	 * @return the total memory requirment
+	 */
+	public static long getVirtualMemoryRequirement(final Document jsdl) {
+
+		String expression = "/jsdl:JobDefinition/jsdl:JobDescription/jsdl:Application/jsdl:TotalVirtualMemory/jsdl:LowerBoundedRange";
+		NodeList resultNodes = null;
+		try {
+			resultNodes = (NodeList) xpath.evaluate(expression, jsdl,
+					XPathConstants.NODESET);
+		} catch (XPathExpressionException e) {
+			myLogger.warn("No jobname in jsdl file.");
+			return -1;
+		}
+
+		if (resultNodes.getLength() != 1) {
+			return -1;
+		}
+
+		Long minMem;
+
+		try {
+			minMem = new Long(resultNodes.item(0).getTextContent());
+		} catch (NumberFormatException e) {
+			myLogger.error("No valid entry in the MinTotalMemory element.", e);
+			return -1;
+		}
+
+		return minMem;
+
+	}
+
+	/**
 	 * Returns the content of the walltime element in the jsdl file. The
 	 * walltime specified in the jsdl document should be
 	 * "walltime in seconds * no cpus". This is not what this method gives back.
