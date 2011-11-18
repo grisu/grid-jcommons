@@ -10,8 +10,14 @@ public class SpinUpdater extends TimerTask {
 	private String message = null;
 	private int i = 0;
 
+	private volatile boolean mute = false;
+
 	public SpinUpdater(String message) {
 		this.message = message;
+	}
+
+	public void mute(boolean mute) {
+		this.mute = mute;
 	}
 
 	@Override
@@ -24,7 +30,10 @@ public class SpinUpdater extends TimerTask {
 			msg = "   [" + CliHelpers.indeterminateProgressStrings[i] + "]   "
 					+ message;
 		}
-		CliHelpers.writeToTerminal(msg);
+
+		if ( ! mute ) {
+			CliHelpers.writeToTerminal(msg);
+		}
 
 		i = i + 1;
 		if (i >= CliHelpers.indeterminateProgressStrings.length) {

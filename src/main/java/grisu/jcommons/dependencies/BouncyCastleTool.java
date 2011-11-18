@@ -21,8 +21,8 @@ public class BouncyCastleTool {
 	private static final String[] possiblePaths = new String[] {
 		BouncyCastleTool.class.getProtectionDomain().getCodeSource()
 		.getLocation().getPath(),
- "/usr/share/java",
-			GridEnvironment.getGridCommonJavaLibDirectory().getAbsolutePath() };
+		"/usr/share/java",
+		GridEnvironment.getGridCommonJavaLibDirectory().getAbsolutePath() };
 
 	private static boolean addExternalBouncyCastle() {
 
@@ -68,6 +68,10 @@ public class BouncyCastleTool {
 			}
 		}
 		myLogger.error("Could not find/load bouncy castle provider...");
+
+		// trying to download
+		// DependencyManager.addDependencies(dependencies, folder)
+
 		return false;
 	}
 

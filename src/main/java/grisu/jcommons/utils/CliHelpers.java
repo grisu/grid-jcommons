@@ -180,6 +180,7 @@ public class CliHelpers {
 			}
 		} else {
 			timer.cancel();
+			spinUpdater.mute(true);
 			spinUpdater = null;
 			writeToTerminal("                                                ");
 			// try {
