@@ -23,11 +23,29 @@ public class FileSystemHelpers {
 			if (end < 0) {
 				return temp;
 			} else {
-				return temp.substring(end);
+				return temp.substring(0, end);
 			}
 		} else {
 			return temp.substring(0, end);
 		}
+
+	}
+
+	public static String getPath(String url) {
+
+		if (StringUtils.isBlank(url)) {
+			return null;
+		}
+
+		if (url.contains("://")) {
+			url = url.substring(url.indexOf("://") + 3);
+		}
+
+		if (!url.contains("/")) {
+			return null;
+		}
+
+		return url.substring(url.indexOf("/"));
 
 	}
 

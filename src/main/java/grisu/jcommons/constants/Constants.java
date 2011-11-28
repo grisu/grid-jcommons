@@ -461,5 +461,9 @@ public class Constants {
 	 */
 	public static final String REDISTRIBUTE = "REDISTRIBUTE_";
 
+	// Admin commands
+	public static final String REFRESH_VOS = "refresh_vos";
+	public static final String REFRESH_CONFIG = "refresh_config";
+
 
 }
