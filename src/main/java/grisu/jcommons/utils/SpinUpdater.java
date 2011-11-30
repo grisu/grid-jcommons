@@ -5,9 +5,12 @@ import java.util.TimerTask;
 
 import org.apache.commons.lang.StringUtils;
 
+import com.google.common.base.Strings;
+
 public class SpinUpdater extends TimerTask {
 
 	private String message = null;
+	private int lastMessage = 0;
 	private int i = 0;
 
 	private volatile boolean mute = false;
@@ -23,13 +26,21 @@ public class SpinUpdater extends TimerTask {
 	@Override
 	public void run() {
 		String msg = null;
-		// TODO Auto-generated method stub
+
 		if (StringUtils.isBlank(message)) {
+			message = "";
 			msg = "   [" + CliHelpers.indeterminateProgressStrings[i] + "]";
 		} else {
 			msg = "   [" + CliHelpers.indeterminateProgressStrings[i] + "]   "
 					+ message;
 		}
+
+		if (msg.length() < lastMessage) {
+			CliHelpers
+			.writeToTerminal(Strings.padEnd("", lastMessage + 1, ' '));
+		}
+
+		lastMessage = msg.length();
 
 		if ( ! mute ) {
 			CliHelpers.writeToTerminal(msg);
@@ -42,6 +53,7 @@ public class SpinUpdater extends TimerTask {
 	}
 
 	public void setMessage(String message) {
+		CliHelpers.writeToTerminal("");
 		this.message = message;
 	}
 

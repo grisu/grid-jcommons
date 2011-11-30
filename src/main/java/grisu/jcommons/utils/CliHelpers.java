@@ -222,7 +222,7 @@ public class CliHelpers {
 
 	}
 
-	public static void writeToTerminal(String message) {
+	public static synchronized void writeToTerminal(String message) {
 		getConsoleReader().getCursorBuffer().clearBuffer();
 		getConsoleReader().getCursorBuffer().write(message);
 		try {
