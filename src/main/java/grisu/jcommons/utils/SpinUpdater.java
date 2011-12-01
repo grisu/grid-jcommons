@@ -24,7 +24,7 @@ public class SpinUpdater extends TimerTask {
 	}
 
 	@Override
-	public void run() {
+	public synchronized void run() {
 		String msg = null;
 
 		if (StringUtils.isBlank(message)) {

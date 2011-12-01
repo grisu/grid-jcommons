@@ -33,6 +33,8 @@ public class CliHelpers {
 
 	private static boolean interrupt_progress = false;
 
+	private static String lastMessage = null;
+
 	public static void enableProgressDisplay(boolean enable) {
 		ENABLE_PROGRESS = enable;
 	}
@@ -172,7 +174,11 @@ public class CliHelpers {
 
 		if (start) {
 			if (spinUpdater != null) {
-				spinUpdater.setMessage(message);
+				if ((message == null)
+						|| ((message != null) && !message.equals(lastMessage))) {
+					spinUpdater.setMessage(message);
+					lastMessage = message;
+				}
 			} else {
 				spinUpdater = new SpinUpdater(message);
 				timer = new Timer();
@@ -183,6 +189,7 @@ public class CliHelpers {
 			timer.cancel();
 			spinUpdater = null;
 			writeToTerminal("                                                ");
+			lastMessage = message;
 			// try {
 			// consoleReader.clearLine();
 			// } catch (IOException e) {
