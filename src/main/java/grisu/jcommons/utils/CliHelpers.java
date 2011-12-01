@@ -11,6 +11,7 @@ import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.google.common.base.Strings;
 import com.google.common.collect.ImmutableList;
 
 public class CliHelpers {
@@ -187,9 +188,19 @@ public class CliHelpers {
 		} else {
 			spinUpdater.mute(true);
 			timer.cancel();
+			try {
+				Thread.sleep(DURATION * 3);
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
 			spinUpdater = null;
-			writeToTerminal("                                                ");
-			lastMessage = message;
+			if (lastMessage != null) {
+				writeToTerminal(Strings.padEnd("", lastMessage.length() + 1,
+						' '));
+			} else {
+				writeToTerminal("                    ");
+			}
+			lastMessage = null;
 			// try {
 			// consoleReader.clearLine();
 			// } catch (IOException e) {
