@@ -27,23 +27,28 @@ public class SpinUpdater extends TimerTask {
 	public synchronized void run() {
 		String msg = null;
 
-		if (StringUtils.isBlank(message)) {
+		if (message == null) {
 			message = "";
+		}
+
+		if (message.length() < lastMessage) {
+			int temp = message.length();
+			message = Strings.padEnd(message, lastMessage, ' ');
+			lastMessage = temp;
+		} else {
+			lastMessage = message.length();
+		}
+
+		if (StringUtils.isBlank(message)) {
 			msg = "   [" + CliHelpers.indeterminateProgressStrings[i] + "]";
 		} else {
 			msg = "   [" + CliHelpers.indeterminateProgressStrings[i] + "]   "
 					+ message;
 		}
 
-		if (msg.length() < lastMessage) {
-			int temp = msg.length();
-			msg = Strings.padEnd(msg, lastMessage, ' ');
-			lastMessage = temp;
-		} else {
-			lastMessage = message.length();
+		if (mute) {
+			System.out.println("MUUUUUUUUTEEEE");
 		}
-
-
 		CliHelpers.writeToTerminal(msg, mute);
 
 

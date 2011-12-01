@@ -129,9 +129,18 @@ public class CliHelpers {
 
 		while (true) {
 
-			setIndeterminateProgress("Testing...", true);
-
-			Thread.sleep(4000);
+			setIndeterminateProgress("Testing 1 11111111111111111111111111",
+					true);
+			Thread.sleep(2000);
+			// setIndeterminateProgress("Testing 2 222222222222222222222",
+			// true);
+			// Thread.sleep(2000);
+			// setIndeterminateProgress("Testing 3 33333333333333", true);
+			// Thread.sleep(2000);
+			// setIndeterminateProgress("Testing 4 444444", true);
+			// Thread.sleep(2000);
+			setIndeterminateProgress("Testing 5", true);
+			Thread.sleep(2000);
 
 			setIndeterminateProgress(false);
 
@@ -178,24 +187,29 @@ public class CliHelpers {
 				if ((message == null)
 						|| ((message != null) && !message.equals(lastMessage))) {
 					spinUpdater.setMessage(message);
-					lastMessage = message;
 				}
 			} else {
 				spinUpdater = new SpinUpdater(message);
 				timer = new Timer();
 				timer.scheduleAtFixedRate(spinUpdater, 0L, DURATION);
 			}
+			lastMessage = message;
 		} else {
 			spinUpdater.mute(true);
 			timer.cancel();
 
 			spinUpdater = null;
-			if (lastMessage != null) {
-				writeToTerminal(Strings.padEnd("", lastMessage.length() + 1,
-						' '));
-			} else {
-				writeToTerminal("                    ");
+			// if (StringUtils.isNotBlank(lastMessage)) {
+			if (lastMessage == null) {
+				lastMessage = "";
 			}
+
+			String pad = Strings.padEnd("", lastMessage.length() + 9, ' ');
+			// System.out.println("PAD: " + pad.length());
+			writeToTerminal(pad);
+			// } else {
+			// writeToTerminal("                    ");
+			// }
 			lastMessage = null;
 			// try {
 			// consoleReader.clearLine();
@@ -250,6 +264,9 @@ public class CliHelpers {
 			} catch (final IOException e) {
 				myLogger.error(e.getLocalizedMessage(), e);
 			}
+		} else {
+			myLogger.debug("Muting: " + message);
 		}
+
 	}
 }
