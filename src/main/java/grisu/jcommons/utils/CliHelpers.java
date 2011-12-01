@@ -179,8 +179,8 @@ public class CliHelpers {
 				timer.scheduleAtFixedRate(spinUpdater, 0L, DURATION);
 			}
 		} else {
-			timer.cancel();
 			spinUpdater.mute(true);
+			timer.cancel();
 			spinUpdater = null;
 			writeToTerminal("                                                ");
 			// try {
@@ -222,15 +222,20 @@ public class CliHelpers {
 
 	}
 
-	public static synchronized void writeToTerminal(String message) {
-		getConsoleReader().getCursorBuffer().clearBuffer();
-		getConsoleReader().getCursorBuffer().write(message);
-		try {
-			getConsoleReader().setCursorPosition(getTermwidth());
-			getConsoleReader().redrawLine();
-		} catch (final IOException e) {
-			myLogger.error(e.getLocalizedMessage(), e);
-		}
+	public static void writeToTerminal(String message) {
+		writeToTerminal(message, false);
+	}
 
+	public static synchronized void writeToTerminal(String message, boolean mute) {
+		if (!mute) {
+			getConsoleReader().getCursorBuffer().clearBuffer();
+			getConsoleReader().getCursorBuffer().write(message);
+			try {
+				getConsoleReader().setCursorPosition(getTermwidth());
+				getConsoleReader().redrawLine();
+			} catch (final IOException e) {
+				myLogger.error(e.getLocalizedMessage(), e);
+			}
+		}
 	}
 }

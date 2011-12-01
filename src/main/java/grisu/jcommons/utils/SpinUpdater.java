@@ -42,9 +42,7 @@ public class SpinUpdater extends TimerTask {
 
 		lastMessage = msg.length();
 
-		if ( ! mute ) {
-			CliHelpers.writeToTerminal(msg);
-		}
+		CliHelpers.writeToTerminal(msg, mute);
 
 		i = i + 1;
 		if (i >= CliHelpers.indeterminateProgressStrings.length) {
