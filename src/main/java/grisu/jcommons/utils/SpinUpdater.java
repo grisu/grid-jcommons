@@ -46,9 +46,6 @@ public class SpinUpdater extends TimerTask {
 					+ message;
 		}
 
-		if (mute) {
-			System.out.println("MUUUUUUUUTEEEE");
-		}
 		CliHelpers.writeToTerminal(msg, mute);
 
 
