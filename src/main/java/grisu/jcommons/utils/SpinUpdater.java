@@ -39,10 +39,13 @@ public class SpinUpdater extends TimerTask {
 			int temp = msg.length();
 			msg = Strings.padEnd(msg, lastMessage, ' ');
 			lastMessage = temp;
+		} else {
+			lastMessage = message.length();
 		}
 
 
 		CliHelpers.writeToTerminal(msg, mute);
+
 
 		i = i + 1;
 		if (i >= CliHelpers.indeterminateProgressStrings.length) {
