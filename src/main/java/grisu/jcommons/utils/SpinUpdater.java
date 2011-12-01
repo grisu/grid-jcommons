@@ -51,7 +51,6 @@ public class SpinUpdater extends TimerTask {
 	}
 
 	public void setMessage(String message) {
-		CliHelpers.writeToTerminal("");
 		this.message = message;
 	}
 

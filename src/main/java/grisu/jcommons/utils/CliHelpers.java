@@ -188,11 +188,7 @@ public class CliHelpers {
 		} else {
 			spinUpdater.mute(true);
 			timer.cancel();
-			try {
-				Thread.sleep(DURATION * 3);
-			} catch (InterruptedException e) {
-				e.printStackTrace();
-			}
+
 			spinUpdater = null;
 			if (lastMessage != null) {
 				writeToTerminal(Strings.padEnd("", lastMessage.length() + 1,
