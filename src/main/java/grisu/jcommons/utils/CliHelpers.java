@@ -204,6 +204,13 @@ public class CliHelpers {
 				lastMessage = "";
 			}
 
+			try {
+				Thread.sleep(600);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+
 			String pad = Strings.padEnd("", lastMessage.length() + 9, ' ');
 			// System.out.println("PAD: " + pad.length());
 			writeToTerminal(pad);

@@ -2,7 +2,11 @@ package grisu.jcommons.model.info;
 
 import grisu.jcommons.utils.FileSystemHelpers;
 
+import java.util.Map;
+
 import org.apache.commons.lang.StringUtils;
+
+import com.google.common.collect.ImmutableMap;
 
 public class FileSystem implements Comparable<FileSystem> {
 
@@ -85,6 +89,10 @@ public class FileSystem implements Comparable<FileSystem> {
 
 	public int getPort() {
 		return port;
+	}
+
+	public Map<String, String> getProperties() {
+		return ImmutableMap.of();
 	}
 
 	public String getProtocol() {
