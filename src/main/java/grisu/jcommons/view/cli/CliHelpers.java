@@ -21,9 +21,10 @@ public class CliHelpers {
 	public static final Terminal terminal = Terminal.setupTerminal();
 	private static ConsoleReader consoleReader = null;
 
+	private static ProgressDisplay progressSingleton = new MuteProgressDisplay();
+
 	// private static ProgressDisplay progressSingleton = new
-	// MuteProgressDisplay();
-	private static ProgressDisplay progressSingleton = new LineByLineProgressDisplay();
+	// LineByLineProgressDisplay();
 
 	// private static ProgressDisplay progressSingleton = new
 	// MuteProgressDisplay();
@@ -165,16 +166,5 @@ public class CliHelpers {
 		progressSingleton = pg;
 	}
 
-	public static void writeToTerminal(String message) {
 
-		getConsoleReader().getCursorBuffer().clearBuffer();
-		getConsoleReader().getCursorBuffer().write(message);
-		try {
-			getConsoleReader().setCursorPosition(getTermwidth());
-			getConsoleReader().redrawLine();
-		} catch (final IOException e) {
-			myLogger.error(e.getLocalizedMessage(), e);
-		}
-
-	}
 }
