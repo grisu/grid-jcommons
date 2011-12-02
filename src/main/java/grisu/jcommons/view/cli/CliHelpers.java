@@ -1,8 +1,7 @@
-package grisu.jcommons.utils;
+package grisu.jcommons.view.cli;
 
 import java.io.IOException;
 import java.util.Collection;
-import java.util.Timer;
 
 import jline.ConsoleReader;
 import jline.Terminal;
@@ -11,34 +10,24 @@ import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.google.common.base.Strings;
 import com.google.common.collect.ImmutableList;
 
 public class CliHelpers {
 
-	private static SpinUpdater spinUpdater = null;
 
 	static final Logger myLogger = LoggerFactory.getLogger(CliHelpers.class
 			.getName());
 
-	private static boolean ENABLE_PROGRESS = true;
-	private static Timer timer = null;
-
 	public static final Terminal terminal = Terminal.setupTerminal();
 	private static ConsoleReader consoleReader = null;
 
-	public static String[] indeterminateProgressStrings = new String[] { "-",
-		"\\", "|", "/" };
+	// private static ProgressDisplay progressSingleton = new
+	// MuteProgressDisplay();
+	private static ProgressDisplay progressSingleton = new LineByLineProgressDisplay();
 
-	public static final int DURATION = 100;
+	// private static ProgressDisplay progressSingleton = new
+	// MuteProgressDisplay();
 
-	private static boolean interrupt_progress = false;
-
-	private static String lastMessage = null;
-
-	public static void enableProgressDisplay(boolean enable) {
-		ENABLE_PROGRESS = enable;
-	}
 
 	public static synchronized ConsoleReader getConsoleReader() {
 		if (consoleReader == null) {
@@ -156,123 +145,35 @@ public class CliHelpers {
 
 	}
 
-	private static String repetition(String string, int progress) {
-		final StringBuffer result = new StringBuffer();
-		for (int i = 0; i < progress; i++) {
-			result.append(string);
-		}
-		return result.toString();
-	}
-
 	public static void setIndeterminateProgress(boolean start) {
-		setIndeterminateProgress(null, start);
+		progressSingleton.setIndeterminateProgress(start);
 	}
 
 	public static synchronized void setIndeterminateProgress(
 			final String message, boolean start) {
 
-		if (terminal == null) {
-			return;
-		}
-
-		if (!ENABLE_PROGRESS) {
-			System.out.println(start);
-			return;
-		}
-
-		getConsoleReader().setDefaultPrompt("");
-
-		if (start) {
-			if (spinUpdater != null) {
-				if ((message == null)
-						|| ((message != null) && !message.equals(lastMessage))) {
-					spinUpdater.setMessage(message);
-				}
-			} else {
-				spinUpdater = new SpinUpdater(message);
-				timer = new Timer();
-				timer.scheduleAtFixedRate(spinUpdater, 0L, DURATION);
-			}
-			lastMessage = message;
-		} else {
-			spinUpdater.mute(true);
-			timer.cancel();
-
-			spinUpdater = null;
-			// if (StringUtils.isNotBlank(lastMessage)) {
-			if (lastMessage == null) {
-				lastMessage = "";
-			}
-
-			try {
-				Thread.sleep(600);
-			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-
-			String pad = Strings.padEnd("", lastMessage.length() + 9, ' ');
-			// System.out.println("PAD: " + pad.length());
-			writeToTerminal(pad);
-			// } else {
-			// writeToTerminal("                    ");
-			// }
-			lastMessage = null;
-			// try {
-			// consoleReader.clearLine();
-			// } catch (IOException e) {
-			// // TODO Auto-generated catch block
-			// e.printStackTrace();
-			// }
-			if (!StringUtils.isBlank(message)) {
-				writeToTerminal(message);
-				System.out.println(message);
-			} else {
-				writeToTerminal("");
-			}
-
-		}
+		progressSingleton.setIndeterminateProgress(message, start);
 
 	}
 
 	public static void setProgress(int completed, int total) {
-		if ((terminal == null) || !ENABLE_PROGRESS) {
-			return;
-		}
+		progressSingleton.setProgress(completed, total);
 
-		getConsoleReader().setDefaultPrompt("");
+	}
 
-		int progress = completed;
-		if (total != 0) {
-			progress = (completed * 20) / total;
-		}
-
-		final String totalStr = String.valueOf(total);
-		final String percent = String.format(
-				"%" + totalStr.length() + "d/%s [", completed, totalStr);
-		final String result = percent + repetition("-", progress)
-				+ repetition(" ", 20 - progress) + "]";
-
-		writeToTerminal(result);
-
+	public static synchronized void setProgressDisplay(ProgressDisplay pg) {
+		progressSingleton = pg;
 	}
 
 	public static void writeToTerminal(String message) {
-		writeToTerminal(message, false);
-	}
 
-	public static synchronized void writeToTerminal(String message, boolean mute) {
-		if (!mute) {
-			getConsoleReader().getCursorBuffer().clearBuffer();
-			getConsoleReader().getCursorBuffer().write(message);
-			try {
-				getConsoleReader().setCursorPosition(getTermwidth());
-				getConsoleReader().redrawLine();
-			} catch (final IOException e) {
-				myLogger.error(e.getLocalizedMessage(), e);
-			}
-		} else {
-			myLogger.debug("Muting: " + message);
+		getConsoleReader().getCursorBuffer().clearBuffer();
+		getConsoleReader().getCursorBuffer().write(message);
+		try {
+			getConsoleReader().setCursorPosition(getTermwidth());
+			getConsoleReader().redrawLine();
+		} catch (final IOException e) {
+			myLogger.error(e.getLocalizedMessage(), e);
 		}
 
 	}

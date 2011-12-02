@@ -1,6 +1,8 @@
 package grisu.jcommons.utils;
 
 
+import grisu.jcommons.view.cli.FancyCliProgress;
+
 import java.util.TimerTask;
 
 import org.apache.commons.lang.StringUtils;
@@ -15,8 +17,11 @@ public class SpinUpdater extends TimerTask {
 
 	private volatile boolean mute = false;
 
-	public SpinUpdater(String message) {
+	private final FancyCliProgress progress;
+
+	public SpinUpdater(String message, FancyCliProgress p) {
 		this.message = message;
+		this.progress = p;
 	}
 
 	public void mute(boolean mute) {
@@ -40,17 +45,19 @@ public class SpinUpdater extends TimerTask {
 		}
 
 		if (StringUtils.isBlank(message)) {
-			msg = "   [" + CliHelpers.indeterminateProgressStrings[i] + "]";
+			msg = "   [" + FancyCliProgress.indeterminateProgressStrings[i]
+					+ "]";
 		} else {
-			msg = "   [" + CliHelpers.indeterminateProgressStrings[i] + "]   "
+			msg = "   [" + FancyCliProgress.indeterminateProgressStrings[i]
+					+ "]   "
 					+ message;
 		}
 
-		CliHelpers.writeToTerminal(msg, mute);
+		progress.writeToTerminal(msg, mute);
 
 
 		i = i + 1;
-		if (i >= CliHelpers.indeterminateProgressStrings.length) {
+		if (i >= FancyCliProgress.indeterminateProgressStrings.length) {
 			i = 0;
 		}
 	}
@@ -58,5 +65,7 @@ public class SpinUpdater extends TimerTask {
 	public void setMessage(String message) {
 		this.message = message;
 	}
+
+
 
 }
