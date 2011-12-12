@@ -31,7 +31,10 @@ public class CommonGridProperties {
 		 * Whether to automatically print out
 		 * uncaught exceptions.
 		 */
-		DEBUG_UNCAUGHT_EXCEPTIONS
+		DEBUG_UNCAUGHT_EXCEPTIONS, /**
+		 * The password used to create a credential.
+		 */
+		PASSWORD
 
 	}
 
@@ -43,7 +46,7 @@ public class CommonGridProperties {
 	 * $HOME/.grid/grid.properties)
 	 */
 	public static final String GRID_PROPERTIES_FILE = GridEnvironment
-	.getGridConfigDirectory() + File.separator + "grid.properties";
+			.getGridConfigDirectory() + File.separator + "grid.properties";
 
 	/**
 	 * Gets the singleton properties object.

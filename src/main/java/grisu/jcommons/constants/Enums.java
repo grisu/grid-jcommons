@@ -57,7 +57,7 @@ public class Enums {
 		/**
 		 * Undefined marker.
 		 */
-		UNDEFINED("Undefined");
+		UNDEFINED("Undefined"), WRAPPED("Wrapped");
 
 		/**
 		 * Translates a String into a {@link LoginType} enum.
