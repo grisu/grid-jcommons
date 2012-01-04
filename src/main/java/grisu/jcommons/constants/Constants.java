@@ -465,5 +465,7 @@ public class Constants {
 	public static final String REFRESH_VOS = "refresh_vos";
 	public static final String REFRESH_CONFIG = "refresh_config";
 
+	// other...
+	public static final String BACKEND = "backend";
 
 }
