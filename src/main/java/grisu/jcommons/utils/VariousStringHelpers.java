@@ -12,9 +12,9 @@ public class VariousStringHelpers {
 
 		int index = dn.lastIndexOf("=");
 		if (index < 0) {
-			index = 0;
+			index = -1;
 		}
-		return dn.substring(index);
+		return dn.substring(index + 1);
 
 	}
 
