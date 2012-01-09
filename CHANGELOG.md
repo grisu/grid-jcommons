@@ -1,6 +1,11 @@
 Changelog
 =========
 
+1.5.2
+-----
+
+* Constants etc...
+
 1.3
 ---
 
