@@ -6,6 +6,11 @@ Changelog
 
 * Constants etc...
 
+1.5
+---
+
+* Constants etc...
+
 1.3
 ---
 
