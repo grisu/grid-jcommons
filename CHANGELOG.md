@@ -1,6 +1,11 @@
 Changelog
 =========
 
+1.5.3
+-----
+
+* Updated logback dependency
+
 1.5.2
 -----
 
