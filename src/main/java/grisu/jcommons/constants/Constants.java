@@ -154,7 +154,7 @@ public class Constants {
 	 * The key for the property that holds the keys and values for the
 	 * environment variables that should be set for a job.
 	 */
-	public static final String ENVIRONMENT_VARIABLES_KEY = "environmentVariables";
+	public static final String ENVIRONMENT_VARIABLES_KEY = "env";
 
 	/**
 	 * The key for specifying the modules to load for a job.
