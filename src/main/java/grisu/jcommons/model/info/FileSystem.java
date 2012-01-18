@@ -17,9 +17,11 @@ public class FileSystem implements Comparable<FileSystem> {
 	private int port = DEFAULT_PORT;
 	private String protocol = DEFAULT_PROTOCOL;
 
+	private Site site = null;
+
 	private String alias = null;
 
-	public FileSystem() {
+	private FileSystem() {
 	}
 
 	public FileSystem(String url) {
@@ -61,12 +63,11 @@ public class FileSystem implements Comparable<FileSystem> {
 			} catch (Exception e) {
 				return false;
 			}
-		} else
-			if (o instanceof FileSystem) {
-				other = (FileSystem) o;
-			} else {
-				return false;
-			}
+		} else if (o instanceof FileSystem) {
+			other = (FileSystem) o;
+		} else {
+			return false;
+		}
 
 		if (host.equals(other.getHost()) && (port == other.getPort())
 				&& protocol.equals(other.getProtocol())) {
@@ -99,6 +100,10 @@ public class FileSystem implements Comparable<FileSystem> {
 		return protocol;
 	}
 
+	public Site getSite() {
+		return this.site;
+	}
+
 	public String getUrl() {
 		if (port != DEFAULT_PORT) {
 			return protocol + "://" + host + ":" + port;
@@ -109,7 +114,7 @@ public class FileSystem implements Comparable<FileSystem> {
 
 	@Override
 	public int hashCode() {
-		return this.host.hashCode()+this.protocol.hashCode()+port;
+		return this.host.hashCode() + this.protocol.hashCode() + port;
 	}
 
 	public void setAlias(String a) {
@@ -135,6 +140,10 @@ public class FileSystem implements Comparable<FileSystem> {
 		} else {
 			this.protocol = protocol;
 		}
+	}
+
+	public void setSite(Site site) {
+		this.site = site;
 	}
 
 	@Override

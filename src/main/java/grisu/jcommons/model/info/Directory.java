@@ -1,8 +1,11 @@
 package grisu.jcommons.model.info;
 
-import org.apache.commons.lang.StringUtils;
+import java.util.Collection;
+import java.util.Set;
+
 import org.bestgrid.goji.utils.EndpointHelpers;
 
+import com.google.common.collect.Sets;
 
 /**
  * A Directory is an object that points to a url in grid-space (consisting of a
@@ -42,14 +45,14 @@ public class Directory implements Comparable<Directory> {
 
 	private FileSystem filesystem;
 	private String path;
-	private String fqan;
+	private Collection<Group> groups;
 	private String alias;
 
 	public Directory() {
 
 	}
 
-	public Directory(FileSystem fs, String path, String fqan, String alias) {
+	public Directory(FileSystem fs, String path, Set<Group> fqans, String alias) {
 		this.filesystem = fs;
 		if (path.endsWith("/")) {
 			this.path = slash(fixMdsLegacies(path.substring(0,
@@ -58,11 +61,11 @@ public class Directory implements Comparable<Directory> {
 			this.path = slash(fixMdsLegacies(path));
 		}
 
-		this.fqan = fqan;
-		if (StringUtils.isBlank(alias)) {
-			alias = EndpointHelpers.translateIntoEndpointName(fs.getHost(),
-					fqan);
-		}
+		this.groups = Sets.newTreeSet(fqans);
+		// if (StringUtils.isBlank(alias)) {
+		// alias = EndpointHelpers.translateIntoEndpointName(fs.getHost(),
+		// fqan.getFqan());
+		// }
 		this.alias = alias;
 	}
 
@@ -72,7 +75,9 @@ public class Directory implements Comparable<Directory> {
 		if (r == 0) {
 			r = path.compareTo(o.getPath());
 			if (r == 0) {
-				r = fqan.compareTo(o.getFqan());
+
+				// TODO compare both groups
+				// r = groups.compareTo(o.getGroups());
 			}
 		}
 		return r;
@@ -84,8 +89,9 @@ public class Directory implements Comparable<Directory> {
 			Directory other = (Directory) o;
 
 			if (getFilesystem().equals(other.getFilesystem())
-					&& path.equals(other.getPath())
-					&& fqan.equals(other.getFqan())) {
+					&& path.equals(other.getPath())) {
+				// TODO equals for groups
+				// && groups.equals(other.getGroup())) {
 				return true;
 			}
 		}
@@ -100,8 +106,8 @@ public class Directory implements Comparable<Directory> {
 		return filesystem;
 	}
 
-	public String getFqan() {
-		return fqan;
+	public Collection<Group> getGroups() {
+		return groups;
 	}
 
 	public String getPath() {
@@ -109,7 +115,7 @@ public class Directory implements Comparable<Directory> {
 	}
 
 	public String getRelativePath(String url) {
-		if ( EndpointHelpers.isGlobusOnlineUrl(url) ) {
+		if (EndpointHelpers.isGlobusOnlineUrl(url)) {
 			String username = EndpointHelpers.extractUsername(url);
 			String epName = EndpointHelpers.extractEndpointName(url);
 
@@ -117,7 +123,6 @@ public class Directory implements Comparable<Directory> {
 				throw new IllegalStateException(
 						"Url not in this directory filespace.");
 			}
-
 
 			String otherPath = EndpointHelpers.extractPathPart(url);
 
@@ -127,8 +132,6 @@ public class Directory implements Comparable<Directory> {
 			}
 
 			return otherPath.substring(path.length());
-
-
 
 		} else {
 
@@ -150,7 +153,7 @@ public class Directory implements Comparable<Directory> {
 
 	@Override
 	public int hashCode() {
-		return filesystem.hashCode() + path.hashCode() + fqan.hashCode();
+		return filesystem.hashCode() + path.hashCode() + groups.hashCode();
 	}
 
 	@Override
