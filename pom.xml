@@ -146,6 +146,11 @@
 			<version>bestgrid-0.9.95-2</version>
 			<scope>provided</scope>
 		</dependency>
+		<dependency>
+			<groupId>nz.nesi</groupId>
+			<artifactId>grin</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+		</dependency>
 	</dependencies>
 
 
