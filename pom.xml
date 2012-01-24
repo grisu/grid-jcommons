@@ -158,7 +158,7 @@
 				<version>2.1</version>
 				<configuration>
 					<autoVersionSubmodules>true</autoVersionSubmodules>
-					<pushChanges>false</pushChanges>
+					<pushChanges>true</pushChanges>
 					<localCheckout>true</localCheckout>
 				</configuration>
 			</plugin>
