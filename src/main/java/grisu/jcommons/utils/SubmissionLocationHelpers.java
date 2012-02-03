@@ -1,6 +1,5 @@
 package grisu.jcommons.utils;
 
-import grisu.jcommons.interfaces.GridResource;
 
 /**
  * Helper class to calculate the string format that is used within Grisu and
@@ -11,25 +10,26 @@ import grisu.jcommons.interfaces.GridResource;
  */
 public final class SubmissionLocationHelpers {
 
-	/**
-	 * Calculates the submission location string for the specified GridResource.
-	 * 
-	 * @param gridResource
-	 *            the GridResource
-	 * @return the submission location string
-	 */
-	public static String createSubmissionLocationString(
-			final GridResource gridResource) {
-
-		String contactString = gridResource.getContactString();
-
-		String hostname = contactString.substring(
-				contactString.indexOf("https://") != 0 ? 0 : 8,
-				contactString.indexOf(":8443"));
-
-		return createSubmissionLocationString(hostname,
-				gridResource.getQueueName(), gridResource.getJobManager());
-	}
+	// /**
+	// * Calculates the submission location string for the specified
+	// GridResource.
+	// *
+	// * @param gridResource
+	// * the GridResource
+	// * @return the submission location string
+	// */
+	// public static String createSubmissionLocationString(
+	// final GridResource gridResource) {
+	//
+	// String contactString = gridResource.getContactString();
+	//
+	// String hostname = contactString.substring(
+	// contactString.indexOf("https://") != 0 ? 0 : 8,
+	// contactString.indexOf(":8443"));
+	//
+	// return createSubmissionLocationString(hostname,
+	// gridResource.getQueueName(), gridResource.getJobManager());
+	// }
 
 	// /**
 	// * Calculates the submission location string.
