@@ -271,8 +271,8 @@ public class Constants {
 	 * 
 	 * Usually you can also specify "null", but this is cleaner.
 	 */
-	public static final String NON_VO_FQAN = "None";
-	public static final String NON_VO_NAME = "None";
+	public static final String NON_VO_FQAN = "/none";
+	public static final String NON_VO_NAME = "none";
 
 	/**
 	 * Only used internally.
