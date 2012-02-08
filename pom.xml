@@ -4,7 +4,7 @@
 	<groupId>grisu</groupId>
 	<artifactId>grid-jcommons</artifactId>
 	<name>Grid JCommons</name>
-	<version>1.5.11</version>
+	<version>1.5.12-SNAPSHOT</version>
 	<description>Java Interfaces, Constants and helper classes that are
 		used in more than one of the grid related projects.</description>
 
