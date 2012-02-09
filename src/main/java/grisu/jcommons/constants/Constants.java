@@ -464,6 +464,10 @@ public class Constants {
 	// Admin commands
 	public static final String REFRESH_VOS = "refresh_vos";
 	public static final String REFRESH_CONFIG = "refresh_config";
+	public static final String CLEAR_USER_CACHE = "clear_cache";
+	public static final String USER = "user";
+	public static final String ALL_USERS = "all";
+	public static final String LIST_USERS = "list_users";
 
 	// other...
 	public static final String BACKEND = "backend";
