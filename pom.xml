@@ -145,6 +145,6 @@
 	<parent>
 		<groupId>nz.org.nesi</groupId>
 		<artifactId>nesi</artifactId>
-		<version>0.8</version>
+		<version>0.9</version>
 	</parent>
 </project>
