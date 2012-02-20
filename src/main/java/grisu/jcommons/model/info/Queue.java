@@ -222,6 +222,15 @@ public class Queue extends AbstractResource implements Comparable<Queue> {
 		return getGateway().getSite();
 	}
 
+	public String getSubmissionLocation() {
+		if (StringUtils.isBlank(factoryType)
+				|| PBS_FACTORY_TYPE.equals(factoryType)) {
+			return getName() + ":" + getGateway().getHost();
+		} else {
+			return getName() + ":" + getGateway().getHost() + "#" + factoryType;
+		}
+	}
+
 	/**
 	 * In bytes.
 	 * 
@@ -305,12 +314,7 @@ public class Queue extends AbstractResource implements Comparable<Queue> {
 
 	@Override
 	public String toString() {
-		if (StringUtils.isBlank(factoryType)
-				|| PBS_FACTORY_TYPE.equals(factoryType)) {
-			return getName() + ":" + getGateway().getHost();
-		} else {
-			return getName() + ":" + getGateway().getHost() + "#" + factoryType;
-		}
+		return getSubmissionLocation();
 	}
 
 }
