@@ -2,8 +2,10 @@ package grisu.jcommons.model.info;
 
 import grisu.jcommons.constants.Constants;
 
+import java.util.Map;
 import java.util.Set;
 
+import com.google.common.collect.Maps;
 import com.google.common.collect.Sets;
 
 public class Version extends AbstractResource implements Comparable<Version> {
@@ -11,8 +13,13 @@ public class Version extends AbstractResource implements Comparable<Version> {
 	public static Version ANY_VERSION = new Version(
 			Constants.NO_VERSION_INDICATOR_STRING);
 
-	public static Version create(String applicationVersion) {
-		return new Version(applicationVersion);
+	private final static Map<String, Version> cached = Maps.newHashMap();
+
+	public static synchronized Version get(String applicationVersion) {
+		if (cached.get(applicationVersion) == null) {
+			cached.put(applicationVersion, new Version(applicationVersion));
+		}
+		return cached.get(applicationVersion);
 	}
 
 	private String version;

@@ -1,14 +1,15 @@
 package grisu.jcommons.model.info;
 
-
+import java.util.Map;
 import java.util.Set;
 
 import com.google.common.base.Objects;
 import com.google.common.collect.ComparisonChain;
+import com.google.common.collect.Maps;
 import com.google.common.collect.Sets;
 
 public class Middleware extends AbstractResource implements
-Comparable<Middleware> {
+		Comparable<Middleware> {
 
 	public static final String DEFAULT_MIDDLEWARE_TYPE = "Globus";
 	public static final String DEFAULT_VERSION = "5.0";
@@ -16,11 +17,17 @@ Comparable<Middleware> {
 	public static final Middleware DEFAULT_MIDDLEWARE = new Middleware(
 			DEFAULT_MIDDLEWARE_TYPE, DEFAULT_VERSION);
 
+	private final static Map<String, Middleware> cached = Maps.newHashMap();
+
 	// public static final Middleware ANY_MIDDLEWARE = new Middleware("any",
 	// "any");
 
-	public static Middleware create(String name, String version) {
-		return new Middleware(name, version);
+	public static Middleware get(String name, String version) {
+
+		if (cached.get(name + "_" + version) == null) {
+			cached.put(name + "_" + version, new Middleware(name, version));
+		}
+		return cached.get(name + "_" + version);
 	}
 
 	private String name = DEFAULT_MIDDLEWARE_TYPE;
@@ -35,7 +42,8 @@ Comparable<Middleware> {
 	}
 
 	public int compareTo(Middleware o) {
-		return ComparisonChain.start().compare(getName(), o.getName()).compare(getVersion(), o.getVersion()).result();
+		return ComparisonChain.start().compare(getName(), o.getName())
+				.compare(getVersion(), o.getVersion()).result();
 	}
 
 	@Override
@@ -48,7 +56,8 @@ Comparable<Middleware> {
 		}
 		final Middleware other = (Middleware) obj;
 
-		return Objects.equal(getName(), other.getName()) && Objects.equal(getVersion(), getVersion());
+		return Objects.equal(getName(), other.getName())
+				&& Objects.equal(getVersion(), getVersion());
 	}
 
 	@Override

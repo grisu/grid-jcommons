@@ -1,6 +1,5 @@
 package grisu.jcommons.model.info;
 
-
 import java.util.Set;
 
 import com.google.common.base.Objects;
@@ -12,16 +11,11 @@ public class Package extends AbstractResource implements Comparable<Package> {
 	public static final Package GENERIC = new Package(
 			Application.GENERIC_APPLICATION, Version.ANY_VERSION);
 
-	public static Package create(String application2, String applicationVersion) {
-		return new Package(Application.create(application2), Version.create(applicationVersion));
-	}
-
 	private Application application;
 
 	private Version version;
 
 	private Set<Executable> executables = Sets.newTreeSet();
-
 
 	private Module module;
 
@@ -31,19 +25,18 @@ public class Package extends AbstractResource implements Comparable<Package> {
 	public Package(Application app, Version version) {
 		this.application = app;
 		this.version = version;
+
 	}
 
-	public Package(Application app, Version version,
-			Set<Executable> e, Module m) {
-		this.application = app;
-		this.version = version;
+	public Package(Application app, Version version, Set<Executable> e, Module m) {
+		this(app, version);
 		this.executables = e;
 		this.module = m;
 	}
 
 	public Package(String app, String version) {
-		this.application = new Application(app);
-		this.version = new Version(version);
+		this(Application.get(app), Version.get(version));
+
 	}
 
 	public int compareTo(Package o) {
@@ -51,7 +44,7 @@ public class Package extends AbstractResource implements Comparable<Package> {
 				.start()
 				.compare(getApplication().getName(),
 						o.getApplication().getName())
-						.compare(getVersion(), o.getVersion()).result();
+				.compare(getVersion(), o.getVersion()).result();
 	}
 
 	@Override
@@ -84,7 +77,6 @@ public class Package extends AbstractResource implements Comparable<Package> {
 		return result;
 
 	}
-
 
 	public Set<Executable> getExecutables() {
 		return this.executables;

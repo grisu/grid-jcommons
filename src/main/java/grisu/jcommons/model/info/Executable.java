@@ -1,16 +1,32 @@
 package grisu.jcommons.model.info;
 
-
+import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import com.google.common.collect.ComparisonChain;
+import com.google.common.collect.Lists;
+import com.google.common.collect.Maps;
 import com.google.common.collect.Sets;
 
 public class Executable extends AbstractResource implements
-Comparable<Executable> {
+		Comparable<Executable> {
 
-	public static Executable create(String exe) {
-		return new Executable(exe);
+	private final static Map<String, Executable> cached = Maps.newHashMap();
+
+	public static Executable get(String exe) {
+		if (cached.get(exe) == null) {
+			cached.put(exe, new Executable(exe));
+		}
+		return cached.get(exe);
+	}
+
+	public static List<Executable> getList(String... exes) {
+		List<Executable> result = Lists.newLinkedList();
+		for (String e : exes) {
+			result.add(get(e));
+		}
+		return result;
 	}
 
 	private String executable;

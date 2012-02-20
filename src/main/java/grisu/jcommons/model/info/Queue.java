@@ -121,8 +121,8 @@ public class Queue extends AbstractResource implements Comparable<Queue> {
 	public Collection<Package> filterPackages(String app, String version) {
 		return Collections2.filter(
 				getPackages(),
-				Filters.filterResource(Application.create(app),
-						Version.create(version)));
+				Filters.filterResource(Application.get(app),
+						Version.get(version)));
 	}
 
 	@Override

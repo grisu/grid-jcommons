@@ -21,6 +21,7 @@ public class Filters {
 			this.jobProps = p;
 			this.group = g;
 		}
+
 		public boolean apply(Queue q) {
 
 			if (!q.getGroups().contains(group)) {
@@ -45,12 +46,12 @@ public class Filters {
 			Collection<AbstractResource> r = resource.getConnections();
 
 			for (AbstractResource ar : this.filters) {
-				if (r.contains(ar)) {
-					return true;
+				if (!r.contains(ar)) {
+					return false;
 				}
 			}
 
-			return false;
+			return true;
 		}
 
 	}
