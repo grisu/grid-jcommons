@@ -22,9 +22,9 @@ public class GridEnvironment {
 	 */
 	private static final int DEFAULT_MYPROXY_PORT = 7512;
 	/**
-	 * The hostname of the default MyProxy server (myproxy.arcs.org.au).
+	 * The hostname of the default MyProxy server (myproxy.test.nesi.org.nz).
 	 */
-	private static final String DEFAULT_MYPROXY_SERVER = "myproxy.arcs.org.au";
+	private static final String DEFAULT_MYPROXY_SERVER = "myproxy.test.nesi.org.nz";
 
 	/**
 	 * Calculates which MyProxy server to us and returns its port.
@@ -150,7 +150,5 @@ public class GridEnvironment {
 	// }
 	// return file;
 	// }
-
-
 
 }

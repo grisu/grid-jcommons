@@ -45,8 +45,25 @@ public class CommonGridProperties {
 	 * The location of the grid config file (default:
 	 * $HOME/.grid/grid.properties)
 	 */
-	public static final String GRID_PROPERTIES_FILE = GridEnvironment
-			.getGridConfigDirectory() + File.separator + "grid.properties";
+	private static final File GRID_PROPERTIES_FILE = calculateGridPropertiesFile();
+
+	private static File calculateGridPropertiesFile() {
+
+		File temp = new File(GridEnvironment.getGridConfigDirectory()
+				+ File.separator + "grid.properties");
+
+		// if (!temp.exists()) {
+		//
+		// // check whether maybe a host-wide config dir exists
+		// File temp2 = new File("/etc/grid/grid.properties");
+		// if (temp2.exists()) {
+		// temp = temp2;
+		// }
+		// }
+
+		return temp;
+
+	}
 
 	/**
 	 * Gets the singleton properties object.
@@ -68,7 +85,7 @@ public class CommonGridProperties {
 	 */
 	private CommonGridProperties() {
 		try {
-			config = new PropertiesConfiguration(new File(GRID_PROPERTIES_FILE));
+			config = new PropertiesConfiguration(GRID_PROPERTIES_FILE);
 		} catch (ConfigurationException e) {
 			throw new RuntimeException(e);
 		}
