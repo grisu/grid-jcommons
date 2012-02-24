@@ -35,6 +35,12 @@ public class Queue extends AbstractResource implements Comparable<Queue> {
 	private long virtualMemory = Long.MAX_VALUE;
 	private int walltimeInMinutes = Integer.MAX_VALUE;
 
+	private int hosts = Integer.MAX_VALUE;
+	private int cpusPerHost = Integer.MAX_VALUE;
+
+	// other queue properties
+	private String description = "n/a";
+
 	private Queue() {
 	}
 
@@ -98,6 +104,13 @@ public class Queue extends AbstractResource implements Comparable<Queue> {
 				if (!appAvail) {
 					return false;
 				}
+				break;
+			case HOSTCOUNT:
+				int hostcount = Integer.parseInt(jobProperties.get(p));
+				if (hostcount > this.hosts) {
+					return false;
+				}
+				break;
 			}
 
 		}
@@ -123,6 +136,14 @@ public class Queue extends AbstractResource implements Comparable<Queue> {
 				getPackages(),
 				Filters.filterResource(Application.get(app),
 						Version.get(version)));
+	}
+
+	public int getCpusPerHost() {
+		return cpusPerHost;
+	}
+
+	public String getDescription() {
+		return this.description;
 	}
 
 	@Override
@@ -195,6 +216,10 @@ public class Queue extends AbstractResource implements Comparable<Queue> {
 
 	public Set<Group> getGroups() {
 		return groups;
+	}
+
+	public int getHosts() {
+		return hosts;
 	}
 
 	/**
@@ -276,6 +301,14 @@ public class Queue extends AbstractResource implements Comparable<Queue> {
 
 	}
 
+	public void setCpusPerHost(int ch) {
+		this.cpusPerHost = ch;
+	}
+
+	public void setDescription(String desc) {
+		this.description = desc;
+	}
+
 	private void setDirectories(Set<Directory> d) {
 		this.directories = d;
 	}
@@ -286,6 +319,10 @@ public class Queue extends AbstractResource implements Comparable<Queue> {
 
 	private void setGroups(Set<Group> g) {
 		this.groups = g;
+	}
+
+	public void setHosts(int h) {
+		this.hosts = h;
 	}
 
 	private void setMemoryInBytes(long m) {
