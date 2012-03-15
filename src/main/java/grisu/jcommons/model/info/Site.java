@@ -1,6 +1,5 @@
 package grisu.jcommons.model.info;
 
-
 import java.util.Set;
 
 import com.google.common.base.Objects;

@@ -30,7 +30,7 @@ public class Queue extends AbstractResource implements Comparable<Queue> {
 	private final String factoryType = "PBS";
 
 	// job property restrictions
-	private int noCpus = Integer.MAX_VALUE;
+	private int cpus = Integer.MAX_VALUE;
 	private long memory = Long.MAX_VALUE;
 	private long virtualMemory = Long.MAX_VALUE;
 	private int walltimeInMinutes = Integer.MAX_VALUE;
@@ -38,8 +38,10 @@ public class Queue extends AbstractResource implements Comparable<Queue> {
 	private int hosts = Integer.MAX_VALUE;
 	private int cpusPerHost = Integer.MAX_VALUE;
 
-	// other queue properties
+	// other queue properties, not considered when calculating whether a job
+	// would run on this queue or not
 	private String description = "n/a";
+	private Integer clockspeedInHz = Integer.MAX_VALUE;
 
 	private Queue() {
 	}
@@ -62,7 +64,7 @@ public class Queue extends AbstractResource implements Comparable<Queue> {
 		this.groups = groups;
 		this.directories = stagingFileSystems;
 		this.packages = packages;
-		this.noCpus = noCpus;
+		this.cpus = noCpus;
 		this.memory = memoryInBytes;
 		this.virtualMemory = virtualMemoryInBytes;
 		this.walltimeInMinutes = walltimeInMinutes;
@@ -80,7 +82,7 @@ public class Queue extends AbstractResource implements Comparable<Queue> {
 				break;
 			case NO_CPUS:
 				int nocpus = Integer.parseInt(jobProperties.get(p));
-				if (nocpus > this.noCpus) {
+				if (nocpus > this.cpus) {
 					return false;
 				}
 				break;
@@ -136,6 +138,14 @@ public class Queue extends AbstractResource implements Comparable<Queue> {
 				getPackages(),
 				Filters.filterResource(Application.get(app),
 						Version.get(version)));
+	}
+
+	public Integer getClockspeedInHz() {
+		return clockspeedInHz;
+	}
+
+	public int getCpus() {
+		return cpus;
 	}
 
 	public int getCpusPerHost() {
@@ -235,10 +245,6 @@ public class Queue extends AbstractResource implements Comparable<Queue> {
 		return this.name;
 	}
 
-	public int getNoCpus() {
-		return noCpus;
-	}
-
 	public Set<Package> getPackages() {
 		return packages;
 	}
@@ -301,6 +307,14 @@ public class Queue extends AbstractResource implements Comparable<Queue> {
 
 	}
 
+	public void setClockspeedInHz(Integer clockspeedInHz) {
+		this.clockspeedInHz = clockspeedInHz;
+	}
+
+	private void setCpus(int cpus) {
+		this.cpus = cpus;
+	}
+
 	public void setCpusPerHost(int ch) {
 		this.cpusPerHost = ch;
 	}
@@ -331,10 +345,6 @@ public class Queue extends AbstractResource implements Comparable<Queue> {
 
 	private void setName(String name) {
 		this.name = name;
-	}
-
-	private void setNoCpus(int cpus) {
-		this.noCpus = cpus;
 	}
 
 	private void setPackages(Set<Package> p) {
