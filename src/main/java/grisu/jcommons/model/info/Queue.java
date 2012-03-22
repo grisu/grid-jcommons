@@ -27,7 +27,7 @@ public class Queue extends AbstractResource implements Comparable<Queue> {
 
 	private Set<Directory> directories = Sets.newHashSet();
 
-	private final String factoryType = "PBS";
+	private String factoryType = "PBS";
 
 	// job property restrictions
 	private int cpus = Integer.MAX_VALUE;
@@ -196,6 +196,10 @@ public class Queue extends AbstractResource implements Comparable<Queue> {
 
 	}
 
+	public String getFactoryType() {
+		return this.factoryType;
+	}
+
 	public Set<FileSystem> getFileSystems(Group group) {
 		Set<FileSystem> fss = Sets.newLinkedHashSet();
 		for (Directory d : getDirectories()) {
@@ -295,7 +299,7 @@ public class Queue extends AbstractResource implements Comparable<Queue> {
 			if (app.equalsIgnoreCase(tempApp)) {
 				if (StringUtils.isBlank(version)
 						|| Constants.NO_VERSION_INDICATOR_STRING
-								.equals(tempVersion)) {
+								.equals(version)) {
 					return true;
 				}
 				return version.equalsIgnoreCase(tempVersion);
@@ -325,6 +329,10 @@ public class Queue extends AbstractResource implements Comparable<Queue> {
 
 	private void setDirectories(Set<Directory> d) {
 		this.directories = d;
+	}
+
+	public void setFactoryType(String ft) {
+		this.factoryType = ft;
 	}
 
 	private void setGateway(Gateway gw) {
