@@ -6,6 +6,7 @@ import java.io.File;
 
 import org.apache.commons.configuration.ConfigurationException;
 import org.apache.commons.configuration.PropertiesConfiguration;
+import org.apache.commons.lang.StringUtils;
 
 /**
  * Class to manage a set of properties that are commonly used when doing
@@ -34,7 +35,11 @@ public class CommonGridProperties {
 		DEBUG_UNCAUGHT_EXCEPTIONS, /**
 		 * The password used to create a credential.
 		 */
-		PASSWORD
+		PASSWORD, /**
+		 * The grid info config to use by default. Either "testbed"
+		 * (default), "nesi", or the path to a config file.
+		 */
+		GRID_INFO_CONFIG
 
 	}
 
@@ -91,6 +96,10 @@ public class CommonGridProperties {
 		}
 	}
 
+	public String getGridInfoConfig() {
+		return getGridProperty(Property.GRID_INFO_CONFIG);
+	}
+
 	/**
 	 * Gets a certain common grid property.
 	 * 
@@ -100,7 +109,11 @@ public class CommonGridProperties {
 	 */
 	public String getGridProperty(Property prop) {
 
-		String result = config.getString(prop.toString());
+		String result = System.getProperty(prop.toString());
+
+		if (StringUtils.isBlank(result)) {
+			result = config.getString(prop.toString());
+		}
 
 		return result;
 	}
@@ -144,6 +157,10 @@ public class CommonGridProperties {
 
 		return getGridProperty(Property.SHIB_USERNAME);
 
+	}
+
+	public void setGridInfoConfig(String c) {
+		setGridProperty(Property.GRID_INFO_CONFIG, c);
 	}
 
 	/**

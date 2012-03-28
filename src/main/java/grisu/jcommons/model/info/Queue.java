@@ -43,6 +43,9 @@ public class Queue extends AbstractResource implements Comparable<Queue> {
 	private String description = "n/a";
 	private Integer clockspeedInHz = Integer.MAX_VALUE;
 
+	private DynamicQueueInformation dynamicQueueInfo = new DummyDynamicQueueInformation(
+			this);
+
 	private Queue() {
 	}
 
@@ -196,6 +199,10 @@ public class Queue extends AbstractResource implements Comparable<Queue> {
 
 	}
 
+	public DynamicQueueInformation getDynamicQueueInfo() {
+		return this.dynamicQueueInfo;
+	}
+
 	public String getFactoryType() {
 		return this.factoryType;
 	}
@@ -329,6 +336,10 @@ public class Queue extends AbstractResource implements Comparable<Queue> {
 
 	private void setDirectories(Set<Directory> d) {
 		this.directories = d;
+	}
+
+	public void setDynamicQueueInfo(DynamicQueueInformation dqi) {
+		this.dynamicQueueInfo = dqi;
 	}
 
 	public void setFactoryType(String ft) {
