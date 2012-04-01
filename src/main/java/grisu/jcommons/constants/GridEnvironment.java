@@ -26,6 +26,8 @@ public class GridEnvironment {
 	 */
 	private static final String DEFAULT_MYPROXY_SERVER = "myproxy.test.nesi.org.nz";
 
+	private static final String DEFAULT_GRID_CONFIG_FILENAME = "grid.groovy";
+
 	/**
 	 * Calculates which MyProxy server to us and returns its port.
 	 * 
@@ -138,6 +140,16 @@ public class GridEnvironment {
 		}
 
 		return gridDir;
+	}
+
+	public static File getGridInfoConfigFile() {
+
+		String dir = getGridConfigDirectory() + File.separator
+				+ DEFAULT_GRID_CONFIG_FILENAME;
+		File file = new File(dir);
+
+		return file;
+
 	}
 
 	// public static File getGridHelperScriptsDirectory() {
