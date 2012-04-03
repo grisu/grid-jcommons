@@ -9,9 +9,12 @@ import java.security.AccessController;
 import java.security.PrivilegedAction;
 import java.security.Provider;
 import java.security.Security;
+import java.util.Map;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import com.google.common.collect.Maps;
 
 public class BouncyCastleTool {
 
@@ -19,13 +22,11 @@ public class BouncyCastleTool {
 			.getLogger(BouncyCastleTool.class);
 
 	private static final String[] possiblePaths = new String[] {
-		BouncyCastleTool.class.getProtectionDomain().getCodeSource()
-		.getLocation().getPath(),
-		"/usr/share/java",
-		GridEnvironment.getGridCommonJavaLibDirectory().getAbsolutePath() };
+			BouncyCastleTool.class.getProtectionDomain().getCodeSource()
+					.getLocation().getPath(), "/usr/share/java",
+			GridEnvironment.getGridCommonJavaLibDirectory().getAbsolutePath() };
 
 	private static boolean addExternalBouncyCastle() {
-
 
 		for (String path : possiblePaths) {
 
@@ -75,7 +76,8 @@ public class BouncyCastleTool {
 		return false;
 	}
 
-	public static int initBouncyCastle() throws ClassNotFoundException {
+	public synchronized static int initBouncyCastle()
+			throws ClassNotFoundException {
 
 		// System.out.println("SimpleProxyLib updated");
 
@@ -85,7 +87,18 @@ public class BouncyCastleTool {
 			bcClass = Class
 					.forName("org.bouncycastle.jce.provider.BouncyCastleProvider");
 		} catch (ClassNotFoundException e1) {
-			BouncyCastleTool.addExternalBouncyCastle();
+			if (!BouncyCastleTool.addExternalBouncyCastle()) {
+
+				myLogger.debug("Trying to get bouncycastle dependency.");
+				Map<Dependency, String> deps = Maps.newHashMap();
+				deps.put(Dependency.BOUNCYCASTLE, "ignore");
+				DependencyManager.addDependencies(deps,
+						GridEnvironment.getGridCommonJavaLibDirectory());
+				myLogger.debug("Bouncycastle dependency available");
+
+				BouncyCastleTool.addExternalBouncyCastle();
+
+			}
 			bcClass = bcClass
 					.forName("org.bouncycastle.jce.provider.BouncyCastleProvider");
 		}
