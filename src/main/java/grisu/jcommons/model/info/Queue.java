@@ -2,6 +2,7 @@ package grisu.jcommons.model.info;
 
 import grisu.jcommons.constants.Constants;
 import grisu.jcommons.constants.JobSubmissionProperty;
+import grisu.jcommons.model.info.DynamicInfo.TYPE;
 
 import java.util.Collection;
 import java.util.Map;
@@ -11,6 +12,7 @@ import org.apache.commons.lang.StringUtils;
 
 import com.google.common.collect.Collections2;
 import com.google.common.collect.ComparisonChain;
+import com.google.common.collect.Maps;
 import com.google.common.collect.Sets;
 
 public class Queue extends AbstractResource implements Comparable<Queue> {
@@ -29,12 +31,15 @@ public class Queue extends AbstractResource implements Comparable<Queue> {
 
 	private String factoryType = "PBS";
 
+	private QueueUpdater updater;
+
 	// job property restrictions
 	private int cpus = Integer.MAX_VALUE;
+
 	private long memory = Long.MAX_VALUE;
+
 	private long virtualMemory = Long.MAX_VALUE;
 	private int walltimeInMinutes = Integer.MAX_VALUE;
-
 	private int hosts = Integer.MAX_VALUE;
 	private int cpusPerHost = Integer.MAX_VALUE;
 
@@ -43,8 +48,8 @@ public class Queue extends AbstractResource implements Comparable<Queue> {
 	private String description = "n/a";
 	private Integer clockspeedInHz = Integer.MAX_VALUE;
 
-	private DynamicQueueInformation dynamicQueueInfo = new DummyDynamicQueueInformation(
-			this);
+	private final Map<DynamicInfo.TYPE, DynamicInfo> dynamicInfo = Maps
+			.newTreeMap();
 
 	private Queue() {
 	}
@@ -199,8 +204,8 @@ public class Queue extends AbstractResource implements Comparable<Queue> {
 
 	}
 
-	public DynamicQueueInformation getDynamicQueueInfo() {
-		return this.dynamicQueueInfo;
+	public DynamicInfo getDynamicInfo(TYPE type) {
+		return dynamicInfo.get(type);
 	}
 
 	public String getFactoryType() {
@@ -273,6 +278,10 @@ public class Queue extends AbstractResource implements Comparable<Queue> {
 		}
 	}
 
+	public QueueUpdater getUpdater() {
+		return updater;
+	}
+
 	/**
 	 * In bytes.
 	 * 
@@ -338,8 +347,8 @@ public class Queue extends AbstractResource implements Comparable<Queue> {
 		this.directories = d;
 	}
 
-	public void setDynamicQueueInfo(DynamicQueueInformation dqi) {
-		this.dynamicQueueInfo = dqi;
+	public void setDynamicInfo(DynamicInfo di) {
+		this.dynamicInfo.put(di.getType(), di);
 	}
 
 	public void setFactoryType(String ft) {
@@ -368,6 +377,14 @@ public class Queue extends AbstractResource implements Comparable<Queue> {
 
 	private void setPackages(Set<Package> p) {
 		this.packages = p;
+	}
+
+	public void setUpdater(QueueUpdater updater) {
+		if (this.updater != null) {
+			this.updater.removeQueue(this);
+		}
+		this.updater = updater;
+		this.updater.addQueue(this);
 	}
 
 	private void setVirtualMemoryInBytes(long m) {
