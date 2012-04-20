@@ -18,15 +18,14 @@ import org.apache.commons.httpclient.methods.GetMethod;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-
 public class DependencyManager {
 
 	public static final String DISABLE_DEPENDENCY_MANAGEMENT = "disableDependencyManagement";
 
 	public static boolean showDownloadDialog = false;
 
-	static final Logger myLogger = LoggerFactory.getLogger(DependencyManager.class
-			.getName());
+	static final Logger myLogger = LoggerFactory
+			.getLogger(DependencyManager.class.getName());
 
 	private static HttpClient httpClient = new HttpClient();
 
@@ -37,13 +36,14 @@ public class DependencyManager {
 
 	}
 
-	public static void addDependencies(Map<Dependency, String> dependencies,
-			File folder, boolean forceDependencyManagement) {
+	public synchronized static void addDependencies(
+			Map<Dependency, String> dependencies, File folder,
+			boolean forceDependencyManagement) {
 
 		String disable = System.getProperty("disableDependencyManagement");
 
 		if (!forceDependencyManagement
-				&& ((disable == null) || !disable.toLowerCase().equals("true"))) {
+				&& ((disable != null) && disable.toLowerCase().equals("true"))) {
 
 			myLogger.info("Dependency management disabled. Not resolving dependencies.");
 			return;

@@ -2,6 +2,7 @@ package grisu.jcommons.model.info;
 
 import grisu.jcommons.constants.Constants;
 import grisu.jcommons.constants.JobSubmissionProperty;
+import grisu.jcommons.model.info.DynamicInfo.TYPE;
 
 import java.util.Collection;
 import java.util.Map;
@@ -11,6 +12,7 @@ import org.apache.commons.lang.StringUtils;
 
 import com.google.common.collect.Collections2;
 import com.google.common.collect.ComparisonChain;
+import com.google.common.collect.Maps;
 import com.google.common.collect.Sets;
 
 public class Queue extends AbstractResource implements Comparable<Queue> {
@@ -27,13 +29,27 @@ public class Queue extends AbstractResource implements Comparable<Queue> {
 
 	private Set<Directory> directories = Sets.newHashSet();
 
-	private final String factoryType = "PBS";
+	private String factoryType = "PBS";
+
+	private QueueUpdater updater;
 
 	// job property restrictions
-	private int noCpus = Integer.MAX_VALUE;
+	private int cpus = Integer.MAX_VALUE;
+
 	private long memory = Long.MAX_VALUE;
+
 	private long virtualMemory = Long.MAX_VALUE;
 	private int walltimeInMinutes = Integer.MAX_VALUE;
+	private int hosts = Integer.MAX_VALUE;
+	private int cpusPerHost = Integer.MAX_VALUE;
+
+	// other queue properties, not considered when calculating whether a job
+	// would run on this queue or not
+	private String description = "n/a";
+	private Integer clockspeedInHz = Integer.MAX_VALUE;
+
+	private final Map<DynamicInfo.TYPE, DynamicInfo> dynamicInfo = Maps
+			.newTreeMap();
 
 	private Queue() {
 	}
@@ -56,7 +72,7 @@ public class Queue extends AbstractResource implements Comparable<Queue> {
 		this.groups = groups;
 		this.directories = stagingFileSystems;
 		this.packages = packages;
-		this.noCpus = noCpus;
+		this.cpus = noCpus;
 		this.memory = memoryInBytes;
 		this.virtualMemory = virtualMemoryInBytes;
 		this.walltimeInMinutes = walltimeInMinutes;
@@ -74,7 +90,7 @@ public class Queue extends AbstractResource implements Comparable<Queue> {
 				break;
 			case NO_CPUS:
 				int nocpus = Integer.parseInt(jobProperties.get(p));
-				if (nocpus > this.noCpus) {
+				if (nocpus > this.cpus) {
 					return false;
 				}
 				break;
@@ -98,6 +114,13 @@ public class Queue extends AbstractResource implements Comparable<Queue> {
 				if (!appAvail) {
 					return false;
 				}
+				break;
+			case HOSTCOUNT:
+				int hostcount = Integer.parseInt(jobProperties.get(p));
+				if (hostcount > this.hosts) {
+					return false;
+				}
+				break;
 			}
 
 		}
@@ -123,6 +146,22 @@ public class Queue extends AbstractResource implements Comparable<Queue> {
 				getPackages(),
 				Filters.filterResource(Application.get(app),
 						Version.get(version)));
+	}
+
+	public Integer getClockspeedInHz() {
+		return clockspeedInHz;
+	}
+
+	public int getCpus() {
+		return cpus;
+	}
+
+	public int getCpusPerHost() {
+		return cpusPerHost;
+	}
+
+	public String getDescription() {
+		return this.description;
 	}
 
 	@Override
@@ -165,6 +204,14 @@ public class Queue extends AbstractResource implements Comparable<Queue> {
 
 	}
 
+	public DynamicInfo getDynamicInfo(TYPE type) {
+		return dynamicInfo.get(type);
+	}
+
+	public String getFactoryType() {
+		return this.factoryType;
+	}
+
 	public Set<FileSystem> getFileSystems(Group group) {
 		Set<FileSystem> fss = Sets.newLinkedHashSet();
 		for (Directory d : getDirectories()) {
@@ -197,6 +244,10 @@ public class Queue extends AbstractResource implements Comparable<Queue> {
 		return groups;
 	}
 
+	public int getHosts() {
+		return hosts;
+	}
+
 	/**
 	 * In bytes.
 	 * 
@@ -208,10 +259,6 @@ public class Queue extends AbstractResource implements Comparable<Queue> {
 
 	public String getName() {
 		return this.name;
-	}
-
-	public int getNoCpus() {
-		return noCpus;
 	}
 
 	public Set<Package> getPackages() {
@@ -229,6 +276,10 @@ public class Queue extends AbstractResource implements Comparable<Queue> {
 		} else {
 			return getName() + ":" + getGateway().getHost() + "#" + factoryType;
 		}
+	}
+
+	public QueueUpdater getUpdater() {
+		return updater;
 	}
 
 	/**
@@ -264,7 +315,7 @@ public class Queue extends AbstractResource implements Comparable<Queue> {
 			if (app.equalsIgnoreCase(tempApp)) {
 				if (StringUtils.isBlank(version)
 						|| Constants.NO_VERSION_INDICATOR_STRING
-								.equals(tempVersion)) {
+								.equals(version)) {
 					return true;
 				}
 				return version.equalsIgnoreCase(tempVersion);
@@ -276,8 +327,32 @@ public class Queue extends AbstractResource implements Comparable<Queue> {
 
 	}
 
+	public void setClockspeedInHz(Integer clockspeedInHz) {
+		this.clockspeedInHz = clockspeedInHz;
+	}
+
+	private void setCpus(int cpus) {
+		this.cpus = cpus;
+	}
+
+	public void setCpusPerHost(int ch) {
+		this.cpusPerHost = ch;
+	}
+
+	public void setDescription(String desc) {
+		this.description = desc;
+	}
+
 	private void setDirectories(Set<Directory> d) {
 		this.directories = d;
+	}
+
+	public void setDynamicInfo(DynamicInfo di) {
+		this.dynamicInfo.put(di.getType(), di);
+	}
+
+	public void setFactoryType(String ft) {
+		this.factoryType = ft;
 	}
 
 	private void setGateway(Gateway gw) {
@@ -288,6 +363,10 @@ public class Queue extends AbstractResource implements Comparable<Queue> {
 		this.groups = g;
 	}
 
+	public void setHosts(int h) {
+		this.hosts = h;
+	}
+
 	private void setMemoryInBytes(long m) {
 		this.memory = m;
 	}
@@ -296,12 +375,16 @@ public class Queue extends AbstractResource implements Comparable<Queue> {
 		this.name = name;
 	}
 
-	private void setNoCpus(int cpus) {
-		this.noCpus = cpus;
-	}
-
 	private void setPackages(Set<Package> p) {
 		this.packages = p;
+	}
+
+	public void setUpdater(QueueUpdater updater) {
+		if (this.updater != null) {
+			this.updater.removeQueue(this);
+		}
+		this.updater = updater;
+		this.updater.addQueue(this);
 	}
 
 	private void setVirtualMemoryInBytes(long m) {

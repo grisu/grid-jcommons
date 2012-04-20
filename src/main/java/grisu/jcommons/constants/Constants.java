@@ -80,12 +80,12 @@ public class Constants {
 	 * The key to specify whether to force the submission of a "single" type
 	 * job, even though you might have specified more than one cpu.
 	 */
-	public static final String FORCE_SINGLE_KEY = "force_single";
+	public static final String FORCE_SINGLE_KEY = "single";
 	/**
 	 * The key to specify whether to force the submission of a "mpi" type job,
 	 * even though you might have specified only one cpu.
 	 */
-	public static final String FORCE_MPI_KEY = "force_mpi";
+	public static final String FORCE_MPI_KEY = "mpi";
 	/**
 	 * The key for specifying the amount of memory this job needs to have access
 	 * to (in Bytes).

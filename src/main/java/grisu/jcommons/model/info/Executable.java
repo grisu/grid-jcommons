@@ -14,7 +14,7 @@ public class Executable extends AbstractResource implements
 
 	private final static Map<String, Executable> cached = Maps.newHashMap();
 
-	public static Executable get(String exe) {
+	public static synchronized Executable get(String exe) {
 		if (cached.get(exe) == null) {
 			cached.put(exe, new Executable(exe));
 		}
