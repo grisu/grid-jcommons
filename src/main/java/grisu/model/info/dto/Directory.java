@@ -15,6 +15,9 @@ public class Directory {
 	private String path;
 	private Site site;
 
+	private boolean isShared;
+	private boolean isVolatileDirectory;
+
 	@XmlElement(name = "filesystem")
 	public FileSystem getFilesystem() {
 		return filesystem;
@@ -40,6 +43,16 @@ public class Directory {
 		return site;
 	}
 
+	@XmlElement(name = "shared")
+	public boolean isShared() {
+		return isShared;
+	}
+
+	@XmlElement(name = "volatileDirectory")
+	public boolean isVolatileDirectory() {
+		return isVolatileDirectory;
+	}
+
 	public void setFilesystem(FileSystem filesystem) {
 		this.filesystem = filesystem;
 	}
@@ -51,11 +64,25 @@ public class Directory {
 	public void setHost(String host) {
 		this.host = host;
 	}
+
 	public void setPath(String path) {
 		this.path = path;
 	}
+
+	public void setShared(boolean isShared) {
+		this.isShared = isShared;
+	}
+
 	public void setSite(Site site) {
 		this.site = site;
+	}
+
+	public void setVolatileDirectory(boolean isVolatileDirectory) {
+		this.isVolatileDirectory = isVolatileDirectory;
+	}
+
+	public String toUrl() {
+		return filesystem.toString() + path;
 	}
 
 }

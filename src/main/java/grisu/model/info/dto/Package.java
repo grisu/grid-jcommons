@@ -2,7 +2,6 @@ package grisu.model.info.dto;
 
 import java.util.Set;
 
-import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
@@ -14,6 +13,17 @@ public class Package {
 	private Module module;
 	private String name;
 	private Version version;
+
+	public static final Package GENERIC_PACKAGE = new Package(
+			Application.GENERIC_APPLICATION, Version.ANY_VERSION);
+
+	public Package() {
+	}
+
+	public Package(Application app, Version version) {
+		this.application = app;
+		this.version = version;
+	}
 
 	@XmlElement(name = "application")
 	public Application getApplication() {

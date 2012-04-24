@@ -1,7 +1,11 @@
 package grisu.model.info.dto;
 
+import grisu.jcommons.constants.Constants;
+
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
+
+import com.google.common.base.Objects;
 
 /**
  * A VO consist of the name, a host the management software (VOMS/VOMRS) is
@@ -15,12 +19,58 @@ import javax.xml.bind.annotation.XmlRootElement;
  * 
  */
 @XmlRootElement(name = "vo")
-public class VO {
+public class VO implements Comparable<VO> {
+
+	public static VO NON_VO = new VO(Constants.NON_VO_NAME, "", -1, "");
 
 	private String voName;
 	private String host = null;
 	private int port = -1;
 	private String hostDN = null;
+
+	public VO() {
+	}
+
+	public VO(String voName, String host, int port, String hostDN) {
+		this.voName = voName;
+		this.host = host;
+		this.port = port;
+		this.hostDN = hostDN;
+	}
+
+	public int compareTo(VO vo) {
+
+		int result = voName.compareTo(vo.getVoName());
+		if (result != 0) {
+			return result;
+		}
+
+		result = host.compareTo(vo.getHost());
+		if (result != 0) {
+			return result;
+		}
+
+		result = hostDN.compareTo(vo.getHostDN());
+		return result;
+
+	}
+
+	@Override
+	public boolean equals(Object otherObject) {
+		if (otherObject instanceof VO) {
+			VO other = (VO) otherObject;
+			if (voName.equals(other.getVoName())
+					&& host.equals(other.getHost())
+					&& (port == other.getPort()) && hostDN.equals(other.hostDN)) {
+
+				return true;
+			} else {
+				return false;
+			}
+		} else {
+			return false;
+		}
+	}
 
 	@XmlElement(name = "host")
 	public String getHost() {
@@ -41,17 +91,32 @@ public class VO {
 	public String getVoName() {
 		return voName;
 	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hashCode(voName.hashCode(), host.hashCode(), port,
+				hostDN.hashCode());
+	}
+
 	public void setHost(String host) {
 		this.host = host;
 	}
+
 	public void setHostDN(String hostDN) {
 		this.hostDN = hostDN;
 	}
+
 	public void setPort(int port) {
 		this.port = port;
 	}
+
 	public void setVoName(String voName) {
 		this.voName = voName;
+	}
+
+	@Override
+	public String toString() {
+		return getVoName();
 	}
 
 }

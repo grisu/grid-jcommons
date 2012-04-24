@@ -7,7 +7,7 @@ public class DynamicInfo {
 	}
 
 	private final TYPE type;
-	private final String value;
+	private String value;
 
 	public DynamicInfo(TYPE type, String value) {
 		this.type = type;
@@ -20,6 +20,10 @@ public class DynamicInfo {
 
 	public String getValue() {
 		return value;
+	}
+
+	public void setValue(String value) {
+		this.value = value;
 	}
 
 }

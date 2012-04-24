@@ -1,16 +1,22 @@
 package grisu.model.info.dto;
 
-import java.util.Map;
+import java.util.List;
 import java.util.Set;
 
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
-import com.google.common.collect.Maps;
+import org.apache.commons.lang.StringUtils;
+
+import com.google.common.base.Objects;
+import com.google.common.collect.ComparisonChain;
+import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
 
 @XmlRootElement(name = "queue")
-public class Queue {
+public class Queue implements Comparable<Queue> {
+
+	public static final String PBS_FACTORY_TYPE = "PBS";
 
 	private Gateway gateway;
 
@@ -39,8 +45,49 @@ public class Queue {
 	private String description = "n/a";
 	private Integer clockspeedInHz = Integer.MAX_VALUE;
 
-	private Map<String, DynamicInfo> dynamicInfo = Maps
-			.newTreeMap();
+	private List<DynamicInfo> dynamicInfo = Lists.newLinkedList();
+
+	public int compareTo(Queue o) {
+		return ComparisonChain.start().compare(toString(), o.toString())
+				.result();
+
+	}
+
+	public boolean equals(Queue obj) {
+		if (obj == null) {
+			return false;
+		}
+		if (getClass() != obj.getClass()) {
+			return false;
+		}
+		final Queue other = obj;
+		return Objects.equal(this.toString(), other.toString());
+	}
+
+	public Set<Directory> findDirectories(Group group) {
+
+		Set<Directory> dirs = Sets.newLinkedHashSet();
+		for (Directory d : getDirectories()) {
+			if (d.getGroups().contains(group)) {
+				dirs.add(d);
+			}
+		}
+		return dirs;
+	}
+
+	public Set<Directory> findDirectories(String fqan) {
+
+		Set<Directory> dirs = Sets.newLinkedHashSet();
+		for (Directory d : getDirectories()) {
+			for (Group g : d.getGroups()) {
+				if (g.getFqan().equals(fqan)) {
+					dirs.add(d);
+				}
+			}
+		}
+		return dirs;
+
+	}
 
 	@XmlElement(name = "clockspeedInHz")
 	public Integer getClockspeedInHz() {
@@ -68,7 +115,7 @@ public class Queue {
 	}
 
 	@XmlElement(name = "dynamicInfo")
-	public Map<String, DynamicInfo> getDynamicInfo() {
+	public List<DynamicInfo> getDynamicInfo() {
 		return dynamicInfo;
 	}
 
@@ -117,6 +164,11 @@ public class Queue {
 		return walltimeInMinutes;
 	}
 
+	@Override
+	public int hashCode() {
+		return Objects.hashCode(toString());
+	}
+
 	public void setClockspeedInHz(Integer clockspeedInHz) {
 		this.clockspeedInHz = clockspeedInHz;
 	}
@@ -137,7 +189,7 @@ public class Queue {
 		this.directories = directories;
 	}
 
-	public void setDynamicInfo(Map<String, DynamicInfo> dynamicInfo) {
+	public void setDynamicInfo(List<DynamicInfo> dynamicInfo) {
 		this.dynamicInfo = dynamicInfo;
 	}
 
@@ -175,6 +227,16 @@ public class Queue {
 
 	public void setWalltimeInMinutes(int walltimeInMinutes) {
 		this.walltimeInMinutes = walltimeInMinutes;
+	}
+
+	@Override
+	public String toString() {
+		if (StringUtils.isBlank(factoryType)
+				|| PBS_FACTORY_TYPE.equals(factoryType)) {
+			return getName() + ":" + getGateway().getHost();
+		} else {
+			return getName() + ":" + getGateway().getHost() + "#" + factoryType;
+		}
 	}
 
 }

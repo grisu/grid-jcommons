@@ -6,7 +6,10 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement(name = "filesystem")
 public class FileSystem {
 
+	public static final int DEFAULT_PORT = 2811;
+
 	private String host;
+
 	private Site site;
 	private int port;
 	private String protocol;
@@ -29,6 +32,14 @@ public class FileSystem {
 	@XmlElement(name = "site")
 	public Site getSite() {
 		return site;
+	}
+
+	public String getUrl() {
+		if (port != DEFAULT_PORT) {
+			return protocol + "://" + host + ":" + port;
+		} else {
+			return protocol + "://" + host;
+		}
 	}
 
 	public void setHost(String host) {

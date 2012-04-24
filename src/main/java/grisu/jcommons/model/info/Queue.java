@@ -5,6 +5,7 @@ import grisu.jcommons.constants.JobSubmissionProperty;
 import grisu.jcommons.model.info.DynamicInfo.TYPE;
 
 import java.util.Collection;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -12,7 +13,7 @@ import org.apache.commons.lang.StringUtils;
 
 import com.google.common.collect.Collections2;
 import com.google.common.collect.ComparisonChain;
-import com.google.common.collect.Maps;
+import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
 
 public class Queue extends AbstractResource implements Comparable<Queue> {
@@ -48,8 +49,7 @@ public class Queue extends AbstractResource implements Comparable<Queue> {
 	private String description = "n/a";
 	private Integer clockspeedInHz = Integer.MAX_VALUE;
 
-	private final Map<DynamicInfo.TYPE, DynamicInfo> dynamicInfo = Maps
-			.newTreeMap();
+	private final List<DynamicInfo> dynamicInfo = Lists.newLinkedList();
 
 	private Queue() {
 	}
@@ -204,8 +204,17 @@ public class Queue extends AbstractResource implements Comparable<Queue> {
 
 	}
 
+	public List<DynamicInfo> getDynamicInfo() {
+		return dynamicInfo;
+	}
+
 	public DynamicInfo getDynamicInfo(TYPE type) {
-		return dynamicInfo.get(type);
+		for (DynamicInfo i : dynamicInfo) {
+			if (i.getType().equals(type)) {
+				return i;
+			}
+		}
+		return null;
 	}
 
 	public String getFactoryType() {
@@ -348,7 +357,13 @@ public class Queue extends AbstractResource implements Comparable<Queue> {
 	}
 
 	public void setDynamicInfo(DynamicInfo di) {
-		this.dynamicInfo.put(di.getType(), di);
+		for (DynamicInfo i : dynamicInfo) {
+			if (i.getType().equals(di.getType())) {
+				i.setValue(di.getValue());
+				return;
+			}
+		}
+		this.dynamicInfo.add(di);
 	}
 
 	public void setFactoryType(String ft) {
