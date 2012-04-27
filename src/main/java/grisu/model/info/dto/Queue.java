@@ -1,5 +1,6 @@
 package grisu.model.info.dto;
 
+import java.util.Collection;
 import java.util.List;
 import java.util.Set;
 
@@ -17,6 +18,21 @@ import com.google.common.collect.Sets;
 public class Queue implements Comparable<Queue> {
 
 	public static final String PBS_FACTORY_TYPE = "PBS";
+
+	public static Queue getQueue(Collection<Queue> queues,
+			String submissionLocation) {
+
+		if (queues == null) {
+			return null;
+		}
+
+		for (Queue q : queues) {
+			if (q.toString().equals(submissionLocation)) {
+				return q;
+			}
+		}
+		return null;
+	}
 
 	private Gateway gateway;
 
