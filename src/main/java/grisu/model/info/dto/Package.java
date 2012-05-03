@@ -5,8 +5,10 @@ import java.util.Set;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
+import com.google.common.collect.ComparisonChain;
+
 @XmlRootElement(name = "package")
-public class Package {
+public class Package implements Comparable<Package> {
 
 	private Application application;
 	private Set<Executable> executables;
@@ -23,6 +25,14 @@ public class Package {
 	public Package(Application app, Version version) {
 		this.application = app;
 		this.version = version;
+	}
+
+	public int compareTo(Package o) {
+		return ComparisonChain
+				.start()
+				.compare(getApplication().getName(),
+						o.getApplication().getName())
+				.compare(getVersion(), o.getVersion()).result();
 	}
 
 	@XmlElement(name = "application")

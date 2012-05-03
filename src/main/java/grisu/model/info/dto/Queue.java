@@ -38,7 +38,7 @@ public class Queue implements Comparable<Queue> {
 
 	private Set<Group> groups;
 
-	private Set<Package> packages = Sets.newHashSet();
+	private Set<Package> packages = Sets.newTreeSet();
 
 	private String name;
 

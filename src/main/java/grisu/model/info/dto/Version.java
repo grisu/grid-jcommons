@@ -6,7 +6,7 @@ import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
 @XmlRootElement(name = "version")
-public class Version {
+public class Version implements Comparable<Version> {
 
 	public static final Version ANY_VERSION = new Version(
 			Constants.NO_VERSION_INDICATOR_STRING);
@@ -18,6 +18,10 @@ public class Version {
 
 	public Version(String version) {
 		setVersion(version);
+	}
+
+	public int compareTo(Version o) {
+		return version.compareTo(o.getVersion());
 	}
 
 	@XmlElement(name = "version")
