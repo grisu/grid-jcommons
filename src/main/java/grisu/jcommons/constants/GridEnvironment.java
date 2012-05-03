@@ -152,6 +152,13 @@ public class GridEnvironment {
 
 	}
 
+	public static void setDefaultMyProxyHost(String myProxy) {
+
+		CommonGridProperties.getDefault().setGridProperty(
+				CommonGridProperties.Property.MYPROXY_HOST, myProxy);
+
+	}
+
 	// public static File getGridHelperScriptsDirectory() {
 	//
 	// String dir = getGridConfigDirectory() + File.separator

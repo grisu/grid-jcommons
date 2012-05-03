@@ -173,7 +173,11 @@ public class CommonGridProperties {
 	 */
 	public void setGridProperty(Property prop, String value) {
 
-		config.setProperty(prop.toString(), value);
+		if (StringUtils.isBlank(value)) {
+			config.clearProperty(prop.toString());
+		} else {
+			config.setProperty(prop.toString(), value);
+		}
 		try {
 			config.save();
 		} catch (ConfigurationException e) {
