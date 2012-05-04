@@ -69,14 +69,15 @@ public class Queue implements Comparable<Queue> {
 
 	}
 
-	public boolean equals(Queue obj) {
+	@Override
+	public boolean equals(Object obj) {
 		if (obj == null) {
 			return false;
 		}
 		if (getClass() != obj.getClass()) {
 			return false;
 		}
-		final Queue other = obj;
+		final Queue other = (Queue) obj;
 		return Objects.equal(this.toString(), other.toString());
 	}
 

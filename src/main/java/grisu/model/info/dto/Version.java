@@ -24,9 +24,27 @@ public class Version implements Comparable<Version> {
 		return version.compareTo(o.getVersion());
 	}
 
+	@Override
+	public boolean equals(Object obj) {
+		if (obj == null) {
+			return false;
+		}
+		if (getClass() != obj.getClass()) {
+			return false;
+		}
+		final Version other = (Version) obj;
+
+		return getVersion().equals(other.getVersion());
+	}
+
 	@XmlElement(name = "version")
 	public String getVersion() {
 		return version;
+	}
+
+	@Override
+	public int hashCode() {
+		return 24 * version.hashCode();
 	}
 
 	public void setVersion(String version) {

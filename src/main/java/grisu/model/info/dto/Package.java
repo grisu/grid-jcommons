@@ -5,6 +5,7 @@ import java.util.Set;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
+import com.google.common.base.Objects;
 import com.google.common.collect.ComparisonChain;
 
 @XmlRootElement(name = "package")
@@ -35,6 +36,21 @@ public class Package implements Comparable<Package> {
 				.compare(getVersion(), o.getVersion()).result();
 	}
 
+	@Override
+	public boolean equals(Object obj) {
+		if (obj == null) {
+			return false;
+		}
+		if (getClass() != obj.getClass()) {
+			return false;
+		}
+		final Package other = (Package) obj;
+
+		return Objects.equal(getApplication(), other.getApplication())
+				&& Objects.equal(this.getVersion(), other.getVersion());
+
+	}
+
 	@XmlElement(name = "application")
 	public Application getApplication() {
 		return application;
@@ -58,6 +74,11 @@ public class Package implements Comparable<Package> {
 	@XmlElement(name = "version")
 	public Version getVersion() {
 		return version;
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hashCode(getApplication(), getVersion());
 	}
 
 	public void setApplication(Application application) {
