@@ -50,4 +50,9 @@ public class Version implements Comparable<Version> {
 	public void setVersion(String version) {
 		this.version = version;
 	}
+
+	@Override
+	public String toString() {
+		return getVersion();
+	}
 }
