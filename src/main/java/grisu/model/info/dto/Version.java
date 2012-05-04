@@ -33,11 +33,11 @@ public class Version implements Comparable<Version> {
 			return false;
 		}
 		final Version other = (Version) obj;
-
-		return getVersion().equals(other.getVersion());
+		System.out.println("Version:" + version);
+		return version.equals(other.getVersion());
 	}
 
-	@XmlElement(name = "version")
+	@XmlElement(name = "versionName")
 	public String getVersion() {
 		return version;
 	}
