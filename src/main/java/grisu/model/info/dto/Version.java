@@ -33,7 +33,6 @@ public class Version implements Comparable<Version> {
 			return false;
 		}
 		final Version other = (Version) obj;
-		System.out.println("Version:" + version);
 		return version.equals(other.getVersion());
 	}
 
