@@ -59,7 +59,7 @@ public class Queue implements Comparable<Queue> {
 	// other queue properties, not considered when calculating whether a job
 	// would run on this queue or not
 	private String description = "n/a";
-	private Integer clockspeedInHz = Integer.MAX_VALUE;
+	private Long clockspeedInHz = Long.MAX_VALUE;
 
 	private List<DynamicInfo> dynamicInfo = Lists.newLinkedList();
 
@@ -107,7 +107,7 @@ public class Queue implements Comparable<Queue> {
 	}
 
 	@XmlElement(name = "clockspeedInHz")
-	public Integer getClockspeedInHz() {
+	public Long getClockspeedInHz() {
 		return clockspeedInHz;
 	}
 
@@ -186,7 +186,7 @@ public class Queue implements Comparable<Queue> {
 		return Objects.hashCode(toString());
 	}
 
-	public void setClockspeedInHz(Integer clockspeedInHz) {
+	public void setClockspeedInHz(Long clockspeedInHz) {
 		this.clockspeedInHz = clockspeedInHz;
 	}
 
