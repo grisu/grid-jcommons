@@ -101,4 +101,9 @@ public class Package implements Comparable<Package> {
 		this.version = version;
 	}
 
+	@Override
+	public String toString() {
+		return getName() + " / " + getVersion();
+	}
+
 }
