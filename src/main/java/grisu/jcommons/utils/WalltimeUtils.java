@@ -27,6 +27,15 @@ public class WalltimeUtils {
 
 	}
 
+	public static String convertSeconds(int i) {
+		if (i == Integer.MAX_VALUE || i == Integer.MIN_VALUE || i == 0) {
+			return "n/a";
+		}
+
+		String[] result = convertSecondsInHumanReadableString(i);
+		return result[0] + " " + result[1];
+	}
+
 	public static String[] convertSecondsInHumanReadableString(
 			int walltimeInSeconds) {
 

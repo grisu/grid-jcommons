@@ -3,6 +3,7 @@ package grisu.jcommons.interfaces;
 import grisu.jcommons.constants.JobSubmissionProperty;
 import grisu.model.info.dto.Application;
 import grisu.model.info.dto.Directory;
+import grisu.model.info.dto.JobQueueMatch;
 import grisu.model.info.dto.Package;
 import grisu.model.info.dto.Queue;
 import grisu.model.info.dto.Site;
@@ -37,6 +38,19 @@ public interface InformationManager {
 	// */
 	// public Collection<Queue> findQueues(
 	// Map<JobSubmissionProperty, String> jobProps, String group);
+
+	/**
+	 * Finds all queues in the grid for a certain fqan and returns all Queues
+	 * with information on whether the specified job can be run on it or not.
+	 * 
+	 * @param job
+	 *            the job properties
+	 * @param fqan
+	 *            the group
+	 * @return a list of queues
+	 */
+	List<JobQueueMatch> findMatches(Map<JobSubmissionProperty, String> job,
+			String fqan);
 
 	/**
 	 * Finds all queues in the grid that can run a job with the specified
@@ -76,7 +90,6 @@ public interface InformationManager {
 	 */
 	List<Application> getAllApplicationsOnGridForVO(String fqan);
 
-
 	/**
 	 * Returns all submission locations on all the sites from MDS.
 	 * 
@@ -95,8 +108,7 @@ public interface InformationManager {
 	 * @return submission locations of sites which have the software application
 	 *         installed
 	 */
-	Collection<Queue> getAllQueues(String application,
-			String version);
+	Collection<Queue> getAllQueues(String application, String version);
 
 	/**
 	 * Returns all the submissionlocations for the given application. The entry
@@ -113,8 +125,7 @@ public interface InformationManager {
 	 *            name of the application
 	 * @return all the submission queues for the given application.
 	 */
-	List<Queue> getAllQueuesForApplication(
-			String application);
+	List<Queue> getAllQueuesForApplication(String application);
 
 	/**
 	 * Returns all submission locations or a specific VO.
@@ -124,7 +135,6 @@ public interface InformationManager {
 	 * @return the submission locations
 	 */
 	Collection<Queue> getAllQueuesForVO(String fqan);
-
 
 	/**
 	 * Return all the names of all the sites from MDS.
@@ -159,8 +169,7 @@ public interface InformationManager {
 	 *            the executable
 	 * @return the codes
 	 */
-	List<Application> getApplicationsThatProvideExecutable(
-			String executable);
+	List<Application> getApplicationsThatProvideExecutable(String executable);
 
 	/**
 	 * Returns all the data locations (mount points) on the grid available for
@@ -198,8 +207,8 @@ public interface InformationManager {
 	 * @return a map of the attribute details of the given application at the
 	 *         site.
 	 */
-	Package getPackage(String application,
-			String version, String submissionLocation);
+	Package getPackage(String application, String version,
+			String submissionLocation);
 
 	/**
 	 * Returns the GridResource object for the submissionLocation string.
@@ -214,21 +223,26 @@ public interface InformationManager {
 	public Queue getQueue(String submissionLocation);
 
 	/**
-	 * Checks whether there is a resource of the specified type and name (result of the toString() method) and returns it.
-	 *
-	 * @param type the type of the resource
-	 * @param name the name of the resource
+	 * Checks whether there is a resource of the specified type and name (result
+	 * of the toString() method) and returns it.
+	 * 
+	 * @param type
+	 *            the type of the resource
+	 * @param name
+	 *            the name of the resource
 	 * @return the resource or null if it can't be found
 	 */
 	<T> T getResource(Class<T> type, String name);
 
-	//	/**
-	//	 * Finds all resources of the specified type that have connections to the filters specified.
-	//	 * @param resourceClass the type of resources you look for
-	//	 * @param filters the resources that have direct connections to the resources you look for
-	//	 * @return all matching resources
-	//	 */
-	//	public <T extends AbstractResource> Collection<T> getResources(
+	// /**
+	// * Finds all resources of the specified type that have connections to the
+	// filters specified.
+	// * @param resourceClass the type of resources you look for
+	// * @param filters the resources that have direct connections to the
+	// resources you look for
+	// * @return all matching resources
+	// */
+	// public <T extends AbstractResource> Collection<T> getResources(
 	// Class<T> resourceClass, AbstractResource... filters);
 
 	/**
@@ -253,8 +267,7 @@ public interface InformationManager {
 	 * @return an array of string representing the available versions of the
 	 *         software application at the site
 	 */
-	List<Version> getVersionsOfApplicationOnSite(String application,
-			String site);
+	List<Version> getVersionsOfApplicationOnSite(String application, String site);
 
 	/**
 	 * Returns the list of available versions of the software application at a
