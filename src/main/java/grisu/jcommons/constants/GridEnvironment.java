@@ -24,7 +24,7 @@ public class GridEnvironment {
 	/**
 	 * The hostname of the default MyProxy server (myproxy.test.nesi.org.nz).
 	 */
-	private static final String DEFAULT_MYPROXY_SERVER = "myproxy.test.nesi.org.nz";
+	private static final String DEFAULT_MYPROXY_SERVER = "myproxy.nesi.org.nz";
 
 	private static final String DEFAULT_GRID_CONFIG_FILENAME = "grid.groovy";
 
