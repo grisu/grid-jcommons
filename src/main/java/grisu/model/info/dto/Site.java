@@ -23,4 +23,9 @@ public class Site implements Comparable<Site> {
 		this.name = name;
 	}
 
+	@Override
+	public String toString() {
+		return getName();
+	}
+
 }
