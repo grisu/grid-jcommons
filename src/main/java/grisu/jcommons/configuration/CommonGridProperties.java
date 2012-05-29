@@ -39,7 +39,11 @@ public class CommonGridProperties {
 		 * The grid info config to use by default. Either "testbed"
 		 * (default), "nesi", or the path to a config file.
 		 */
-		GRID_INFO_CONFIG
+		GRID_INFO_CONFIG, /**
+		 * Whether to use the grid-session daemon when logging
+		 * into the grid.
+		 */
+		USE_GRID_SESSION
 
 	}
 
@@ -118,6 +122,17 @@ public class CommonGridProperties {
 		return result;
 	}
 
+	public boolean getGridPropertyBoolean(Property prop) {
+
+		String result = System.getProperty(prop.toString());
+		if (StringUtils.isNotBlank(result)) {
+			return Boolean.parseBoolean(result);
+		}
+
+		boolean resultBool = config.getBoolean(prop.toString(), Boolean.TRUE);
+		return resultBool;
+	}
+
 	/**
 	 * Gets a certain grid property as an integer.
 	 * 
@@ -157,6 +172,16 @@ public class CommonGridProperties {
 
 		return getGridProperty(Property.SHIB_USERNAME);
 
+	}
+
+	public String getOtherGridProperty(String storeKey) {
+		String result = System.getProperty(storeKey);
+
+		if (StringUtils.isBlank(result)) {
+			result = config.getString(storeKey);
+		}
+
+		return result;
 	}
 
 	public void setGridInfoConfig(String c) {
@@ -213,6 +238,25 @@ public class CommonGridProperties {
 	 */
 	public void setLastShibUsername(String u) {
 		setGridProperty(Property.SHIB_USERNAME, u);
+	}
+
+	public void setOtherGridProperty(String key, String value) {
+		if (StringUtils.isBlank(value)) {
+			config.clearProperty(key);
+		} else {
+			config.setProperty(key, value);
+		}
+		try {
+			config.save();
+		} catch (ConfigurationException e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	public boolean useGridSession() {
+
+		return getGridPropertyBoolean(Property.USE_GRID_SESSION);
+
 	}
 
 }

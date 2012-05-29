@@ -21,9 +21,12 @@ public class BouncyCastleTool {
 	private static Logger myLogger = LoggerFactory
 			.getLogger(BouncyCastleTool.class);
 
+	private static volatile boolean initialized = false;
+
 	private static final String[] possiblePaths = new String[] {
 			BouncyCastleTool.class.getProtectionDomain().getCodeSource()
-					.getLocation().getPath(), "/usr/share/java",
+					.getLocation().getPath(), "/usr/local/lib/nesi",
+			"/usr/share/java",
 			GridEnvironment.getGridCommonJavaLibDirectory().getAbsolutePath() };
 
 	private static boolean addExternalBouncyCastle() {
@@ -76,59 +79,73 @@ public class BouncyCastleTool {
 		return false;
 	}
 
-	public synchronized static int initBouncyCastle()
-			throws ClassNotFoundException {
+	public synchronized static int initBouncyCastle() {
+		return initBouncyCastle(false);
+	}
 
-		// System.out.println("SimpleProxyLib updated");
+	public synchronized static int initBouncyCastle(boolean force) {
 
-		// try {
-		Class bcClass = null;
-		try {
-			bcClass = Class
-					.forName("org.bouncycastle.jce.provider.BouncyCastleProvider");
-		} catch (ClassNotFoundException e1) {
-			if (!BouncyCastleTool.addExternalBouncyCastle()) {
+		myLogger.debug("checking whether to init bouncy castle library");
+		if (!initialized || force) {
+			myLogger.debug("initialize bouncy castle library");
+			// System.out.println("SimpleProxyLib updated");
 
-				myLogger.debug("Trying to get bouncycastle dependency.");
-				Map<Dependency, String> deps = Maps.newHashMap();
-				deps.put(Dependency.BOUNCYCASTLE, "ignore");
-				DependencyManager.addDependencies(deps,
-						GridEnvironment.getGridCommonJavaLibDirectory());
-				myLogger.debug("Bouncycastle dependency available");
+			// try {
+			Class bcClass = null;
+			try {
+				bcClass = Class
+						.forName("org.bouncycastle.jce.provider.BouncyCastleProvider");
+			} catch (ClassNotFoundException e1) {
+				if (!BouncyCastleTool.addExternalBouncyCastle()) {
 
-				BouncyCastleTool.addExternalBouncyCastle();
+					myLogger.debug("Trying to get bouncycastle dependency.");
+					Map<Dependency, String> deps = Maps.newHashMap();
+					deps.put(Dependency.BOUNCYCASTLE, "ignore");
+					DependencyManager.addDependencies(deps,
+							GridEnvironment.getGridCommonJavaLibDirectory());
+					myLogger.debug("Bouncycastle dependency available");
 
-			}
-			bcClass = bcClass
-					.forName("org.bouncycastle.jce.provider.BouncyCastleProvider");
-		}
+					BouncyCastleTool.addExternalBouncyCastle();
 
-		final Class temp = bcClass;
-		AccessController.doPrivileged(new PrivilegedAction<Void>() {
-			public Void run() {
-
+				}
 				try {
-
-					// bouncy castle
-					if (Security.addProvider((Provider) temp.newInstance()) == -1) {
-						myLogger.debug("Could not add BouncyCastleProvider because it is already installed.");
-					}
-					return null;
-				} catch (Throwable e) {
-					// e.printStackTrace();
-					myLogger.error("Could not load BouncyCastleProvider.", e);
-					return null;
+					bcClass = bcClass
+							.forName("org.bouncycastle.jce.provider.BouncyCastleProvider");
+				} catch (ClassNotFoundException e) {
+					throw new RuntimeException(e);
 				}
 			}
-		});
-		// } catch (Throwable e) {
-		// // e.printStackTrace();
-		// myLogger.error("Could not load BouncyCastleProvider.", e);
-		// // throw new RuntimeException(e);
-		// return -1;
-		// }
-		myLogger.info("Loaded BouncyCastleProvider.");
+
+			final Class temp = bcClass;
+			AccessController.doPrivileged(new PrivilegedAction<Void>() {
+				public Void run() {
+
+					try {
+
+						// bouncy castle
+						if (Security.addProvider((Provider) temp.newInstance()) == -1) {
+							myLogger.debug("Could not add BouncyCastleProvider because it is already installed.");
+						}
+						return null;
+					} catch (Throwable e) {
+						// e.printStackTrace();
+						myLogger.error("Could not load BouncyCastleProvider.",
+								e);
+						return null;
+					}
+				}
+			});
+			// } catch (Throwable e) {
+			// // e.printStackTrace();
+			// myLogger.error("Could not load BouncyCastleProvider.", e);
+			// // throw new RuntimeException(e);
+			// return -1;
+			// }
+			myLogger.info("Loaded BouncyCastleProvider.");
+			initialized = true;
+		}
 		return 0;
+
 	}
 
 }
