@@ -40,10 +40,15 @@ public class CommonGridProperties {
 		 * (default), "nesi", or the path to a config file.
 		 */
 		GRID_INFO_CONFIG, /**
-		 * Whether to use the grid-session daemon when logging
-		 * into the grid.
+		 * Whether to use the grid-session service when
+		 * logging into the grid.
 		 */
-		USE_GRID_SESSION
+		USE_GRID_SESSION,
+		/**
+		 * Whether to daemonize the grid-session service or run in the same
+		 * process.
+		 */
+		DAEMONIZE_GRID_SESSION
 
 	}
 
@@ -98,6 +103,12 @@ public class CommonGridProperties {
 		} catch (ConfigurationException e) {
 			throw new RuntimeException(e);
 		}
+	}
+
+	public boolean daemonizeGridSession() {
+
+		return getGridPropertyBoolean(Property.DAEMONIZE_GRID_SESSION);
+
 	}
 
 	public String getGridInfoConfig() {
