@@ -1,5 +1,8 @@
 package grisu.jcommons.exceptions;
 
+import javax.xml.ws.WebFault;
+
+@WebFault(faultBean = "grisu.control.jaxws.exceptions.CredentialException")
 public class CredentialException extends RuntimeException {
 
 	public CredentialException() {
