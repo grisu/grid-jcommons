@@ -85,4 +85,9 @@ public class Directory {
 		return filesystem.toString() + path;
 	}
 
+	@Override
+	public String toString() {
+		return toUrl();
+	}
+
 }

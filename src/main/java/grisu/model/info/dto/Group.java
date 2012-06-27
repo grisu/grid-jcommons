@@ -26,4 +26,9 @@ public class Group {
 	public void setVo(VO vo) {
 		this.vo = vo;
 	}
+
+	@Override
+	public String toString() {
+		return getFqan();
+	}
 }
