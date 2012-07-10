@@ -64,8 +64,13 @@ public class Queue implements Comparable<Queue> {
 	private List<DynamicInfo> dynamicInfo = Lists.newLinkedList();
 
 	public int compareTo(Queue o) {
-		return ComparisonChain.start().compare(getGateway(), o.getGateway())
-				.compare(getName(), getName()).result();
+
+		int result = ComparisonChain.start()
+				.compare(getGateway().getSite(), o.getGateway().getSite())
+				.compare(getGateway().getHost(), o.getGateway().getHost())
+				.compare(getName(), o.getName()).result();
+
+		return result;
 	}
 
 	@Override
@@ -77,7 +82,11 @@ public class Queue implements Comparable<Queue> {
 			return false;
 		}
 		final Queue other = (Queue) obj;
-		return Objects.equal(this.toString(), other.toString());
+		return Objects.equal(this.getGateway().getSite(), other.getGateway()
+				.getSite())
+				&& Objects.equal(getGateway().getHost(), other.getGateway()
+						.getHost())
+				&& Objects.equal(getName(), other.getName());
 	}
 
 	public Set<Directory> findDirectories(Group group) {
@@ -182,7 +191,8 @@ public class Queue implements Comparable<Queue> {
 
 	@Override
 	public int hashCode() {
-		return Objects.hashCode(toString());
+		return Objects.hashCode(getName(), getGateway().getSite(), getGateway()
+				.getHost());
 	}
 
 	public void setClockspeedInHz(Long clockspeedInHz) {

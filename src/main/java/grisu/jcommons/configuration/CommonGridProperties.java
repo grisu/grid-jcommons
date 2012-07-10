@@ -107,7 +107,7 @@ public class CommonGridProperties {
 
 	public boolean daemonizeGridSession() {
 
-		return getGridPropertyBoolean(Property.DAEMONIZE_GRID_SESSION);
+		return getGridPropertyBoolean(Property.DAEMONIZE_GRID_SESSION, false);
 
 	}
 
@@ -133,14 +133,14 @@ public class CommonGridProperties {
 		return result;
 	}
 
-	public boolean getGridPropertyBoolean(Property prop) {
+	public boolean getGridPropertyBoolean(Property prop, Boolean defaultValue) {
 
 		String result = System.getProperty(prop.toString());
 		if (StringUtils.isNotBlank(result)) {
 			return Boolean.parseBoolean(result);
 		}
 
-		boolean resultBool = config.getBoolean(prop.toString(), Boolean.TRUE);
+		boolean resultBool = config.getBoolean(prop.toString(), defaultValue);
 		return resultBool;
 	}
 
@@ -266,7 +266,7 @@ public class CommonGridProperties {
 
 	public boolean useGridSession() {
 
-		return getGridPropertyBoolean(Property.USE_GRID_SESSION);
+		return getGridPropertyBoolean(Property.USE_GRID_SESSION, true);
 
 	}
 

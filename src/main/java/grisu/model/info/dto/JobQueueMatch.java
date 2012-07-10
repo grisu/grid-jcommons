@@ -38,8 +38,8 @@ public class JobQueueMatch implements Comparable<JobQueueMatch> {
 	}
 
 	public int compareTo(JobQueueMatch o) {
-		return ComparisonChain.start().compare(getRank(), o.getRank())
-				.compare(getQueue(), getQueue()).result();
+		return ComparisonChain.start().compare(getQueue(), o.getQueue())
+				.result();
 	}
 
 	@Override
