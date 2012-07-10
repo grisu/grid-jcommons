@@ -3,12 +3,19 @@ package grisu.model.info.dto;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
+import com.google.common.collect.ComparisonChain;
+
 @XmlRootElement(name = "gateway")
-public class Gateway {
+public class Gateway implements Comparable<Gateway> {
 
 	private String host;
 	private Site site;
 	private Middleware middleware;
+
+	public int compareTo(Gateway o) {
+		return ComparisonChain.start().compare(getSite(), o.getSite())
+				.compare(getHost(), o.getHost()).result();
+	}
 
 	@XmlElement(name = "host")
 	public String getHost() {

@@ -64,8 +64,7 @@ public class Queue implements Comparable<Queue> {
 	private List<DynamicInfo> dynamicInfo = Lists.newLinkedList();
 
 	public int compareTo(Queue o) {
-		return ComparisonChain.start()
-				.compare(getGateway().getSite(), o.getGateway().getHost())
+		return ComparisonChain.start().compare(getGateway(), o.getGateway())
 				.compare(getName(), getName()).result();
 	}
 
