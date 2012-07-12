@@ -7,8 +7,6 @@ import java.util.Set;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
-import org.apache.commons.lang.StringUtils;
-
 import com.google.common.base.Objects;
 import com.google.common.collect.ComparisonChain;
 import com.google.common.collect.Lists;
@@ -257,12 +255,13 @@ public class Queue implements Comparable<Queue> {
 
 	@Override
 	public String toString() {
-		if (StringUtils.isBlank(factoryType)
-				|| PBS_FACTORY_TYPE.equals(factoryType)) {
-			return getName() + ":" + getGateway().getHost();
-		} else {
-			return getName() + ":" + getGateway().getHost() + "#" + factoryType;
-		}
+		return getName() + ":" + getGateway().getHost();
+		// if (StringUtils.isBlank(factoryType)
+		// || PBS_FACTORY_TYPE.equals(factoryType)) {
+		// return getName() + ":" + getGateway().getHost();
+		// } else {
+		// return getName() + ":" + getGateway().getHost() + "#" + factoryType;
+		// }
 	}
 
 }
