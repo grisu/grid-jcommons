@@ -48,7 +48,15 @@ public class CommonGridProperties {
 		 * Whether to daemonize the grid-session service or run in the same
 		 * process.
 		 */
-		DAEMONIZE_GRID_SESSION
+		DAEMONIZE_GRID_SESSION, /**
+		 * The location of an ssh key that can be used
+		 * to ssh into certain (non-gsi) machines.
+		 */
+		GRID_SSH_KEY, /**
+		 * The location of the corresponding ssh cert (see
+		 * GRID_SSH_KEY).
+		 */
+		GRID_SSH_CERT
 
 	}
 
@@ -60,6 +68,14 @@ public class CommonGridProperties {
 	 * $HOME/.grid/grid.properties)
 	 */
 	private static final File GRID_PROPERTIES_FILE = calculateGridPropertiesFile();
+
+	public static final String KEY_NAME = "grid_rsa";
+	public static final String CERT_NAME = KEY_NAME + ".pub";
+
+	public static final String KEY_PATH = GridEnvironment
+			.getGridConfigDirectory().toString() + File.separator + KEY_NAME;
+	public static final String CERT_PATH = GridEnvironment
+			.getGridConfigDirectory().toString() + File.separator + CERT_NAME;
 
 	private static File calculateGridPropertiesFile() {
 
@@ -154,6 +170,24 @@ public class CommonGridProperties {
 	public int getGridPropertyInt(Property prop) {
 		int result = config.getInt(prop.toString(), Integer.MIN_VALUE);
 		return result;
+	}
+
+	public String getGridSSHCert() {
+		String cert = getGridProperty(Property.GRID_SSH_CERT);
+		if (StringUtils.isBlank(cert)) {
+			return CERT_PATH;
+		} else {
+			return cert;
+		}
+	}
+
+	public String getGridSSHKey() {
+		String key = getGridProperty(Property.GRID_SSH_KEY);
+		if (StringUtils.isBlank(key)) {
+			return KEY_PATH;
+		} else {
+			return key;
+		}
 	}
 
 	/**
