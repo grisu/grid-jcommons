@@ -72,10 +72,11 @@ public class CommonGridProperties {
 	public static final String KEY_NAME = "grid_rsa";
 	public static final String CERT_NAME = KEY_NAME + ".pub";
 
-	public static final String KEY_PATH = GridEnvironment
-			.getGridConfigDirectory().toString() + File.separator + KEY_NAME;
-	public static final String CERT_PATH = GridEnvironment
-			.getGridConfigDirectory().toString() + File.separator + CERT_NAME;
+	public static String SSH_DIR = getSSHDirectory();
+
+	public static final String KEY_PATH = SSH_DIR + File.separator + KEY_NAME;
+
+	public static final String CERT_PATH = SSH_DIR + File.separator + CERT_NAME;
 
 	private static File calculateGridPropertiesFile() {
 
@@ -105,6 +106,14 @@ public class CommonGridProperties {
 			singleton = new CommonGridProperties();
 		}
 		return singleton;
+	}
+
+	public static String getSSHDirectory() {
+		String tmp = System.getProperty("user.home") + File.separator + ".ssh";
+		if (!new File(tmp).exists()) {
+			new File(tmp).mkdirs();
+		}
+		return tmp;
 	}
 
 	/** The config. */
