@@ -177,6 +177,7 @@ public class Queue implements Comparable<Queue> {
 		return packages;
 	}
 
+	@javax.xml.bind.annotation.XmlTransient
 	public String getSubmissionLocation() {
 		return getName() + ":" + getGateway().getHost();
 		// if (StringUtils.isBlank(factoryType)
