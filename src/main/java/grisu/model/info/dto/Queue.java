@@ -177,6 +177,16 @@ public class Queue implements Comparable<Queue> {
 		return packages;
 	}
 
+	public String getSubmissionLocation() {
+		return getName() + ":" + getGateway().getHost();
+		// if (StringUtils.isBlank(factoryType)
+		// || PBS_FACTORY_TYPE.equals(factoryType)) {
+		// return getName() + ":" + getGateway().getHost();
+		// } else {
+		// return getName() + ":" + getGateway().getHost() + "#" + factoryType;
+		// }
+	}
+
 	@XmlElement(name = "virtualMemory")
 	public long getVirtualMemory() {
 		return virtualMemory;
@@ -255,13 +265,18 @@ public class Queue implements Comparable<Queue> {
 
 	@Override
 	public String toString() {
-		return getName() + ":" + getGateway().getHost();
-		// if (StringUtils.isBlank(factoryType)
-		// || PBS_FACTORY_TYPE.equals(factoryType)) {
-		// return getName() + ":" + getGateway().getHost();
-		// } else {
-		// return getName() + ":" + getGateway().getHost() + "#" + factoryType;
-		// }
+		return getSubmissionLocation();
 	}
+
+	// @Override
+	// public String toString() {
+	// return getName() + ":" + getGateway().getHost();
+	// // if (StringUtils.isBlank(factoryType)
+	// // || PBS_FACTORY_TYPE.equals(factoryType)) {
+	// // return getName() + ":" + getGateway().getHost();
+	// // } else {
+	// // return getName() + ":" + getGateway().getHost() + "#" + factoryType;
+	// // }
+	// }
 
 }

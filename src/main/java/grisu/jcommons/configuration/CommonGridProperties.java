@@ -72,7 +72,7 @@ public class CommonGridProperties {
 	public static final String KEY_NAME = "grid_rsa";
 	public static final String CERT_NAME = KEY_NAME + ".pub";
 
-	public static String SSH_DIR = getSSHDirectory();
+	public final static String SSH_DIR = getSSHDirectory();
 
 	public static final String KEY_PATH = SSH_DIR + File.separator + KEY_NAME;
 
