@@ -307,9 +307,9 @@ public class CommonGridProperties {
 		}
 	}
 
-	public boolean useGridSession() {
+	public boolean startGridSessionThreadOrDaemon() {
 
-		return getGridPropertyBoolean(Property.USE_GRID_SESSION, true);
+		return getGridPropertyBoolean(Property.USE_GRID_SESSION, false);
 
 	}
 
