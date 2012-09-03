@@ -1,5 +1,7 @@
 package grisu.model.info.dto;
 
+import java.util.Collection;
+
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
@@ -16,6 +18,21 @@ import com.google.common.collect.ComparisonChain;
  */
 @XmlRootElement(name = "jobqueuematch")
 public class JobQueueMatch implements Comparable<JobQueueMatch> {
+
+	public static JobQueueMatch getMatch(Collection<JobQueueMatch> matches,
+			String submissionLocation) {
+
+		if (matches == null) {
+			return null;
+		}
+
+		for (JobQueueMatch m : matches) {
+			if (m.getQueue().toString().equals(submissionLocation)) {
+				return m;
+			}
+		}
+		return null;
+	}
 
 	private Queue queue;
 	private DtoProperties job;
