@@ -1,4 +1,4 @@
-package org.bestgrid.goji.utils;
+package grisu.jcommons.utils;
 
 public class EndpointHelpers {
 	public static String encode(String endpoint) {

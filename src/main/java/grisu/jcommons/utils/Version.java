@@ -14,13 +14,13 @@ import org.slf4j.LoggerFactory;
 
 public class Version {
 
-	static final Logger myLogger = LoggerFactory.getLogger(Version.class.getName());
+	static final Logger myLogger = LoggerFactory.getLogger(Version.class
+			.getName());
 
 	public static String get(String module) {
 
 		try {
 			List<String> result = readTextFromJar("/" + module + ".version");
-
 			if ((result == null) || (result.size() == 0)
 					|| StringUtils.isEmpty(result.get(0))) {
 				return "N/A";

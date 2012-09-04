@@ -11,7 +11,7 @@ public enum Dependency {
 			"arcs-gsi-${version}-lib.jar"), ARCSGSI_WITHOUTPYTHON(
 			"${repository}/au/org/arcs/auth/arcs-gsi/${version}",
 			"arcs-gsi-${version}-lib-without-jython.jar"), BOUNCYCASTLE(
-			"http://www.bouncycastle.org/download/", "bcprov-${version}.jar"), GRISU_LOCAL_BACKEND(
+			"http://code.ceres.auckland.ac.nz/webstart", "bcprov.jar"), GRISU_LOCAL_BACKEND(
 			"${repository}/org/vpac/grisu/grisu-core/${version}",
 			"grisu-core-${version}-backend.jar"), GRISU_XFIRE_CLIENT_LIBS(
 			"$repository}/org/vpac/grisu/grisu-client-xfire/${version}",

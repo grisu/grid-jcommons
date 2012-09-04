@@ -6,6 +6,7 @@ import java.io.File;
 
 import org.apache.commons.configuration.ConfigurationException;
 import org.apache.commons.configuration.PropertiesConfiguration;
+import org.apache.commons.lang.StringUtils;
 
 /**
  * Class to manage a set of properties that are commonly used when doing
@@ -34,7 +35,28 @@ public class CommonGridProperties {
 		DEBUG_UNCAUGHT_EXCEPTIONS, /**
 		 * The password used to create a credential.
 		 */
-		PASSWORD
+		PASSWORD, /**
+		 * The grid info config to use by default. Either "testbed"
+		 * (default), "nesi", or the path to a config file.
+		 */
+		GRID_INFO_CONFIG, /**
+		 * Whether to use the grid-session service when
+		 * logging into the grid.
+		 */
+		USE_GRID_SESSION,
+		/**
+		 * Whether to daemonize the grid-session service or run in the same
+		 * process.
+		 */
+		DAEMONIZE_GRID_SESSION, /**
+		 * The location of an ssh key that can be used
+		 * to ssh into certain (non-gsi) machines.
+		 */
+		GRID_SSH_KEY, /**
+		 * The location of the corresponding ssh cert (see
+		 * GRID_SSH_KEY).
+		 */
+		GRID_SSH_CERT
 
 	}
 
@@ -45,8 +67,34 @@ public class CommonGridProperties {
 	 * The location of the grid config file (default:
 	 * $HOME/.grid/grid.properties)
 	 */
-	public static final String GRID_PROPERTIES_FILE = GridEnvironment
-			.getGridConfigDirectory() + File.separator + "grid.properties";
+	private static final File GRID_PROPERTIES_FILE = calculateGridPropertiesFile();
+
+	public static final String KEY_NAME = "grid_rsa";
+	public static final String CERT_NAME = KEY_NAME + ".pub";
+
+	public final static String SSH_DIR = getSSHDirectory();
+
+	public static final String KEY_PATH = SSH_DIR + File.separator + KEY_NAME;
+
+	public static final String CERT_PATH = SSH_DIR + File.separator + CERT_NAME;
+
+	private static File calculateGridPropertiesFile() {
+
+		File temp = new File(GridEnvironment.getGridConfigDirectory()
+				+ File.separator + "grid.properties");
+
+		// if (!temp.exists()) {
+		//
+		// // check whether maybe a host-wide config dir exists
+		// File temp2 = new File("/etc/grid/grid.properties");
+		// if (temp2.exists()) {
+		// temp = temp2;
+		// }
+		// }
+
+		return temp;
+
+	}
 
 	/**
 	 * Gets the singleton properties object.
@@ -60,6 +108,14 @@ public class CommonGridProperties {
 		return singleton;
 	}
 
+	public static String getSSHDirectory() {
+		String tmp = System.getProperty("user.home") + File.separator + ".ssh";
+		if (!new File(tmp).exists()) {
+			new File(tmp).mkdirs();
+		}
+		return tmp;
+	}
+
 	/** The config. */
 	private final PropertiesConfiguration config;
 
@@ -68,10 +124,20 @@ public class CommonGridProperties {
 	 */
 	private CommonGridProperties() {
 		try {
-			config = new PropertiesConfiguration(new File(GRID_PROPERTIES_FILE));
+			config = new PropertiesConfiguration(GRID_PROPERTIES_FILE);
 		} catch (ConfigurationException e) {
 			throw new RuntimeException(e);
 		}
+	}
+
+	public boolean daemonizeGridSession() {
+
+		return getGridPropertyBoolean(Property.DAEMONIZE_GRID_SESSION, false);
+
+	}
+
+	public String getGridInfoConfig() {
+		return getGridProperty(Property.GRID_INFO_CONFIG);
 	}
 
 	/**
@@ -83,9 +149,24 @@ public class CommonGridProperties {
 	 */
 	public String getGridProperty(Property prop) {
 
-		String result = config.getString(prop.toString());
+		String result = System.getProperty(prop.toString());
+
+		if (StringUtils.isBlank(result)) {
+			result = config.getString(prop.toString());
+		}
 
 		return result;
+	}
+
+	public boolean getGridPropertyBoolean(Property prop, Boolean defaultValue) {
+
+		String result = System.getProperty(prop.toString());
+		if (StringUtils.isNotBlank(result)) {
+			return Boolean.parseBoolean(result);
+		}
+
+		boolean resultBool = config.getBoolean(prop.toString(), defaultValue);
+		return resultBool;
 	}
 
 	/**
@@ -98,6 +179,24 @@ public class CommonGridProperties {
 	public int getGridPropertyInt(Property prop) {
 		int result = config.getInt(prop.toString(), Integer.MIN_VALUE);
 		return result;
+	}
+
+	public String getGridSSHCert() {
+		String cert = getGridProperty(Property.GRID_SSH_CERT);
+		if (StringUtils.isBlank(cert)) {
+			return CERT_PATH;
+		} else {
+			return cert;
+		}
+	}
+
+	public String getGridSSHKey() {
+		String key = getGridProperty(Property.GRID_SSH_KEY);
+		if (StringUtils.isBlank(key)) {
+			return KEY_PATH;
+		} else {
+			return key;
+		}
 	}
 
 	/**
@@ -129,6 +228,20 @@ public class CommonGridProperties {
 
 	}
 
+	public String getOtherGridProperty(String storeKey) {
+		String result = System.getProperty(storeKey);
+
+		if (StringUtils.isBlank(result)) {
+			result = config.getString(storeKey);
+		}
+
+		return result;
+	}
+
+	public void setGridInfoConfig(String c) {
+		setGridProperty(Property.GRID_INFO_CONFIG, c);
+	}
+
 	/**
 	 * Sets a certain grid property
 	 * 
@@ -139,7 +252,11 @@ public class CommonGridProperties {
 	 */
 	public void setGridProperty(Property prop, String value) {
 
-		config.setProperty(prop.toString(), value);
+		if (StringUtils.isBlank(value)) {
+			config.clearProperty(prop.toString());
+		} else {
+			config.setProperty(prop.toString(), value);
+		}
 		try {
 			config.save();
 		} catch (ConfigurationException e) {
@@ -175,6 +292,25 @@ public class CommonGridProperties {
 	 */
 	public void setLastShibUsername(String u) {
 		setGridProperty(Property.SHIB_USERNAME, u);
+	}
+
+	public void setOtherGridProperty(String key, String value) {
+		if (StringUtils.isBlank(value)) {
+			config.clearProperty(key);
+		} else {
+			config.setProperty(key, value);
+		}
+		try {
+			config.save();
+		} catch (ConfigurationException e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	public boolean startGridSessionThreadOrDaemon() {
+
+		return getGridPropertyBoolean(Property.USE_GRID_SESSION, false);
+
 	}
 
 }

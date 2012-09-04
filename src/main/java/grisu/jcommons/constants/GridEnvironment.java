@@ -22,9 +22,17 @@ public class GridEnvironment {
 	 */
 	private static final int DEFAULT_MYPROXY_PORT = 7512;
 	/**
-	 * The hostname of the default MyProxy server (myproxy.arcs.org.au).
+	 * The hostname of the default MyProxy server (myproxy.test.nesi.org.nz).
 	 */
-	private static final String DEFAULT_MYPROXY_SERVER = "myproxy.arcs.org.au";
+	private static final String DEFAULT_MYPROXY_SERVER = "myproxy.nesi.org.nz";
+
+	private static final String DEFAULT_GRID_CONFIG_FILENAME = "grid.groovy";
+
+	/**
+	 * If this variable is set, it'll be used as the myproxy server for this
+	 * instance, otherwise .grid/grid.properties and env variables are checked.
+	 */
+	public static String MYPROXY_SERVER = null;
 
 	/**
 	 * Calculates which MyProxy server to us and returns its port.
@@ -66,6 +74,10 @@ public class GridEnvironment {
 	 * @return the port of the deault myproxy server.
 	 */
 	public static String getDefaultMyProxyServer() {
+
+		if (!StringUtils.isBlank(MYPROXY_SERVER)) {
+			return MYPROXY_SERVER;
+		}
 
 		String server = CommonGridProperties.getDefault().getGridProperty(
 				CommonGridProperties.Property.MYPROXY_HOST);
@@ -140,6 +152,23 @@ public class GridEnvironment {
 		return gridDir;
 	}
 
+	public static File getGridInfoConfigFile() {
+
+		String dir = getGridConfigDirectory() + File.separator
+				+ DEFAULT_GRID_CONFIG_FILENAME;
+		File file = new File(dir);
+
+		return file;
+
+	}
+
+	public static void setDefaultMyProxyHost(String myProxy) {
+
+		CommonGridProperties.getDefault().setGridProperty(
+				CommonGridProperties.Property.MYPROXY_HOST, myProxy);
+
+	}
+
 	// public static File getGridHelperScriptsDirectory() {
 	//
 	// String dir = getGridConfigDirectory() + File.separator
@@ -150,7 +179,5 @@ public class GridEnvironment {
 	// }
 	// return file;
 	// }
-
-
 
 }

@@ -1,7 +1,5 @@
 package grisu.jcommons.utils;
 
-import grisu.jcommons.interfaces.GridResource;
-import grisu.jcommons.interfaces.InformationManager;
 
 /**
  * Helper class to calculate the string format that is used within Grisu and
@@ -12,51 +10,51 @@ import grisu.jcommons.interfaces.InformationManager;
  */
 public final class SubmissionLocationHelpers {
 
-	/**
-	 * Calculates the submission location string for the specified GridResource.
-	 * 
-	 * @param gridResource
-	 *            the GridResource
-	 * @return the submission location string
-	 */
-	public static String createSubmissionLocationString(
-			final GridResource gridResource) {
+	// /**
+	// * Calculates the submission location string for the specified
+	// GridResource.
+	// *
+	// * @param gridResource
+	// * the GridResource
+	// * @return the submission location string
+	// */
+	// public static String createSubmissionLocationString(
+	// final GridResource gridResource) {
+	//
+	// String contactString = gridResource.getContactString();
+	//
+	// String hostname = contactString.substring(
+	// contactString.indexOf("https://") != 0 ? 0 : 8,
+	// contactString.indexOf(":8443"));
+	//
+	// return createSubmissionLocationString(hostname,
+	// gridResource.getQueueName(), gridResource.getJobManager());
+	// }
 
-		String contactString = gridResource.getContactString();
-
-		String hostname = contactString.substring(
-				contactString.indexOf("https://") != 0 ? 0 : 8,
-				contactString.indexOf(":8443"));
-
-		return createSubmissionLocationString(hostname,
-				gridResource.getQueueName(), gridResource.getJobManager());
-	}
-
-	/**
-	 * Calculates the submission location string.
-	 * 
-	 * @param im
-	 *            a information manager
-	 * @param contactString
-	 *            the contact string for this submission location
-	 * @param queue
-	 *            the queue name for this submission location
-	 * @return the submission location string
-	 */
-	public static String createSubmissionLocationString(
-			final InformationManager im, final String contactString,
-			final String queue) {
-
-		String hostname = contactString.substring(
-				contactString.indexOf("https://") != 0 ? 0 : 8,
-				contactString.indexOf(":8443"));
-
-		String site = im.getSiteForHostOrUrl(hostname);
-
-		String jobmanager = im.getJobmanagerOfQueueAtSite(site, queue);
-
-		return createSubmissionLocationString(hostname, queue, jobmanager);
-	}
+	// /**
+	// * Calculates the submission location string.
+	// *
+	// * @param im
+	// * a information manager
+	// * @param contactString
+	// * the contact string for this submission location
+	// * @param queue
+	// * the queue name for this submission location
+	// * @return the submission location string
+	// */
+	// public static String createSubmissionLocationString(final InfoManager im,
+	// final String contactString, final String queue) {
+	//
+	// String hostname = contactString.substring(
+	// contactString.indexOf("https://") != 0 ? 0 : 8,
+	// contactString.indexOf(":8443"));
+	//
+	// Site site = im.getSiteForHostOrUrl(hostname);
+	//
+	// String jobmanager = im.getJobmanagerOfQueueAtSite(site, queue);
+	//
+	// return createSubmissionLocationString(hostname, queue, jobmanager);
+	// }
 
 	/**
 	 * Creates the submission location string.
