@@ -162,6 +162,6 @@
 	<parent>
 		<groupId>nz.org.nesi</groupId>
 		<artifactId>nesi</artifactId>
-		<version>0.20</version>
+		<version>0.22</version>
 	</parent>
 </project>
