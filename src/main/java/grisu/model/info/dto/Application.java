@@ -22,8 +22,9 @@ public class Application implements Comparable<Application> {
 		setName(name);
 	}
 
+	@Override
 	public int compareTo(Application o) {
-		return this.name.compareTo(o.getName());
+		return this.name.compareToIgnoreCase(o.getName());
 	}
 
 	@Override
