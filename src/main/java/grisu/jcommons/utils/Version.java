@@ -32,7 +32,7 @@ public class Version {
 
 			return result.get(0);
 		} catch (Exception e) {
-			myLogger.error("Can't get module " + module, e);
+			myLogger.error("Can't get module " + module);
 			return "N/A";
 		}
 
@@ -51,7 +51,7 @@ public class Version {
 				list.add(line);
 			}
 		} catch (Exception e) {
-			myLogger.error("Can't read from jar " + s, e);
+			myLogger.error("Can't read from jar " + s);
 		} finally {
 			try {
 				if (br != null) {

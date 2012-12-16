@@ -52,11 +52,7 @@ public class CommonGridProperties {
 		 * The location of an ssh key that can be used
 		 * to ssh into certain (non-gsi) machines.
 		 */
-		GRID_SSH_KEY, /**
-		 * The location of the corresponding ssh cert (see
-		 * GRID_SSH_KEY).
-		 */
-		GRID_SSH_CERT
+		GRID_SSH_KEY
 
 	}
 
@@ -70,13 +66,15 @@ public class CommonGridProperties {
 	private static final File GRID_PROPERTIES_FILE = calculateGridPropertiesFile();
 
 	public static final String KEY_NAME = "grid_rsa";
-	public static final String CERT_NAME = KEY_NAME + ".pub";
+	public static final String CERT_EXTENSION = ".pub";
 
 	public final static String SSH_DIR = getSSHDirectory();
 
-	public static final String KEY_PATH = SSH_DIR + File.separator + KEY_NAME;
+	public static final String GRID_KEY_PATH = SSH_DIR + File.separator
+			+ KEY_NAME;
 
-	public static final String CERT_PATH = SSH_DIR + File.separator + CERT_NAME;
+	public static final String DEFAULT_KEY_PATH = SSH_DIR + File.separator
+			+ "id_rsa";
 
 	private static File calculateGridPropertiesFile() {
 
@@ -182,18 +180,29 @@ public class CommonGridProperties {
 	}
 
 	public String getGridSSHCert() {
-		String cert = getGridProperty(Property.GRID_SSH_CERT);
-		if (StringUtils.isBlank(cert)) {
-			return CERT_PATH;
+		String key = getGridSSHKey();
+		if (StringUtils.isBlank(key)) {
+			return null;
 		} else {
-			return cert;
+			return key + CERT_EXTENSION;
 		}
 	}
 
 	public String getGridSSHKey() {
 		String key = getGridProperty(Property.GRID_SSH_KEY);
 		if (StringUtils.isBlank(key)) {
-			return KEY_PATH;
+
+			if (new File(GRID_KEY_PATH).exists()
+					&& new File(GRID_KEY_PATH + CERT_EXTENSION).exists()) {
+				return GRID_KEY_PATH;
+			}
+
+			if (new File(DEFAULT_KEY_PATH).exists()
+					&& new File(DEFAULT_KEY_PATH + CERT_EXTENSION).exists()) {
+				return DEFAULT_KEY_PATH;
+			}
+
+			return GRID_KEY_PATH;
 		} else {
 			return key;
 		}

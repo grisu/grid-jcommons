@@ -90,4 +90,9 @@ public class FileSystem {
 		this.site = site;
 	}
 
+	@Override
+	public String toString() {
+		return getUrl();
+	}
+
 }
