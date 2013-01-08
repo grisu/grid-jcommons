@@ -223,7 +223,12 @@ public class CommonGridProperties {
 	 * @return the last used shib idp
 	 */
 	public String getLastShibIdp() {
-		return getGridProperty(Property.SHIB_IDP);
+		String idp = getGridProperty(Property.SHIB_IDP);
+		if (idp == null || idp.toLowerCase().startsWith("error")) {
+			return null;
+		} else {
+			return idp;
+		}
 	}
 
 	/**
@@ -290,6 +295,9 @@ public class CommonGridProperties {
 	 *            the new last used shib idp
 	 */
 	public void setLastShibIdp(String idp) {
+		if (idp == null || idp.toLowerCase().startsWith("error")) {
+			return;
+		}
 		setGridProperty(Property.SHIB_IDP, idp);
 	}
 
