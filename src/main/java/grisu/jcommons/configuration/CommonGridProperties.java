@@ -22,6 +22,10 @@ public class CommonGridProperties {
 		/** The last used shibboleth username. */
 		SHIB_USERNAME, /** The last used shibboleth idp. */
 		SHIB_IDP, /** The last used MyProxy username. */
+		SLCS_RESPONSE, /**
+		 * The response string of a slcs server to be used to
+		 * create a SLCS cert
+		 */
 		MYPROXY_USERNAME, /** The last used MyProxy host. */
 		MYPROXY_HOST, /** The last used MyProxy port. */
 		MYPROXY_PORT, /** The last used http proxy host. */
