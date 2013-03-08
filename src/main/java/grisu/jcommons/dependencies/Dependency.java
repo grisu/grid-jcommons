@@ -4,20 +4,13 @@ import java.io.File;
 
 public enum Dependency {
 
-	// LOCALSERVICEINTERFACE("https://code.arcs.org.au/hudson/job/Grisu-SNAPSHOT/org.vpac.grisu$grisu-core/lastSuccessfulBuild/artifact/org.vpac.grisu/grisu-core/0.3-SNAPSHOT/local-backend.jar"),
-	// XFIRESERVICEINTERFACECREATOR("https://code.arcs.org.au/hudson/job/Grisu-connectors-SNAPSHOT-binaries/lastSuccessfulBuild/artifact/frontend-modules/xfire-frontend/target/xfire-frontend.jar"),
-	// CLIENTSIDEMDS("https://code.arcs.org.au/hudson/job/Grisu-SNAPSHOT-binaries/lastSuccessfulBuild/artifact/frontend/client-side-mds/target/client-side-mds.jar"),
-	ARCSGSI("${repository}/au/org/arcs/auth/arcs-gsi/${version}",
-			"arcs-gsi-${version}-lib.jar"), ARCSGSI_WITHOUTPYTHON(
-			"${repository}/au/org/arcs/auth/arcs-gsi/${version}",
-			"arcs-gsi-${version}-lib-without-jython.jar"), BOUNCYCASTLE(
-			"http://code.ceres.auckland.ac.nz/webstart", "bcprov.jar"), GRISU_LOCAL_BACKEND(
-			"${repository}/org/vpac/grisu/grisu-core/${version}",
-			"grisu-core-${version}-backend.jar"), GRISU_XFIRE_CLIENT_LIBS(
-			"$repository}/org/vpac/grisu/grisu-client-xfire/${version}",
-			"grisu-client-xfire-${version}.jar"), CLIENT_SIDE_MDS(
-			"${repository}/org/vpac/grisu/client-side-mds/${version}",
-			"client-side-mds-${version}-side-mds.jar");
+	BOUNCYCASTLE(
+			"http://code.ceres.auckland.ac.nz/stable-downloads/bcprov/bcprov.jar",
+			"bcprov.jar"),
+
+	GRISU_LOCAL_BACKEND(
+			"http://code.ceres.auckland.ac.nz/stable-downloads/grisu-backend-local/local-backend.jar",
+			"local-backend.jar");
 
 	public static final String RELEASES_DEFAULT_URL = "http://code.arcs.org.au/nexus/content/repositories/releases";
 	public static final String SNAPSHOTS_DEFAULT_URL = "http://code.arcs.org.au/nexus/content/repositories/snapshots";
