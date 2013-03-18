@@ -1,5 +1,8 @@
 package grisu.model.info.dto;
 
+import grisu.jcommons.constants.Constants;
+
+import java.util.Map;
 import java.util.Set;
 
 import javax.xml.bind.annotation.XmlElement;
@@ -9,11 +12,15 @@ import javax.xml.bind.annotation.XmlRootElement;
 public class Directory {
 
 	public static boolean isShared(Directory d) {
-		return true;
+		String shared = d.getOptions().get(Constants.INFO_DIRECTORY_SHARED_KEY);
+
+		return Boolean.parseBoolean(shared);
 	}
 
 	public static boolean isVolatileDirectory(Directory d) {
-		return true;
+		String vol = d.getOptions().get(Constants.INFO_IS_VOLATILE_KEY);
+
+		return Boolean.parseBoolean(vol);
 	}
 
 	private FileSystem filesystem;
@@ -23,8 +30,7 @@ public class Directory {
 	private String path;
 	private Site site;
 
-	private boolean isShared;
-	private boolean isVolatileDirectory;
+	private Map<String, String> options;
 
 	@XmlElement(name = "filesystem")
 	public FileSystem getFilesystem() {
@@ -41,6 +47,11 @@ public class Directory {
 		return host;
 	}
 
+	@XmlElement(name = "options")
+	public Map<String, String> getOptions() {
+		return options;
+	}
+
 	@XmlElement(name = "path")
 	public String getPath() {
 		return path;
@@ -49,16 +60,6 @@ public class Directory {
 	@XmlElement(name = "site")
 	public Site getSite() {
 		return site;
-	}
-
-	@XmlElement(name = "shared")
-	public boolean isShared() {
-		return isShared;
-	}
-
-	@XmlElement(name = "volatileDirectory")
-	public boolean isVolatileDirectory() {
-		return isVolatileDirectory;
 	}
 
 	public void setFilesystem(FileSystem filesystem) {
@@ -73,25 +74,16 @@ public class Directory {
 		this.host = host;
 	}
 
+	public void setOptions(Map<String, String> options) {
+		this.options = options;
+	}
+
 	public void setPath(String path) {
 		this.path = path;
 	}
 
-	public void setShared(boolean isShared) {
-		this.isShared = isShared;
-	}
-
 	public void setSite(Site site) {
 		this.site = site;
-	}
-
-	public void setVolatileDirectory(boolean isVolatileDirectory) {
-		this.isVolatileDirectory = isVolatileDirectory;
-	}
-
-	@Override
-	public String toString() {
-		return toUrl();
 	}
 
 	public String toUrl() {

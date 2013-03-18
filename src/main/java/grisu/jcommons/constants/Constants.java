@@ -476,6 +476,10 @@ public class Constants {
 	public static final String ALL_USERS = "all";
 	public static final String LIST_USERS = "list_users";
 
+	// info
+	public static final String INFO_DIRECTORY_SHARED_KEY = "shared";
+	public static final String INFO_IS_VOLATILE_KEY = "volatileDirectory";
+
 	// other...
 	public static final String BACKEND = "backend";
 
