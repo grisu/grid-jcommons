@@ -8,6 +8,14 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement(name = "directory")
 public class Directory {
 
+	public static boolean isShared(Directory d) {
+		return true;
+	}
+
+	public static boolean isVolatileDirectory(Directory d) {
+		return true;
+	}
+
 	private FileSystem filesystem;
 	private Set<Group> groups;
 	private String host;
@@ -81,13 +89,13 @@ public class Directory {
 		this.isVolatileDirectory = isVolatileDirectory;
 	}
 
-	public String toUrl() {
-		return filesystem.toString() + path;
-	}
-
 	@Override
 	public String toString() {
 		return toUrl();
+	}
+
+	public String toUrl() {
+		return filesystem.toString() + path;
 	}
 
 }
