@@ -2,7 +2,6 @@ package grisu.model.info.dto;
 
 import grisu.jcommons.constants.Constants;
 
-import java.util.Map;
 import java.util.Set;
 
 import javax.xml.bind.annotation.XmlElement;
@@ -12,13 +11,15 @@ import javax.xml.bind.annotation.XmlRootElement;
 public class Directory {
 
 	public static boolean isShared(Directory d) {
-		String shared = d.getOptions().get(Constants.INFO_DIRECTORY_SHARED_KEY);
+		String shared = d.getOptions().readProperty(
+				Constants.INFO_DIRECTORY_SHARED_KEY);
 
 		return Boolean.parseBoolean(shared);
 	}
 
 	public static boolean isVolatileDirectory(Directory d) {
-		String vol = d.getOptions().get(Constants.INFO_IS_VOLATILE_KEY);
+		String vol = d.getOptions()
+				.readProperty(Constants.INFO_IS_VOLATILE_KEY);
 
 		return Boolean.parseBoolean(vol);
 	}
@@ -30,7 +31,7 @@ public class Directory {
 	private String path;
 	private Site site;
 
-	private Map<String, String> options;
+	private DtoProperties options;
 
 	@XmlElement(name = "filesystem")
 	public FileSystem getFilesystem() {
@@ -48,7 +49,7 @@ public class Directory {
 	}
 
 	@XmlElement(name = "options")
-	public Map<String, String> getOptions() {
+	public DtoProperties getOptions() {
 		return options;
 	}
 
@@ -74,7 +75,7 @@ public class Directory {
 		this.host = host;
 	}
 
-	public void setOptions(Map<String, String> options) {
+	public void setOptions(DtoProperties options) {
 		this.options = options;
 	}
 
