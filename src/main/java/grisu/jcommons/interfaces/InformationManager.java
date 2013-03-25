@@ -290,4 +290,11 @@ public interface InformationManager {
 	 */
 	void refresh();
 
+	/**
+	 * All directories that are available
+	 * 
+	 * @return the directories
+	 */
+	List<Directory> getDirectories();
+
 }

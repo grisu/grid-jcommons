@@ -91,7 +91,7 @@ public class DtoProperties {
 	private List<DtoProperty> properties = new LinkedList<DtoProperty>();
 
 	final private Set<DtoProperty> tempPropSet = Sets.newLinkedHashSet();
-	final private Set<String> tempKeySet = Sets.newLinkedHashSet();
+	private final Set<String> tempKeySet = Sets.newLinkedHashSet();
 	final private Set<String> tempValueSet = Sets.newLinkedHashSet();
 
 	public void addProperty(String key, String value) {

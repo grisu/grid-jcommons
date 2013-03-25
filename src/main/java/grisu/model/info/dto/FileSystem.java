@@ -7,8 +7,10 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 import org.apache.commons.lang.StringUtils;
 
+import com.google.common.base.Objects;
+
 @XmlRootElement(name = "filesystem")
-public class FileSystem {
+public class FileSystem implements Comparable<FileSystem> {
 
 	public static final int DEFAULT_PORT = 2811;
 	public static final String DEFAULT_PROTOCOL = "gsiftp";
@@ -93,6 +95,40 @@ public class FileSystem {
 	@Override
 	public String toString() {
 		return getUrl();
+	}
+
+	@Override
+	public boolean equals(Object o) {
+
+		FileSystem other = null;
+		if (o instanceof String) {
+			try {
+				other = new FileSystem((String) o);
+			} catch (Exception e) {
+				return false;
+			}
+		} else if (o instanceof FileSystem) {
+			other = (FileSystem) o;
+		} else {
+			return false;
+		}
+
+		if (host.equals(other.getHost()) && (port == other.getPort())
+				&& protocol.equals(other.getProtocol())) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hashCode(host, protocol, port);
+	}
+
+	@Override
+	public int compareTo(FileSystem o) {
+		return getUrl().compareTo(o.getUrl());
 	}
 
 }
