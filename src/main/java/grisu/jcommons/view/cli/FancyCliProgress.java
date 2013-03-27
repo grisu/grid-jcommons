@@ -19,7 +19,7 @@ public class FancyCliProgress implements ProgressDisplay {
 	public static final int DURATION = 100;
 
 	public static String[] indeterminateProgressStrings = new String[] { "-",
-		"\\", "|", "/" };
+			"\\", "|", "/" };
 
 	private static Timer timer = null;
 
@@ -33,7 +33,7 @@ public class FancyCliProgress implements ProgressDisplay {
 
 	private static String lastMessage = null;
 
-	private  String repetition(String string, int progress) {
+	private String repetition(String string, int progress) {
 		final StringBuffer result = new StringBuffer();
 		for (int i = 0; i < progress; i++) {
 			result.append(string);
@@ -41,10 +41,12 @@ public class FancyCliProgress implements ProgressDisplay {
 		return result.toString();
 	}
 
+	@Override
 	public void setIndeterminateProgress(boolean start) {
 		setIndeterminateProgress(null, start);
 	}
 
+	@Override
 	public void setIndeterminateProgress(String message, boolean start) {
 		if (terminal == null) {
 			return;
@@ -60,7 +62,7 @@ public class FancyCliProgress implements ProgressDisplay {
 				}
 			} else {
 				spinUpdater = new SpinUpdater(message, this);
-				timer = new Timer();
+				timer = new Timer(true);
 				timer.scheduleAtFixedRate(spinUpdater, 0L, DURATION);
 			}
 			lastMessage = message;
@@ -97,6 +99,7 @@ public class FancyCliProgress implements ProgressDisplay {
 		}
 	}
 
+	@Override
 	public void setProgress(int completed, int total) {
 		if ((terminal == null)) {
 			return;
