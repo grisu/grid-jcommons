@@ -75,9 +75,7 @@
 		<dependency>
 			<groupId>commons-configuration</groupId>
 			<artifactId>commons-configuration</artifactId>
-			<version>1.6</version>
-			<type>jar</type>
-			<scope>compile</scope>
+			<version>1.9</version>
 			<exclusions>
 				<exclusion>
 					<artifactId>commons-digester</artifactId>
