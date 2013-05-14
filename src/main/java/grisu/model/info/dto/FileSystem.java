@@ -21,6 +21,8 @@ public class FileSystem implements Comparable<FileSystem> {
 	private int port;
 	private String protocol;
 
+	private DtoProperties options;
+
 	public FileSystem() {
 	}
 
@@ -51,6 +53,11 @@ public class FileSystem implements Comparable<FileSystem> {
 	@XmlElement(name = "host")
 	public String getHost() {
 		return host;
+	}
+
+	@XmlElement(name = "options")
+	public DtoProperties getOptions() {
+		return options;
 	}
 
 	@XmlElement(name = "port")
@@ -129,6 +136,10 @@ public class FileSystem implements Comparable<FileSystem> {
 	@Override
 	public int compareTo(FileSystem o) {
 		return getUrl().compareTo(o.getUrl());
+	}
+
+	public void setOptions(DtoProperties options) {
+		this.options = options;
 	}
 
 }

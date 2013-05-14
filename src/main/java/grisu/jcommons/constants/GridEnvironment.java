@@ -121,6 +121,35 @@ public class GridEnvironment {
 		return file;
 	}
 
+	/**
+	 * Returns a reference to a directory that can be used to store cached
+	 * files.
+	 * 
+	 * The system property 'grid.common.cache' is used.
+	 * 
+	 * The default path is a directory called "cache" in the result of
+	 * {@link #getGridConfigDirectory()}.
+	 * 
+	 * @return
+	 */
+	public static File getGridCommonCacheDirectory() {
+
+		File gridDir = null;
+
+		if (StringUtils.isNotBlank(System.getProperty("grid.common.cache"))) {
+			gridDir = new File(System.getProperty("grid.common.cache"));
+		} else {
+			gridDir = new File(GRID_DEFAULT_DIRECTORY, "cache");
+		}
+
+		if (!gridDir.exists()) {
+			gridDir.mkdirs();
+		}
+
+		return gridDir;
+
+	}
+
 	// public static File getGridCommonDirectory() {
 	//
 	// String dir = getGridConfigDirectory() + File.separator + "common";

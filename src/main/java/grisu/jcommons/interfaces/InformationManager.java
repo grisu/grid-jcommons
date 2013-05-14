@@ -3,6 +3,7 @@ package grisu.jcommons.interfaces;
 import grisu.jcommons.constants.JobSubmissionProperty;
 import grisu.model.info.dto.Application;
 import grisu.model.info.dto.Directory;
+import grisu.model.info.dto.FileSystem;
 import grisu.model.info.dto.JobQueueMatch;
 import grisu.model.info.dto.Package;
 import grisu.model.info.dto.Queue;
@@ -142,6 +143,13 @@ public interface InformationManager {
 	 * @return all the sites from MDS
 	 */
 	List<Site> getAllSites();
+
+	/**
+	 * Returns a list of all filesystems on the grid.
+	 * 
+	 * @return the filesystems
+	 */
+	List<FileSystem> getFileSystems();
 
 	/**
 	 * Returns the list of available versions of the software application on the
