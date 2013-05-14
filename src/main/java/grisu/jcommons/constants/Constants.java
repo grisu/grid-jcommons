@@ -469,7 +469,7 @@ public class Constants {
 	public static final String ALLOW_REMOTE_SUPPORT = "remote_support_enabled";
 
 	// Admin commands
-	public static final String REFRESH_VOS = "refresh_vos";
+	public static final String REFERSH_GRID_INFO = "refresh_info";
 	public static final String REFRESH_CONFIG = "refresh_config";
 	public static final String CLEAR_USER_CACHE = "clear_cache";
 	public static final String USER = "user";
