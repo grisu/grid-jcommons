@@ -5,6 +5,7 @@ import grisu.jcommons.constants.GridEnvironment;
 import java.io.File;
 import java.io.IOException;
 
+import org.apache.commons.lang.StringUtils;
 import org.eclipse.jgit.api.Git;
 import org.eclipse.jgit.api.PullCommand;
 import org.eclipse.jgit.api.errors.GitAPIException;
@@ -58,17 +59,47 @@ public class GitRepoUpdater {
 			.getLogger(GitRepoUpdater.class);
 
 	public static File ensureUpdated(String remotePath) {
+		return ensureUpdated(remotePath, null);
+	}
+
+	public static File ensureUpdated(String remotePath, String localBasePath) {
 
 		File localPath = null;
+		String remoteRepo = getRepoPart(remotePath);
+
+		if (StringUtils.isBlank(localBasePath)) {
+			localPath = new File(GridEnvironment.getGridCommonCacheDirectory(),
+					get_url_string_path(remoteRepo));
+		} else {
+			localPath = new File(localBasePath);
+		}
+
 		Repository localRepo = null;
 		Git git = null;
 
-		String remoteRepo = getRepoPart(remotePath);
+		if (localPath.isFile()) {
+			throw new RuntimeException("Local git repo is not directory: "
+					+ localPath.getAbsolutePath());
+		}
+		boolean createRepo = false;
+		if (localPath.exists()) {
 
-		localPath = new File(GridEnvironment.getGridCommonCacheDirectory(),
-				get_url_string_path(remoteRepo));
+			if (!localPath.canWrite()) {
+				throw new RuntimeException(
+						"Can't write to local git repo for templates: "
+								+ localPath.getAbsolutePath());
+			}
 
-		if (!localPath.exists()) {
+			String[] files = localPath.list();
+
+			if (files.length == 0) {
+				createRepo = true;
+			}
+		} else {
+			createRepo = true;
+		}
+
+		if (createRepo) {
 			try {
 				Git.cloneRepository().setURI(remoteRepo)
 						.setDirectory(localPath).call();

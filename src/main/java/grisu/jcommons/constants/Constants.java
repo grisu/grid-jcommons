@@ -471,6 +471,7 @@ public class Constants {
 	// Admin commands
 	public static final String REFERSH_GRID_INFO = "refresh_info";
 	public static final String REFRESH_CONFIG = "refresh_config";
+	public static final String REFRESH_TEMPLATES = "refresh_templates";
 	public static final String CLEAR_USER_CACHE = "clear_cache";
 	public static final String USER = "user";
 	public static final String ALL_USERS = "all";
