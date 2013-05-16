@@ -64,6 +64,7 @@ public class GitRepoUpdater {
 
 	public static File ensureUpdated(String remotePath, String localBasePath) {
 
+		myLogger.debug("Updating git: " + remotePath);
 		File localPath = null;
 		String remoteRepo = getRepoPart(remotePath);
 
@@ -101,10 +102,12 @@ public class GitRepoUpdater {
 
 		if (createRepo) {
 			try {
+				myLogger.debug("Cloning git: " + remotePath + " to: "
+						+ localPath);
 				Git.cloneRepository().setURI(remoteRepo)
 						.setDirectory(localPath).call();
 			} catch (Exception e1) {
-				e1.printStackTrace();
+				myLogger.error("Can't clone repo: " + remotePath);
 				throw new RuntimeException(e1);
 			}
 		}
@@ -112,13 +115,13 @@ public class GitRepoUpdater {
 		try {
 			localRepo = new FileRepository(localPath + "/.git");
 		} catch (IOException e) {
-			e.printStackTrace();
 			throw new RuntimeException(e);
 		}
 		git = new Git(localRepo);
 
 		PullCommand pullCmd = git.pull();
 		try {
+			myLogger.debug("Pulling from repo: " + remotePath);
 			pullCmd.call();
 		} catch (GitAPIException e) {
 			e.printStackTrace();
