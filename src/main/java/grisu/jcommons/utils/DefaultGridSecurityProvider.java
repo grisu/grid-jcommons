@@ -15,24 +15,30 @@ public class DefaultGridSecurityProvider extends Provider {
 		public MyTrustManagerFactory() {
 		}
 
+		@Override
 		protected TrustManager[] engineGetTrustManagers() {
 			return new TrustManager[] { new MyX509TrustManager() };
 		}
 
+		@Override
 		protected void engineInit(KeyStore keystore) {
 		}
 
+		@Override
 		protected void engineInit(ManagerFactoryParameters mgrparams) {
 		}
 	}
 
 	protected static class MyX509TrustManager implements X509TrustManager {
+		@Override
 		public void checkClientTrusted(X509Certificate[] chain, String authType) {
 		}
 
+		@Override
 		public void checkServerTrusted(X509Certificate[] chain, String authType) {
 		}
 
+		@Override
 		public X509Certificate[] getAcceptedIssuers() {
 			return null;
 		}

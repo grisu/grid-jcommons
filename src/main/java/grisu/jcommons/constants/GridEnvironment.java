@@ -5,6 +5,8 @@ import grisu.jcommons.configuration.CommonGridProperties;
 import java.io.File;
 
 import org.apache.commons.lang.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Class to manage certain properties, caches that can be re-used by several
@@ -15,8 +17,12 @@ import org.apache.commons.lang.StringUtils;
  */
 public class GridEnvironment {
 
+	static final Logger myLogger = LoggerFactory
+			.getLogger(GridEnvironment.class.getName());
+
 	private static final String GRID_DEFAULT_DIRECTORY = System
 			.getProperty("user.home") + File.separator + ".grid";
+
 	/**
 	 * The port of the default MyProxy server (7512).
 	 */
@@ -25,8 +31,7 @@ public class GridEnvironment {
 	 * The hostname of the default MyProxy server (myproxy.test.nesi.org.nz).
 	 */
 	private static final String DEFAULT_MYPROXY_SERVER = "myproxy.nesi.org.nz";
-
-	private static final String DEFAULT_GRID_CONFIG_FILENAME = "grid.groovy";
+	private static final String DEFAULT_GRID_CONFIG_FILENAME = "info.groovy";
 
 	/**
 	 * If this variable is set, it'll be used as the myproxy server for this
@@ -96,16 +101,6 @@ public class GridEnvironment {
 
 	}
 
-	// public static File getGridCommonDirectory() {
-	//
-	// String dir = getGridConfigDirectory() + File.separator + "common";
-	// File file = new File(dir);
-	// if (!file.exists()) {
-	// file.mkdirs();
-	// }
-	// return file;
-	// }
-
 	/**
 	 * Returns a reference to a directory that can be used to store java jars
 	 * which then can be dynamically added to the classpath of supporting grid
@@ -125,6 +120,45 @@ public class GridEnvironment {
 		}
 		return file;
 	}
+
+	/**
+	 * Returns a reference to a directory that can be used to store cached
+	 * files.
+	 * 
+	 * The system property 'grid.common.cache' is used.
+	 * 
+	 * The default path is a directory called "cache" in the result of
+	 * {@link #getGridConfigDirectory()}.
+	 * 
+	 * @return
+	 */
+	public static File getGridCommonCacheDirectory() {
+
+		File gridDir = null;
+
+		if (StringUtils.isNotBlank(System.getProperty("grid.common.cache"))) {
+			gridDir = new File(System.getProperty("grid.common.cache"));
+		} else {
+			gridDir = new File(GRID_DEFAULT_DIRECTORY, "cache");
+		}
+
+		if (!gridDir.exists()) {
+			gridDir.mkdirs();
+		}
+
+		return gridDir;
+
+	}
+
+	// public static File getGridCommonDirectory() {
+	//
+	// String dir = getGridConfigDirectory() + File.separator + "common";
+	// File file = new File(dir);
+	// if (!file.exists()) {
+	// file.mkdirs();
+	// }
+	// return file;
+	// }
 
 	/**
 	 * Calculates the directory where common properties, caches and libraries

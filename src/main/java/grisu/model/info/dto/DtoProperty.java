@@ -9,6 +9,8 @@ import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlValue;
 
+import com.google.common.base.Objects;
+
 /**
  * A wrapper class that holds a job property key and value.
  * 
@@ -61,11 +63,9 @@ public class DtoProperty {
 	@Override
 	public boolean equals(Object o) {
 		if (o instanceof DtoProperty) {
-			final DtoProperty other = (DtoProperty) o;
-			if (getKey().equals(other.getKey())
-					&& getValue().equals(other.getValue())) {
-				return true;
-			}
+			return Objects.equal(this.getKey(), ((DtoProperty) o).getKey())
+					&& Objects.equal(this.getValue(),
+							((DtoProperty) o).getValue());
 		}
 		return false;
 	}
@@ -82,7 +82,7 @@ public class DtoProperty {
 
 	@Override
 	public int hashCode() {
-		return 231 * (getKey().hashCode() + getValue().hashCode());
+		return com.google.common.base.Objects.hashCode(getKey(), getValue());
 	}
 
 	public void setKey(String key) {

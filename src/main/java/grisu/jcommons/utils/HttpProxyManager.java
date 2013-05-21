@@ -2,20 +2,22 @@ package grisu.jcommons.utils;
 
 import grisu.jcommons.configuration.CommonGridProperties;
 
+import java.io.File;
+import java.io.FileInputStream;
 import java.lang.reflect.Method;
 import java.net.Authenticator;
 import java.net.PasswordAuthentication;
+import java.util.Properties;
 
 import org.apache.commons.lang.StringUtils;
+import org.bushe.swing.event.EventBus;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.bushe.swing.event.EventBus;
-
 
 public class HttpProxyManager {
 
-	static final Logger myLogger = LoggerFactory.getLogger(HttpProxyManager.class
-			.getName());
+	static final Logger myLogger = LoggerFactory
+			.getLogger(HttpProxyManager.class.getName());
 
 	private static String currentHttpProxyHost = null;
 	private static int currentHttpProxyPort = 80;
@@ -67,12 +69,48 @@ public class HttpProxyManager {
 
 	public static void setDefaultHttpProxy() {
 
+		myLogger.debug("Setting default http proxy if necessary...");
+
 		String httpProxy = lastTimeHttpProxyHost();
 		if ((httpProxy == null) || "".equals(httpProxy)) {
-			return;
+
+			// check whether there is a proxy setting from getdown
+			myLogger.debug("Checking getdown proxy settings...");
+			File proxySettings = new File(new File("."), "proxy.txt");
+			if (!proxySettings.exists()) {
+				myLogger.debug(
+						"No proxy settings at: {}, not setting http proxy.",
+						proxySettings.getAbsolutePath());
+				return;
+			}
+			Properties prop = new Properties();
+
+			try {
+				// load a properties file
+				prop.load(new FileInputStream(proxySettings));
+
+				String host = prop.getProperty("host");
+				Integer port = Integer.parseInt(prop.getProperty("port"));
+
+				myLogger.debug(
+						"Successfully read properties file, http proxy host: {}, port: {}",
+						host, port.toString());
+
+				setHttpProxy(host, port, null, null);
+				return;
+
+			} catch (Exception ex) {
+				myLogger.debug("Failed reading {}: {}",
+						proxySettings.getAbsolutePath(),
+						ex.getLocalizedMessage());
+				return;
+			}
+
 		}
 		int httpProxyPort = lastTimeHttpProxyPort();
 
+		myLogger.debug("Setting http proxy to: {} : {}", httpProxy,
+				httpProxyPort);
 		setHttpProxy(httpProxy, httpProxyPort, null, null);
 
 	}
@@ -131,12 +169,12 @@ public class HttpProxyManager {
 			String username, char[] password) {
 
 		try {
-			Class shibClass = Class
-					.forName("au.org.arcs.auth.shibboleth.Shibboleth");
+			Class shibClass = Class.forName("grith.sibboleth.Shibboleth");
 			Method m = shibClass.getMethod("setHttpProxy", String.class,
 					int.class, String.class, char[].class);
 			m.invoke(null, proxyHost, proxyPort, username, password);
 		} catch (Exception e) {
+			myLogger.debug("Not setting http proxy for Shibboleth class");
 			// probably not in classpath
 		}
 

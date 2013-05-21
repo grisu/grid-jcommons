@@ -41,7 +41,6 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 
-
 //import grisu.jcommons.constants.Constants;
 //import grisu.jcommons.constants.JSDLNamespaceContext;
 
@@ -188,7 +187,7 @@ public final class JsdlHelpers {
 		String target = fileSystemUrl
 				+ File.separator
 				+ ((Element) stageIn.getElementsByTagName("FileName").item(0))
-				.getTextContent();
+						.getTextContent();
 
 		return target;
 	}
@@ -705,7 +704,6 @@ public final class JsdlHelpers {
 
 	}
 
-
 	/**
 	 * Parses the jsdl document and returns an array of all the arguments that
 	 * are used on the jsdl-posix:Executable.
@@ -733,7 +731,6 @@ public final class JsdlHelpers {
 		}
 		return arguments;
 	}
-
 
 	/**
 	 * Get the posixApplication element.
@@ -793,7 +790,7 @@ public final class JsdlHelpers {
 
 		for (int i = 0; i < resultNodes.getLength(); i++) {
 
-			Element node = (Element)resultNodes.item(i);
+			Element node = (Element) resultNodes.item(i);
 			String key = node.getAttribute("name");
 			String value = node.getTextContent();
 
@@ -1424,8 +1421,8 @@ public final class JsdlHelpers {
 	}
 
 	/**
-	 * Returns the total virtual memory requirement for this job. This is the memory
-	 * that is required for each cpu multiplied with the number of cpus.
+	 * Returns the total virtual memory requirement for this job. This is the
+	 * memory that is required for each cpu multiplied with the number of cpus.
 	 * 
 	 * @param jsdl
 	 *            the jsdl document
@@ -1745,7 +1742,7 @@ public final class JsdlHelpers {
 
 		Element source_uri = ((Element) ((Element) stageIn
 				.getElementsByTagName("Source").item(0)).getElementsByTagName(
-						"URI").item(0));
+				"URI").item(0));
 		source_uri.setTextContent(source_url);
 
 	}
@@ -1799,7 +1796,7 @@ public final class JsdlHelpers {
 
 			walltime = jsdl.createElement("jsdl:TotalCPUTime");
 			walltime.setTextContent(new Integer(totalcputimeinseconds)
-			.toString());
+					.toString());
 			resultNodes.item(0).appendChild(walltime);
 		} else {
 			// replace the text content of the already existing JobName element

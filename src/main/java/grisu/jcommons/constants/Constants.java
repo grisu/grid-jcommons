@@ -462,13 +462,24 @@ public class Constants {
 	 */
 	public static final String REDISTRIBUTE = "REDISTRIBUTE_";
 
+	/**
+	 * Sets a flag in the grisu backend database to indicate that the user
+	 * allows administrators to access their account for support purposes.
+	 */
+	public static final String ALLOW_REMOTE_SUPPORT = "remote_support_enabled";
+
 	// Admin commands
-	public static final String REFRESH_VOS = "refresh_vos";
+	public static final String REFERSH_GRID_INFO = "refresh_info";
 	public static final String REFRESH_CONFIG = "refresh_config";
+	public static final String REFRESH_TEMPLATES = "refresh_templates";
 	public static final String CLEAR_USER_CACHE = "clear_cache";
 	public static final String USER = "user";
 	public static final String ALL_USERS = "all";
 	public static final String LIST_USERS = "list_users";
+
+	// info
+	public static final String INFO_DIRECTORY_SHARED_KEY = "shared";
+	public static final String INFO_IS_VOLATILE_KEY = "volatileDirectory";
 
 	// other...
 	public static final String BACKEND = "backend";

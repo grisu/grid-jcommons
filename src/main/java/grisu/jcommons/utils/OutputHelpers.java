@@ -18,6 +18,11 @@ public class OutputHelpers {
 	}
 
 	public static String getTable(List<List<String>> listlist,
+			boolean emptyLineAfterTitle) {
+		return getTable(listlist, emptyLineAfterTitle, 0, new Integer[] {});
+	}
+
+	public static String getTable(List<List<String>> listlist,
 			boolean emptyLineAfterTitle, int leftColumnMinWidth,
 			Integer[] columnsToRightAlign) {
 
