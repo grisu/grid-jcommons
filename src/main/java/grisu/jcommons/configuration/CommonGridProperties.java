@@ -56,7 +56,10 @@ public class CommonGridProperties {
 		 * The location of an ssh key that can be used
 		 * to ssh into certain (non-gsi) machines.
 		 */
-		GRID_SSH_KEY
+		GRID_SSH_KEY, /**
+         * the location of the local cache directory
+         */
+        GRID_CACHE_DIR
 
 	}
 
@@ -138,9 +141,13 @@ public class CommonGridProperties {
 
 	}
 
-	public String getGridInfoConfig() {
-		return getGridProperty(Property.GRID_INFO_CONFIG);
-	}
+    public String getGridInfoConfig() {
+        return getGridProperty(Property.GRID_INFO_CONFIG);
+    }
+
+    public String getGridCacheDir() {
+        return getGridProperty(Property.GRID_CACHE_DIR);
+    }
 
 	/**
 	 * Gets a certain common grid property.
@@ -256,9 +263,12 @@ public class CommonGridProperties {
 		return result;
 	}
 
-	public void setGridInfoConfig(String c) {
-		setGridProperty(Property.GRID_INFO_CONFIG, c);
-	}
+    public void setGridInfoConfig(String c) {
+        setGridProperty(Property.GRID_INFO_CONFIG, c);
+    }
+    public void setGridCacheDir(String c) {
+        setGridProperty(Property.GRID_CACHE_DIR, c);
+    }
 
 	/**
 	 * Sets a certain grid property
