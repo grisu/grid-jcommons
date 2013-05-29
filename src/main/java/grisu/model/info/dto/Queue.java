@@ -59,6 +59,8 @@ public class Queue implements Comparable<Queue> {
 	private String description = "n/a";
 	private Long clockspeedInHz = Long.MAX_VALUE;
 
+    private DtoProperties options;
+
 	private List<DynamicInfo> dynamicInfo = Lists.newLinkedList();
 
 	public int compareTo(Queue o) {
@@ -172,6 +174,11 @@ public class Queue implements Comparable<Queue> {
 		return name;
 	}
 
+	@XmlElement(name = "options")
+	public DtoProperties getOptions() {
+		return options;
+	}
+
 	@XmlElement(name = "package")
 	public Set<Package> getPackages() {
 		return packages;
@@ -249,6 +256,10 @@ public class Queue implements Comparable<Queue> {
 
 	public void setName(String name) {
 		this.name = name;
+	}
+
+	public void setOptions(DtoProperties options) {
+		this.options = options;
 	}
 
 	public void setPackages(Set<Package> packages) {
