@@ -1,12 +1,11 @@
 package grisu.model.info.dto;
 
-import java.util.Set;
+import com.google.common.base.Objects;
+import com.google.common.collect.ComparisonChain;
 
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
-
-import com.google.common.base.Objects;
-import com.google.common.collect.ComparisonChain;
+import java.util.Set;
 
 @XmlRootElement(name = "package")
 public class Package implements Comparable<Package> {
@@ -32,7 +31,7 @@ public class Package implements Comparable<Package> {
 		return ComparisonChain
 				.start()
 				.compare(getApplication().getName(),
-						o.getApplication().getName())
+						o.getApplication().getName(), String.CASE_INSENSITIVE_ORDER)
 				.compare(getVersion(), o.getVersion()).result();
 	}
 

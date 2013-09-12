@@ -21,7 +21,7 @@ public class Version implements Comparable<Version> {
 	}
 
 	public int compareTo(Version o) {
-		return version.compareTo(o.getVersion());
+		return version.toLowerCase().compareTo(o.getVersion().toLowerCase());
 	}
 
 	@Override

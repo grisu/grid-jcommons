@@ -1,13 +1,12 @@
 package grisu.jcommons.utils;
 
+import com.Ostermiller.util.LineEnds;
+import org.apache.commons.io.IOUtils;
+
 import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.InputStream;
-
-import org.apache.commons.io.IOUtils;
-
-import com.Ostermiller.util.LineEnds;
 
 public class PackageFileHelper {
 
@@ -43,7 +42,7 @@ public class PackageFileHelper {
 		file.deleteOnExit();
 
 		if (!file.exists()) {
-			TEMP_DIR.mkdirs();
+			file.getParentFile().mkdirs();
 			InputStream inS = PackageFileHelper.class.getResourceAsStream("/"
 					+ fileName);
 			try {
