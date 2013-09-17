@@ -1,10 +1,13 @@
 package grisu.jcommons.processes;
 
+import com.google.common.collect.Lists;
 import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.*;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -14,13 +17,42 @@ import java.util.List;
  * Date: 12/06/13
  * Time: 4:53 PM
  */
-abstract class ExternalCommand  {
+public class ExternalCommand  {
 
     public static final Logger myLogger = LoggerFactory
 			.getLogger(ExternalCommand.class);
 
     private static String OS = System.getProperty("os.name").toLowerCase();
     private boolean failed = false;
+    private String workingDirectory;
+
+    private final List<String> stdout = Collections.synchronizedList(new ArrayList<String>());
+    private final List<String> stderr = Collections.synchronizedList(new ArrayList<String>());
+    private final List<String> log = Collections.synchronizedList(new ArrayList<String>());
+
+    public static void main(String[] args) {
+
+        List<String> command = Lists.newArrayList();
+        command.add("sh");
+        command.add("test_script.sh");
+
+
+
+        ExternalCommand ec = new ExternalCommand(command);
+        ec.setWorkingDirectory("/home/markus/local/bin");
+        ec.execute();
+
+        System.out.println(StringUtils.join(ec.getStdout(), "\n"));
+
+    }
+
+    public List<String> getStdout() {
+        return stdout;
+    }
+
+    public List<String> getStderr() {
+        return stderr;
+    }
 
     public static boolean isWindows() {
 
@@ -53,21 +85,30 @@ abstract class ExternalCommand  {
     }
 
     protected List<String> getCommand() {
-        return null;
+        return command;
     }
 
-    abstract protected String getWorkingDirectory();
+    protected String getWorkingDirectory() {
+        return workingDirectory;
+    }
 
     private void addMessage(String detail) {
-        System.out.println(detail);
+        stdout.add(detail);
+    }
+
+    private void addLogMessage(String detail) {
+        log.add(detail);
     }
 
     private void addErrorMessage(String error) {
-        System.err.println(error);
+        stderr.add(error);
     }
 
-    protected void execute() {
+    public void setWorkingDirectory(String workingDirectory) {
+        this.workingDirectory = workingDirectory;
+    }
 
+    public void execute() {
 
         Process proc = null;
         ProcessBuilder pb = new ProcessBuilder(getCommand());
@@ -76,7 +117,7 @@ abstract class ExternalCommand  {
             pb.directory(new File(getWorkingDirectory()));
         }
 
-        addMessage("Executing command: " + StringUtils.join(getCommand(), " "));
+        addLogMessage("Executing command: " + StringUtils.join(getCommand(), " "));
         try {
             proc = pb.start();
         } catch (Exception e) {
@@ -128,9 +169,9 @@ abstract class ExternalCommand  {
         String cmd = StringUtils.join(getCommand(), " ");
 
         if ( proc.exitValue() == 0 ) {
-            addMessage("Command " + cmd + " finished");
+            addLogMessage("Command " + cmd + " finished");
         } else {
-            addMessage("Command " + cmd + " failed");
+            addLogMessage("Command " + cmd + " failed");
             setFailed();
         }
     }

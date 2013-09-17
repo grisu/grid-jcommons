@@ -61,6 +61,7 @@ public class LogPanel extends JPanel {
         int max = sb.getMaximum();
         System.out.println(min + " " + max);
         return min == max;
+
     }
 
     private void scrollToBottom() {
