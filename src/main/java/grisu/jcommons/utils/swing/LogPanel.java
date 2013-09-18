@@ -27,6 +27,8 @@ public class LogPanel extends JPanel {
 
         warningStyle = textPane.addStyle("WarningStyle", normalStyle);
         StyleConstants.setForeground(warningStyle, Color.red);
+
+        SmartScroll ss = new SmartScroll(getScrollPane());
     }
 
     private JScrollPane getScrollPane() {
@@ -55,39 +57,37 @@ public class LogPanel extends JPanel {
         addMessage(message, warningStyle);
     }
 
-    private boolean isViewAtBottom() {
-        JScrollBar sb = getScrollPane().getVerticalScrollBar();
-        int min = sb.getValue() + sb.getVisibleAmount();
-        int max = sb.getMaximum();
-        System.out.println(min + " " + max);
-        return min == max;
+//    private boolean isViewAtBottom() {
+//        JScrollBar sb = getScrollPane().getVerticalScrollBar();
+//        int min = sb.getValue() + sb.getVisibleAmount();
+//        int max = sb.getMaximum();
+//        System.out.println(min + " " + max);
+//        return min == max;
+//        return true;
+//
+//    }
 
-    }
-
-    private void scrollToBottom() {
-        SwingUtilities.invokeLater(
-                new Runnable() {
-                    public void run() {
-                        getScrollPane().getVerticalScrollBar().setValue(getScrollPane().getVerticalScrollBar().getMaximum());
-                    }
-                });
-    }
+//    private void scrollToBottom() {
+//
+//        System.out.println("SCrolling");
+//        getScrollPane().getVerticalScrollBar().setValue(getScrollPane().getVerticalScrollBar().getMaximum());
+//
+//    }
 
     public void addMessage(final String message, final Style style) {
-        final boolean bottom = isViewAtBottom();
 
-        SwingUtilities.invokeLater(new Thread() {
+        SwingUtilities.invokeLater(new Runnable() {
+            @Override
             public void run() {
-
                 try {
                     doc.insertString(doc.getLength(), message + "\n", style);
                 } catch (BadLocationException e) {
                 }
             }
         });
-        if ( bottom ) {
-            scrollToBottom();
-        }
+
+
+
     }
 
     public void clear() {

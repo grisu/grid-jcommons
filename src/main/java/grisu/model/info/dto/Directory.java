@@ -1,14 +1,12 @@
 package grisu.model.info.dto;
 
+import com.google.common.base.Objects;
 import grisu.jcommons.constants.Constants;
 import grisu.jcommons.utils.EndpointHelpers;
 
-import java.util.Set;
-
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
-
-import com.google.common.base.Objects;
+import java.util.Set;
 
 @XmlRootElement(name = "directory")
 public class Directory implements Comparable<Directory> {
