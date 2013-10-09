@@ -1,18 +1,21 @@
 package grisu.jcommons.configuration;
 
 import grisu.jcommons.constants.GridEnvironment;
-
-import java.io.File;
-
 import org.apache.commons.configuration.ConfigurationException;
 import org.apache.commons.configuration.PropertiesConfiguration;
 import org.apache.commons.lang.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import java.io.File;
 
 /**
  * Class to manage a set of properties that are commonly used when doing
  * grid-related stuff.
  */
 public class CommonGridProperties {
+
+    private static final Logger myLogger = LoggerFactory.getLogger(CommonGridProperties.class);
 
 	/**
 	 * Property Enums
@@ -103,7 +106,7 @@ public class CommonGridProperties {
 
 	/**
 	 * Gets the singleton properties object.
-	 * 
+	 *
 	 * @return the singleton object
 	 */
 	public static CommonGridProperties getDefault() {
@@ -151,7 +154,7 @@ public class CommonGridProperties {
 
 	/**
 	 * Gets a certain common grid property.
-	 * 
+	 *
 	 * @param prop
 	 *            the property name
 	 * @return the property value
@@ -180,7 +183,7 @@ public class CommonGridProperties {
 
 	/**
 	 * Gets a certain grid property as an integer.
-	 * 
+	 *
 	 * @param prop
 	 *            the property name
 	 * @return the property value as an integer
@@ -221,7 +224,7 @@ public class CommonGridProperties {
 
 	/**
 	 * Gets the last used my proxy username.
-	 * 
+	 *
 	 * @return the last used my proxy username
 	 */
 	public String getLastMyProxyUsername() {
@@ -230,7 +233,7 @@ public class CommonGridProperties {
 
 	/**
 	 * Gets the last used shib idp.
-	 * 
+	 *
 	 * @return the last used shib idp
 	 */
 	public String getLastShibIdp() {
@@ -244,7 +247,7 @@ public class CommonGridProperties {
 
 	/**
 	 * Gets the last used shib username.
-	 * 
+	 *
 	 * @return the last used shib username
 	 */
 	public String getLastShibUsername() {
@@ -272,7 +275,7 @@ public class CommonGridProperties {
 
 	/**
 	 * Sets a certain grid property
-	 * 
+	 *
 	 * @param prop
 	 *            the property key
 	 * @param value
@@ -288,13 +291,14 @@ public class CommonGridProperties {
 		try {
 			config.save();
 		} catch (ConfigurationException e) {
-			throw new RuntimeException(e);
+//			throw new RuntimeException(e);
+            myLogger.error("Can't write property {}: {}", new String[]{prop.toString(), e.getLocalizedMessage()}, e);
 		}
 	}
 
 	/**
 	 * Sets the last used my proxy username.
-	 * 
+	 *
 	 * @param username
 	 *            the new last used my proxy username
 	 */
@@ -304,7 +308,7 @@ public class CommonGridProperties {
 
 	/**
 	 * Sets the last used shib idp.
-	 * 
+	 *
 	 * @param idp
 	 *            the new last used shib idp
 	 */
@@ -317,7 +321,7 @@ public class CommonGridProperties {
 
 	/**
 	 * Sets the last used shib username.
-	 * 
+	 *
 	 * @param u
 	 *            the new last used shib username
 	 */
