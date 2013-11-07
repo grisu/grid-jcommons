@@ -1,16 +1,15 @@
 package grisu.model.info.dto;
 
-import java.util.Collection;
-import java.util.List;
-import java.util.Set;
-
-import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlRootElement;
-
 import com.google.common.base.Objects;
 import com.google.common.collect.ComparisonChain;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
+
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
+import java.util.Collection;
+import java.util.List;
+import java.util.Set;
 
 @XmlRootElement(name = "queue")
 public class Queue implements Comparable<Queue> {
@@ -206,8 +205,7 @@ public class Queue implements Comparable<Queue> {
 
 	@Override
 	public int hashCode() {
-		return Objects.hashCode(getName(), getGateway().getSite(), getGateway()
-				.getHost());
+		return Objects.hashCode(getName(), getGateway());
 	}
 
 	public void setClockspeedInHz(Long clockspeedInHz) {
