@@ -4,7 +4,7 @@
 	<groupId>grisu</groupId>
 	<artifactId>grid-jcommons</artifactId>
 	<name>Grid JCommons</name>
-	<version>2.12-SNAPSHOT</version>
+	<version>2.12</version>
 	<description>Java Interfaces, Constants and helper classes that are
 		used in more than one of the grid related projects.</description>
 
@@ -46,7 +46,7 @@
 		<connection>scm:git:git://github.com/grisu/grid-jcommons.git</connection>
 		<developerConnection>scm:git:git@github.com:grisu/grid-jcommons.git</developerConnection>
 		<url>https://github.com/grisu/grid-jcommons</url>
-	  <tag>HEAD</tag>
+	  <tag>2.12</tag>
   </scm>
 
 	<properties>
