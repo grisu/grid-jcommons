@@ -1,132 +1,148 @@
 package grisu.model.info.dto;
 
 import java.util.Collection;
+import java.util.Iterator;
+import java.util.Map;
 
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
 import com.google.common.base.Objects;
+import com.google.common.base.Splitter;
 import com.google.common.collect.ComparisonChain;
+import org.apache.commons.lang.StringUtils;
 
 /**
  * A model to hold information about whether and why and how well a job will run
  * on a queue.
- * 
+ *
  * @author markus
- * 
  */
 @XmlRootElement(name = "jobqueuematch")
 public class JobQueueMatch implements Comparable<JobQueueMatch> {
 
-	public static JobQueueMatch getMatch(Collection<JobQueueMatch> matches,
-			String submissionLocation) {
+    public static JobQueueMatch getMatch(Collection<JobQueueMatch> matches,
+                                         String submissionLocation) {
 
-		if (matches == null) {
-			return null;
-		}
+        if (matches == null) {
+            return null;
+        }
 
-		for (JobQueueMatch m : matches) {
-			if (m.getQueue().toString().equals(submissionLocation)) {
-				return m;
-			}
-		}
-		return null;
-	}
+        for (JobQueueMatch m : matches) {
+            if (m.getQueue().toString().equals(submissionLocation)) {
+                return m;
+            }
+        }
 
-	private Queue queue;
-	private DtoProperties job;
+        for (JobQueueMatch m : matches) {
+            DtoProperties options = m.getQueue().getOptions();
+            if (options != null && options.size() > 0 && StringUtils.isNotBlank((String) options.get("alias"))) {
+                Iterator<String> aliases = Splitter.on(",").split((String)(options.get("alias"))).iterator();
+                while ( aliases.hasNext() ) {
+                    if ( aliases.next().equals(submissionLocation)) {
+                        return m;
+                    }
+                }
 
-	private boolean valid = true;
-	private int rank = 100;
+            }
+        }
+        return null;
+    }
 
-	private DtoProperties propertiesDetails;
+    private Queue queue;
+    private DtoProperties job;
 
-	public JobQueueMatch() {
-	}
+    private boolean valid = true;
+    private int rank = 100;
 
-	public JobQueueMatch(DtoProperties job) {
-		this.job = job;
-	}
+    private DtoProperties propertiesDetails;
 
-	public JobQueueMatch(Queue queue, DtoProperties job) {
-		this.queue = queue;
-		this.job = job;
-	}
+    public JobQueueMatch() {
+    }
 
-	public int compareTo(JobQueueMatch o) {
-		return ComparisonChain.start().compare(getQueue(), o.getQueue())
-				.result();
-	}
+    public JobQueueMatch(DtoProperties job) {
+        this.job = job;
+    }
 
-	@Override
-	public boolean equals(Object obj) {
-		if (obj == null) {
-			return false;
-		}
-		if (getClass() != obj.getClass()) {
-			return false;
-		}
-		final JobQueueMatch other = (JobQueueMatch) obj;
+    public JobQueueMatch(Queue queue, DtoProperties job) {
+        this.queue = queue;
+        this.job = job;
+    }
 
-		return Objects.equal(getQueue(), other.getQueue())
-				&& Objects.equal(this.getRank(), other.getRank());
-	}
+    public int compareTo(JobQueueMatch o) {
+        return ComparisonChain.start().compare(getQueue(), o.getQueue())
+                .result();
+    }
 
-	@XmlElement(name = "job")
-	public DtoProperties getJob() {
-		return job;
-	}
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final JobQueueMatch other = (JobQueueMatch) obj;
 
-	@XmlElement(name = "propertiesdetail")
-	public DtoProperties getPropertiesDetails() {
-		return propertiesDetails;
-	}
+        return Objects.equal(getQueue(), other.getQueue())
+                && Objects.equal(this.getRank(), other.getRank());
+    }
 
-	@XmlElement(name = "queue")
-	public Queue getQueue() {
-		return queue;
-	}
+    @XmlElement(name = "job")
+    public DtoProperties getJob() {
+        return job;
+    }
 
-	@XmlAttribute(name = "rank")
-	public int getRank() {
-		return rank;
-	}
+    @XmlElement(name = "propertiesdetail")
+    public DtoProperties getPropertiesDetails() {
+        return propertiesDetails;
+    }
 
-	@Override
-	public int hashCode() {
-		return Objects.hashCode(getQueue(), getRank());
-	}
+    @XmlElement(name = "queue")
+    public Queue getQueue() {
+        return queue;
+    }
 
-	@XmlAttribute(name = "valid")
-	public boolean isValid() {
-		return valid;
-	}
+    @XmlAttribute(name = "rank")
+    public int getRank() {
+        return rank;
+    }
 
-	public void setJob(DtoProperties job) {
-		this.job = job;
-	}
+    @Override
+    public int hashCode() {
+        return Objects.hashCode(getQueue(), getRank());
+    }
 
-	public void setPropertiesDetails(DtoProperties propertiesDetails) {
-		this.propertiesDetails = propertiesDetails;
-	}
+    @XmlAttribute(name = "valid")
+    public boolean isValid() {
+        return valid;
+    }
 
-	public void setQueue(Queue queue) {
-		this.queue = queue;
-	}
+    public void setJob(DtoProperties job) {
+        this.job = job;
+    }
 
-	public void setRank(int rank) {
-		this.rank = rank;
-	}
+    public void setPropertiesDetails(DtoProperties propertiesDetails) {
+        this.propertiesDetails = propertiesDetails;
+    }
 
-	public void setValid(boolean valid) {
-		this.valid = valid;
-	}
+    public void setQueue(Queue queue) {
+        this.queue = queue;
+    }
 
-	@Override
-	public String toString() {
-		return getQueue().toString();
+    public void setRank(int rank) {
+        this.rank = rank;
+    }
 
-	}
+    public void setValid(boolean valid) {
+        this.valid = valid;
+    }
+
+    @Override
+    public String toString() {
+        return getQueue().toString();
+
+    }
 
 }

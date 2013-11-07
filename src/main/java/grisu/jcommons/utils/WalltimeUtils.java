@@ -1,9 +1,9 @@
 package grisu.jcommons.utils;
 
+import org.apache.commons.lang.StringUtils;
+
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-
-import org.apache.commons.lang.StringUtils;
 
 public class WalltimeUtils {
 	public static int convertHumanReadableStringIntoSeconds(
@@ -17,13 +17,13 @@ public class WalltimeUtils {
 		}
 		final String unit = humanReadable[1];
 
-		if ("minutes".equals(unit)) {
+		if ("minutes".equals(unit) || "minute".equals(unit)) {
 			return amount * 60;
-		} else if ("hours".equals(unit)) {
+		} else if ("hours".equals(unit) || "hour".equals(unit)) {
 			return amount * 3600;
-		} else if ("days".equals(unit)) {
+		} else if ("days".equals(unit) || "day".equals(unit)) {
 			return amount * 3600 * 24;
-		} else if ("weeks".equals(unit)) {
+		} else if ("weeks".equals(unit) || "week".equals(unit)) {
 			return amount * 3600 * 24 * 7;
 		} else {
 			// throw new RuntimeException(unit + " not a supported unit name.");
@@ -44,31 +44,43 @@ public class WalltimeUtils {
 	public static String[] convertSecondsInHumanReadableString(
 			int walltimeInSeconds) {
 
-		final int days = walltimeInSeconds / (3600 * 24);
-		final int hours = (walltimeInSeconds - (days * 3600 * 24)) / 3600;
-		final int minutes = (walltimeInSeconds - ((days * 3600 * 24) + (hours * 3600))) / 60;
+		final Integer days = walltimeInSeconds / (3600 * 24);
+		final Integer hours = (walltimeInSeconds - (days * 3600 * 24)) / 3600;
+		final Integer minutes = (walltimeInSeconds - ((days * 3600 * 24) + (hours * 3600))) / 60;
 
 		if ((days > 0) && (hours == 0) && (minutes == 0)) {
-			return new String[] { new Integer(days).toString(), "days" };
+            if ( days == 1 ) {
+                return new String[] { days.toString(), "day" };
+            } else {
+                return new String[] { days.toString(), "days" };
+            }
 		} else if ((days > 0) && (hours == 0)) {
 			// fuck the minutes
-			return new String[] { new Integer(days).toString(), "days" };
+            if ( days == 1 ) {
+                return new String[] { days.toString(), "day" };
+            } else {
+                return new String[] { days.toString(), "days" };
+            }
 		} else if (days > 14) {
 			return new String[] { new Integer(days).toString(), "days" };
 		} else if ((days > 0) && (hours > 0)) {
-			return new String[] { new Integer((days * 24) + hours).toString(),
-					"hours" };
+            Integer i_hours = new Integer((days * 24) + hours);
+            if ( i_hours == 1 ) {
+                return new String[] { i_hours.toString(),	"hour" };
+            } else {
+                return new String[] { i_hours.toString(),	"hours" };
+            }
 		} else if ((days == 0) && (hours > 0) && (minutes == 0)) {
-			return new String[] { new Integer(hours).toString(), "hours" };
+            if (hours == 1 ) {
+                return new String[] {hours.toString(), "hour" };
+            } else {
+                return new String[] { hours.toString(), "hours" };
+            }
 		} else if ((days == 0) && (hours > 0) && (minutes > 0)) {
 			if (hours > 6) {
 				// fuck the minutes
-				if (hours == 1) {
-					return new String[] { "1", "hour" };
-				} else {
 					return new String[] { new Integer(hours).toString(),
 							"hours" };
-				}
 			} else {
 				return new String[] {
 						new Integer((hours * 60) + minutes).toString(),

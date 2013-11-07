@@ -1,10 +1,10 @@
 package grisu.model.info.dto;
 
-import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlRootElement;
-
 import com.google.common.base.Objects;
 import com.google.common.collect.ComparisonChain;
+
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
 
 @XmlRootElement(name = "gateway")
 public class Gateway implements Comparable<Gateway> {
@@ -49,7 +49,7 @@ public class Gateway implements Comparable<Gateway> {
 
 	@Override
 	public int hashCode() {
-		return Objects.hashCode(getSite(), getHost());
+		return Objects.hashCode(getSite(), getHost(), getMiddleware());
 	}
 
 	public void setHost(String host) {
@@ -63,5 +63,9 @@ public class Gateway implements Comparable<Gateway> {
 	public void setSite(Site site) {
 		this.site = site;
 	}
+
+    public String toString() {
+        return getHost() + " / " + getMiddleware().toString();
+    }
 
 }

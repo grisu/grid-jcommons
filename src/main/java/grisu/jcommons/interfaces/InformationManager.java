@@ -296,7 +296,7 @@ public interface InformationManager {
 	 * 
 	 * This might happen asynchronously.
 	 */
-	void refresh();
+	String refresh();
 
 	/**
 	 * All directories that are available

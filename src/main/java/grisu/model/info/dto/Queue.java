@@ -1,16 +1,15 @@
 package grisu.model.info.dto;
 
-import java.util.Collection;
-import java.util.List;
-import java.util.Set;
-
-import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlRootElement;
-
 import com.google.common.base.Objects;
 import com.google.common.collect.ComparisonChain;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
+
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
+import java.util.Collection;
+import java.util.List;
+import java.util.Set;
 
 @XmlRootElement(name = "queue")
 public class Queue implements Comparable<Queue> {
@@ -58,6 +57,8 @@ public class Queue implements Comparable<Queue> {
 	// would run on this queue or not
 	private String description = "n/a";
 	private Long clockspeedInHz = Long.MAX_VALUE;
+
+    private DtoProperties options;
 
 	private List<DynamicInfo> dynamicInfo = Lists.newLinkedList();
 
@@ -172,6 +173,11 @@ public class Queue implements Comparable<Queue> {
 		return name;
 	}
 
+	@XmlElement(name = "options")
+	public DtoProperties getOptions() {
+		return options;
+	}
+
 	@XmlElement(name = "package")
 	public Set<Package> getPackages() {
 		return packages;
@@ -199,8 +205,7 @@ public class Queue implements Comparable<Queue> {
 
 	@Override
 	public int hashCode() {
-		return Objects.hashCode(getName(), getGateway().getSite(), getGateway()
-				.getHost());
+		return Objects.hashCode(getName(), getGateway());
 	}
 
 	public void setClockspeedInHz(Long clockspeedInHz) {
@@ -249,6 +254,10 @@ public class Queue implements Comparable<Queue> {
 
 	public void setName(String name) {
 		this.name = name;
+	}
+
+	public void setOptions(DtoProperties options) {
+		this.options = options;
 	}
 
 	public void setPackages(Set<Package> packages) {

@@ -23,6 +23,8 @@ public class GridEnvironment {
 	private static final String GRID_DEFAULT_DIRECTORY = System
 			.getProperty("user.home") + File.separator + ".grid";
 
+    public static String GRID_CACHE_DIR = null;
+
 	/**
 	 * The port of the default MyProxy server (7512).
 	 */
@@ -136,7 +138,13 @@ public class GridEnvironment {
 
 		File gridDir = null;
 
-		if (StringUtils.isNotBlank(System.getProperty("grid.common.cache"))) {
+        if (StringUtils.isNotBlank(GRID_CACHE_DIR)) {
+            gridDir = new File(GRID_CACHE_DIR);
+        } else if (StringUtils.isNotBlank(CommonGridProperties.getDefault().getGridProperty(
+                CommonGridProperties.Property.GRID_CACHE_DIR)) ) {
+            gridDir = new File(CommonGridProperties.getDefault().getGridProperty(
+                    CommonGridProperties.Property.GRID_CACHE_DIR));
+        } else if (StringUtils.isNotBlank(System.getProperty("grid.common.cache"))) {
 			gridDir = new File(System.getProperty("grid.common.cache"));
 		} else {
 			gridDir = new File(GRID_DEFAULT_DIRECTORY, "cache");

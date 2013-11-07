@@ -1,18 +1,21 @@
 package grisu.jcommons.configuration;
 
 import grisu.jcommons.constants.GridEnvironment;
-
-import java.io.File;
-
 import org.apache.commons.configuration.ConfigurationException;
 import org.apache.commons.configuration.PropertiesConfiguration;
 import org.apache.commons.lang.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import java.io.File;
 
 /**
  * Class to manage a set of properties that are commonly used when doing
  * grid-related stuff.
  */
 public class CommonGridProperties {
+
+    private static final Logger myLogger = LoggerFactory.getLogger(CommonGridProperties.class);
 
 	/**
 	 * Property Enums
@@ -56,7 +59,10 @@ public class CommonGridProperties {
 		 * The location of an ssh key that can be used
 		 * to ssh into certain (non-gsi) machines.
 		 */
-		GRID_SSH_KEY
+		GRID_SSH_KEY, /**
+         * the location of the local cache directory
+         */
+        GRID_CACHE_DIR
 
 	}
 
@@ -100,7 +106,7 @@ public class CommonGridProperties {
 
 	/**
 	 * Gets the singleton properties object.
-	 * 
+	 *
 	 * @return the singleton object
 	 */
 	public static CommonGridProperties getDefault() {
@@ -138,13 +144,17 @@ public class CommonGridProperties {
 
 	}
 
-	public String getGridInfoConfig() {
-		return getGridProperty(Property.GRID_INFO_CONFIG);
-	}
+    public String getGridInfoConfig() {
+        return getGridProperty(Property.GRID_INFO_CONFIG);
+    }
+
+    public String getGridCacheDir() {
+        return getGridProperty(Property.GRID_CACHE_DIR);
+    }
 
 	/**
 	 * Gets a certain common grid property.
-	 * 
+	 *
 	 * @param prop
 	 *            the property name
 	 * @return the property value
@@ -173,7 +183,7 @@ public class CommonGridProperties {
 
 	/**
 	 * Gets a certain grid property as an integer.
-	 * 
+	 *
 	 * @param prop
 	 *            the property name
 	 * @return the property value as an integer
@@ -214,7 +224,7 @@ public class CommonGridProperties {
 
 	/**
 	 * Gets the last used my proxy username.
-	 * 
+	 *
 	 * @return the last used my proxy username
 	 */
 	public String getLastMyProxyUsername() {
@@ -223,7 +233,7 @@ public class CommonGridProperties {
 
 	/**
 	 * Gets the last used shib idp.
-	 * 
+	 *
 	 * @return the last used shib idp
 	 */
 	public String getLastShibIdp() {
@@ -237,7 +247,7 @@ public class CommonGridProperties {
 
 	/**
 	 * Gets the last used shib username.
-	 * 
+	 *
 	 * @return the last used shib username
 	 */
 	public String getLastShibUsername() {
@@ -256,13 +266,16 @@ public class CommonGridProperties {
 		return result;
 	}
 
-	public void setGridInfoConfig(String c) {
-		setGridProperty(Property.GRID_INFO_CONFIG, c);
-	}
+    public void setGridInfoConfig(String c) {
+        setGridProperty(Property.GRID_INFO_CONFIG, c);
+    }
+    public void setGridCacheDir(String c) {
+        setGridProperty(Property.GRID_CACHE_DIR, c);
+    }
 
 	/**
 	 * Sets a certain grid property
-	 * 
+	 *
 	 * @param prop
 	 *            the property key
 	 * @param value
@@ -278,13 +291,14 @@ public class CommonGridProperties {
 		try {
 			config.save();
 		} catch (ConfigurationException e) {
-			throw new RuntimeException(e);
+//			throw new RuntimeException(e);
+            myLogger.error("Can't write property {}: {}", new String[]{prop.toString(), e.getLocalizedMessage()}, e);
 		}
 	}
 
 	/**
 	 * Sets the last used my proxy username.
-	 * 
+	 *
 	 * @param username
 	 *            the new last used my proxy username
 	 */
@@ -294,7 +308,7 @@ public class CommonGridProperties {
 
 	/**
 	 * Sets the last used shib idp.
-	 * 
+	 *
 	 * @param idp
 	 *            the new last used shib idp
 	 */
@@ -307,7 +321,7 @@ public class CommonGridProperties {
 
 	/**
 	 * Sets the last used shib username.
-	 * 
+	 *
 	 * @param u
 	 *            the new last used shib username
 	 */
