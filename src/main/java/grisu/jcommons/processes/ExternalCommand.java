@@ -5,6 +5,8 @@ import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.beans.PropertyChangeListener;
+import java.beans.PropertyChangeSupport;
 import java.io.*;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -26,9 +28,25 @@ public class ExternalCommand  {
     private boolean failed = false;
     private String workingDirectory;
 
+    private boolean started = false;
+    private boolean finished = false;
+
+    public boolean isStarted() {
+        return started;
+    }
+
+    public boolean isFinished() {
+        return finished;
+    }
+
+    private final PropertyChangeSupport pcs = new PropertyChangeSupport(this);
+
     private final List<String> stdout = Collections.synchronizedList(new ArrayList<String>());
+    private String lastStdoutMessage = null;
     private final List<String> stderr = Collections.synchronizedList(new ArrayList<String>());
+    private String lastStderrMessage = null;
     private final List<String> log = Collections.synchronizedList(new ArrayList<String>());
+    private String lastLogMessage = null;
 
     public static void main(String[] args) {
 
@@ -84,6 +102,14 @@ public class ExternalCommand  {
         this.command = command;
     }
 
+    public void addPropertyChangeListener(PropertyChangeListener l) {
+        pcs.addPropertyChangeListener(l);
+    }
+
+    public void removePropertyChangeListener(PropertyChangeListener l) {
+        pcs.removePropertyChangeListener(l);
+    }
+
     protected List<String> getCommand() {
         return command;
     }
@@ -93,15 +119,33 @@ public class ExternalCommand  {
     }
 
     private void addMessage(String detail) {
+        String old = lastStdoutMessage;
         stdout.add(detail);
+        pcs.firePropertyChange("lastMessage", old, detail);
     }
 
     private void addLogMessage(String detail) {
+        String old = lastLogMessage;
         log.add(detail);
+        pcs.firePropertyChange("lastLogMessage", old, detail);
     }
 
     private void addErrorMessage(String error) {
+        String old = lastStderrMessage;
         stderr.add(error);
+        pcs.firePropertyChange("lastErrorMessage", old, error);
+    }
+
+    public String getLastStdoutMessage() {
+        return lastStdoutMessage;
+    }
+
+    public String getLastStderrMessage() {
+        return lastStderrMessage;
+    }
+
+    public String getLastLogMessage() {
+        return lastLogMessage;
     }
 
     public void setWorkingDirectory(String workingDirectory) {
@@ -123,6 +167,8 @@ public class ExternalCommand  {
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
+        started = true;
+        pcs.firePropertyChange("started", false, true);
 
         //proc = getCommand().execute();
 
@@ -159,7 +205,8 @@ public class ExternalCommand  {
 
         try {
             proc.waitFor();
-
+            finished = true;
+            pcs.firePropertyChange("finished", false, true);
             // wait in case stdout/err buffers are not empty yet
             Thread.sleep(500);
         } catch (Exception e) {
@@ -178,6 +225,10 @@ public class ExternalCommand  {
 
     public void setFailed() {
         this.failed = true;
+        pcs.firePropertyChange("failed", false, true);
     }
 
+    public boolean isFailed() {
+        return failed;
+    }
 }
