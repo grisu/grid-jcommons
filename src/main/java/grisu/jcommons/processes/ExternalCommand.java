@@ -1,5 +1,6 @@
 package grisu.jcommons.processes;
 
+import com.google.common.collect.ImmutableList;
 import com.google.common.collect.Lists;
 import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
@@ -47,6 +48,9 @@ public class ExternalCommand  {
     private String lastStderrMessage = null;
     private final List<String> log = Collections.synchronizedList(new ArrayList<String>());
     private String lastLogMessage = null;
+
+    private Process proc = null;
+
 
     public static void main(String[] args) {
 
@@ -96,11 +100,12 @@ public class ExternalCommand  {
 
     }
 
-    private final List<String> command;
+    private final ImmutableList<String> command;
 
     public ExternalCommand(List<String> command) {
-        this.command = command;
+        this.command = ImmutableList.copyOf(command);
     }
+
 
     public void addPropertyChangeListener(PropertyChangeListener l) {
         pcs.addPropertyChangeListener(l);
@@ -110,7 +115,7 @@ public class ExternalCommand  {
         pcs.removePropertyChangeListener(l);
     }
 
-    protected List<String> getCommand() {
+    public ImmutableList<String> getCommand() {
         return command;
     }
 
@@ -152,9 +157,24 @@ public class ExternalCommand  {
         this.workingDirectory = workingDirectory;
     }
 
+    public void cancel() {
+        if ( ! started ) {
+            return;
+        }
+        if ( finished ) {
+            return;
+        }
+
+        if ( proc == null ) {
+            return;
+        }
+
+        proc.destroy();
+
+    }
+
     public void execute() {
 
-        Process proc = null;
         ProcessBuilder pb = new ProcessBuilder(getCommand());
 
         if (StringUtils.isNotBlank(getWorkingDirectory())) {
