@@ -74,9 +74,15 @@ public class VelocityUtils {
             }
 
 			VelocityEngine ve = new VelocityEngine();
-			ve.setProperty(RuntimeConstants.RESOURCE_LOADER, "classpath");
+            //ve.setProperty(RuntimeConstants.RESOURCE_LOADER, "classpath");
 			ve.setProperty("classpath.resource.loader.class",
 					ClasspathResourceLoader.class.getName());
+
+
+            ve.setProperty("file.resource.loader.class", "org.apache.velocity.runtime.resource.loader.FileResourceLoader");
+            ve.setProperty("file.resource.loader.path", new File("/").getAbsolutePath());
+
+            ve.setProperty(RuntimeConstants.RESOURCE_LOADER, "classpath, file");
 
 			ve.init();
 
