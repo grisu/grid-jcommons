@@ -13,106 +13,130 @@ import java.io.InputStream;
 import java.io.StringWriter;
 import java.util.Map;
 import java.util.Properties;
+import java.util.Set;
 
 public class VelocityUtils {
 
-	/**
-	 * @param args
-	 */
-	public static void main(String[] args) {
-		// TODO Auto-generated method stub
-
-	}
-
-
     public static String render(File templateFile, Map<String, Object> properties) {
+        return render(templateFile, null, properties);
+    }
+
+    public static String render(File templateFile, Set<File> additionalTemplateRootPaths, Map<String, Object> properties) {
 
         try {
 
-            if ( templateFile == null || ! templateFile.exists() || ! templateFile.isFile() ) {
+            if (templateFile == null || !templateFile.exists() || !templateFile.isFile()) {
                 return null;
             }
 
-            Properties velocityProperties = new Properties();
-            velocityProperties.setProperty("file.resource.loader.path",
-                    templateFile.getAbsoluteFile().getParentFile().getAbsolutePath());
+            StringBuffer loaderPath = new StringBuffer(templateFile.getAbsoluteFile().getParentFile().getAbsolutePath());
 
+            Properties velocityProperties = new Properties();
+
+            velocityProperties.setProperty("classpath.resource.loader.class", ClasspathResourceLoader.class.getName());
+            velocityProperties.setProperty("file.resource.loader.class", "org.apache.velocity.runtime.resource.loader.FileResourceLoader");
+
+            StringBuffer paths = new StringBuffer(loaderPath.toString());
+            paths.append(","+new File("/").getAbsolutePath());
+            if (additionalTemplateRootPaths != null) {
+                for (File path : additionalTemplateRootPaths) {
+                    paths.append(","+path.getAbsolutePath());
+                }
+            }
+
+            velocityProperties.setProperty("file.resource.loader.path", paths.toString());
 
             VelocityEngine ve = new VelocityEngine();
+
             ve.init(velocityProperties);
-			VelocityContext context = new VelocityContext();
+            VelocityContext context = new VelocityContext();
 
-			if (properties != null) {
-				// stringfyNulls(properties);
-				for (Map.Entry<String, Object> property : properties.entrySet()) {
-					context.put(property.getKey(), property.getValue());
-				}
-			}
+            if (properties != null) {
+                // stringfyNulls(properties);
+                for (Map.Entry<String, Object> property : properties.entrySet()) {
+                    context.put(property.getKey(), property.getValue());
+                }
+            }
 
-			Template template = ve.getTemplate(templateFile.getName(), "UTF-8");
-			StringWriter writer = new StringWriter();
+//            context.put("context", context);
 
-			template.merge(context, writer);
+            Template template = ve.getTemplate(templateFile.getName(), "UTF-8");
+            StringWriter writer = new StringWriter();
 
-			return writer.toString();
+            template.merge(context, writer);
 
-		} catch (Exception e) {
-			throw new RuntimeException("Could not create template string.", e);
-		}
+            return writer.toString();
+
+        } catch (Exception e) {
+            throw new RuntimeException("Could not create template string.", e);
+        }
 
     }
 
+    public static String render(String templateName,
+                                Map<String, Object> properties) {
+        return render(templateName, null, properties);
+    }
 
-	public static String render(String templateName,
-			Map<String, Object> properties) {
 
-		try {
+    public static String render(String templateName, Set<File> templateRootPaths,
+                                Map<String, Object> properties) {
+
+        try {
 
             File templateFile = new File(templateName);
-            if ( templateFile.exists() && templateFile.isFile() ) {
-                return render(templateFile, properties);
+            if (templateFile.exists() && templateFile.isFile()) {
+                return render(templateFile, templateRootPaths, properties);
             }
 
-			VelocityEngine ve = new VelocityEngine();
-            //ve.setProperty(RuntimeConstants.RESOURCE_LOADER, "classpath");
-			ve.setProperty("classpath.resource.loader.class",
-					ClasspathResourceLoader.class.getName());
+
+            Properties velocityProperties = new Properties();
+
+            StringBuffer paths = new StringBuffer(new File("/").getAbsolutePath());
+            if (templateRootPaths != null) {
+                for (File path : templateRootPaths) {
+                    paths.append(","+path.getAbsolutePath());
+                }
+            }
+
+            velocityProperties.setProperty("classpath.resource.loader.class", ClasspathResourceLoader.class.getName());
+            velocityProperties.setProperty("file.resource.loader.class", "org.apache.velocity.runtime.resource.loader.FileResourceLoader");
+            velocityProperties.setProperty("file.resource.loader.path", paths.toString());
+
+            velocityProperties.setProperty(RuntimeConstants.RESOURCE_LOADER, "classpath, file");
+
+            VelocityEngine ve = new VelocityEngine();
+
+            ve.init(velocityProperties);
 
 
-            ve.setProperty("file.resource.loader.class", "org.apache.velocity.runtime.resource.loader.FileResourceLoader");
-            ve.setProperty("file.resource.loader.path", new File("/").getAbsolutePath());
+            final String templatePath = templateName + ".vm";
+            InputStream input = VelocityUtils.class.getClassLoader()
+                    .getResourceAsStream(templatePath);
+            if (input == null) {
+                throw new IOException("Template file doesn't exist");
+            }
 
-            ve.setProperty(RuntimeConstants.RESOURCE_LOADER, "classpath, file");
+            VelocityContext context = new VelocityContext();
 
-			ve.init();
+            if (properties != null) {
+                // stringfyNulls(properties);
+                for (Map.Entry<String, Object> property : properties.entrySet()) {
+                    context.put(property.getKey(), property.getValue());
+                }
+            }
 
-			final String templatePath = templateName + ".vm";
-			InputStream input = VelocityUtils.class.getClassLoader()
-					.getResourceAsStream(templatePath);
-			if (input == null) {
-				throw new IOException("Template file doesn't exist");
-			}
+            Template template = ve.getTemplate(templatePath, "UTF-8");
+            StringWriter writer = new StringWriter();
 
-			VelocityContext context = new VelocityContext();
+            template.merge(context, writer);
 
-			if (properties != null) {
-				// stringfyNulls(properties);
-				for (Map.Entry<String, Object> property : properties.entrySet()) {
-					context.put(property.getKey(), property.getValue());
-				}
-			}
+            return writer.toString();
 
-			Template template = ve.getTemplate(templatePath, "UTF-8");
-			StringWriter writer = new StringWriter();
+        } catch (Exception e) {
+            throw new RuntimeException("Could not create template string.", e);
+        }
 
-			template.merge(context, writer);
-
-			return writer.toString();
-
-		} catch (Exception e) {
-			throw new RuntimeException("Could not create template string.", e);
-		}
-
-	}
+    }
 
 }
